@@ -11,6 +11,16 @@ body > .container-fluid {
   padding: 0 100px;
 }
 
+input:focus {
+  outline: none !important;
+  -webkit-appearance: none !important;
+  box-shadow: none !important;
+}
+
+hr {
+  background: $black;
+}
+
 span {
   font-size: 12px;
 }
@@ -72,5 +82,49 @@ svg {
 
   & ~ svg {
     fill: $gray-700;
+  }
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-title > span {
+  font-size: 14px;
+}
+
+.modal-btn {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(to right, #219ebc, #4cc9f0);
+  color: #ffffff !important;
+}
+
+.other-btn {
+  border: 2px solid $black;
+  border-radius: 10px;
+
+  &:hover {
+    background: $gray-300;
+  }
+}
+
+.form-floating {
+  & > input[type="email"] {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    &:focus {
+      border: 2px solid #219ebc;
+    }
+  }
+  & > input[type="password"] {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    &:focus {
+      border: 2px solid #219ebc;
+    }
   }
 }

@@ -1,7 +1,7 @@
 <header class="container-fluid">
   <nav class="navbar navbar-light pt-1 pb-0">
     <div class="container-fluid px-0">
-      <%= link_to root_path, class: "navbar-brand px-3" do %>
+      <%= link_to root_path, class: "navbar-brand m-0 px-3" do %>
         <div class="d-flex flex-column align-items-center">
           <svg xmlns="http://www.w3.org/2000/svg" style="fill: #a2d2ff; width: 30px; height: 30px;" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
@@ -21,26 +21,29 @@
             <% end %>
           <% else %>
             <%= link_to "#" do %>
-              <span class="fw-bold me-3">Diventa un venditore</span>
             <% end %>
+            <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#modal">
+              <span class="fw-bold me-3">Diventa un venditore</span>
+            </button>
           <% end %>
         <% end %>
         <div class="dropdown-link m-0 p-1">
             <div class="dropdown">
-              <a class="d-inline-flex align-items-center" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="d-inline-flex align-items-center" id="dropdown" data-bs-toggle="dropdown">
                 <span class="icon mx-2"></span>
                 <svg xmlns="http://www.w3.org/2000/svg" style="width: 35px; height: 35px;" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
                 </svg>
               </a>
-              <div class="dropdown-menu dropdown-menu-end shadow-lg mt-2 p-3" aria-labelledby="dropdown">
-                <% if !user_signed_in? %> 
-                  <%= link_to new_user_registration_path, class: "dropdown-item p-0" do %>
+              <%= render "shared/modal" %>
+              <div class="dropdown-menu dropdown-menu-end shadow-lg mt-2 p-3">
+                <% if !user_signed_in? %>
+                  <button class="dropdown-item p-0" data-bs-toggle="modal" data-bs-target="#modal">
                     <span class="fw-bold">Registrati</span>
-                  <% end %>
-                  <%= link_to new_user_session_path, class: "dropdown-item p-0" do %>
+                  </button>
+                  <button class="dropdown-item p-0" data-bs-toggle="modal" data-bs-target="#modal">
                     <span class="fw-light">Accedi</span>
-                  <% end %>
+                  </button>
                 <% else %>
                   <%= link_to "#", class: "dropdown-item p-0" do %>
                     <span class="fw-bold">Profilo</span>
