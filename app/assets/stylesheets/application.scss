@@ -106,17 +106,17 @@ svg {
   border-radius: 10px;
 
   &:hover {
-    background: $gray-300;
+    background: $gray-300 !important;
   }
 }
 
-.form-floating {
+.login-form > .form-floating {
   & > input[type="email"] {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 
     &:focus {
-      border: 2px solid #219ebc;
+      border: 3px solid #219ebc;
     }
   }
   & > input[type="password"] {
@@ -124,7 +124,33 @@ svg {
     border-bottom-right-radius: 15px;
 
     &:focus {
-      border: 2px solid #219ebc;
+      border: 3px solid #219ebc;
+    }
+  }
+}
+
+.registration-form > .form-floating {
+  & > #user_first_name {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    &:focus {
+      border: 3px solid #219ebc;
+    }
+  }
+
+  & > input[type="password"] {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    &:focus {
+      border: 3px solid #219ebc;
+    }
+  }
+
+  & > input {
+    &:hover {
+      border: 3px solid #219ebc;
     }
   }
 }

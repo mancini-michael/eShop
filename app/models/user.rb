@@ -7,5 +7,5 @@ class User < ApplicationRecord
          :rememberable,
          :validatable
 
-  belongs_to :seller
+  has_one :seller
 end

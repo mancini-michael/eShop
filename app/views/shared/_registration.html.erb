@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="registration" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,7 +11,23 @@
         <div class="mb-3">
           <h5 class="mb-0">Benvenuto su Commerce</h5>
         </div>
-        <%= form_for(:user, url: session_path(:user), html: { class: "login-form" }) do |f| %>
+        <%= form_for(:user, url: registration_path(:user), html: { class: "registration-form" }, data: { turbo: false }) do |f| %>
+          <div class="form-floating">
+            <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.label :first_name %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.label :last_name %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :city, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.label :city %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :zip_code, class: "form-control", placeholder: "name@example.com", pattern: "[0-9]{5}" %>
+            <%= f.label :zip_code %>
+          </div>
           <div class="form-floating">
             <%= f.email_field :email, class: "form-control", placeholder: "name@example.com"%>
             <%= f.label :email %>
@@ -54,7 +70,7 @@
               Continua con Facebook
             </span>
           <% end %>
-          <button class="position-relative other-btn text-center bg-transparent p-2" data-bs-toggle="modal" data-bs-target="#registration">
+          <button class="position-relative other-btn text-center bg-transparent p-2" data-bs-toggle="modal" data-bs-target="#modal">
             <div class="position-absolute top-50 start-25 translate-middle ms-3">
               <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z" clip-rule="evenodd" />
@@ -69,4 +85,3 @@
     </div>
   </div>
 </div>
-<%= render "shared/registration" %>
