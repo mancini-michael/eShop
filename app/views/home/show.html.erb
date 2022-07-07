@@ -9,7 +9,8 @@
       <%= insertion.description %>
       <%= insertion.price %>
       <%= insertion.categories %>
-      <%= User.find(insertion.seller_id).first_name %>
+      <%= User.full_name(User.find(insertion.seller_id)) %>
+      <%= User.find(insertion.seller_id).location %>
     </div>
   <% end %>
 </div>
