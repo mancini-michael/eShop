@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_07_090124) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_07_091241) do
+  create_table "insertions", force: :cascade do |t|
+    t.integer "seller_id", null: false
+    t.string "title", default: "", null: false
+    t.string "description", default: "", null: false
+    t.decimal "price", default: "0.0", null: false
+    t.integer "categories", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seller_id"], name: "index_insertions_on_seller_id"
+  end
+
   create_table "sellers", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -35,5 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_07_090124) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "insertions", "sellers"
   add_foreign_key "sellers", "users"
 end
