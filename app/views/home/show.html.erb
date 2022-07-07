@@ -1,0 +1,15 @@
+<div class="my-3">
+  <div class="mb-3">
+    <span class="fw-light">Categoria: <%= params[:category] %></span>
+    <h3 class="mb-0">Oggetti in vendita</h3>
+  </div>
+  <% @insertions.each do |insertion| %>
+    <div>
+      <%= insertion.title %>
+      <%= insertion.description %>
+      <%= insertion.price %>
+      <%= insertion.categories %>
+      <%= User.find(insertion.seller_id).first_name %>
+    </div>
+  <% end %>
+</div>
