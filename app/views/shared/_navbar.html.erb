@@ -10,7 +10,7 @@
         </div>
       <% end %>
       <div class="d-inline-flex align-items-center">
-        <% if user_signed_in? && Seller.find_by(user_id: current_user.id) %>
+        <% if user_signed_in? && Seller.find_by(user_id: current_user.id, active: true) %>
           <%= button_to restore_user_path(current_user.id), data: { turbo_method: :delete }, class: "border-0 bg-transparent" do %>
             <span class="fw-bold me-3">Fai una pausa dalle vendite</span>
           <% end %>

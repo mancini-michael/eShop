@@ -13,7 +13,8 @@ class HomeController < ApplicationController
 
   def seller_to_user
     if user_signed_in?
-      seller = Seller.destroy_by(user_id: params[:id])
+      seller = Seller.find_by(user_id: params[:id])
+      seller.update(active: !seller.active)
       respond_to { |format| format.html { redirect_to root_path } }
     end
   end
