@@ -51,9 +51,12 @@ Insertion.create(
   categories: 3
 )
 Insertion.create(
-  seller: seller_1,
+  seller: seller_2,
   title: "Iron Man",
   description: "Iron Man by Marvel",
   price: 10,
   categories: 4
 )
+
+Review.create(user: user_1, seller: seller_2, rating: 4)
+Review.create(user: user_2, seller: seller_2, rating: 2)

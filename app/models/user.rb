@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :validatable
 
   has_one :seller
+  has_many :review
 
   geocoded_by :address
   after_validation :geocode
