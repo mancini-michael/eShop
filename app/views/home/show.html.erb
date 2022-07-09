@@ -1,16 +1,13 @@
 <div class="my-3">
-  <div class="mb-3">
+  <div class="mb-4">
     <span class="fw-light">Categoria: <%= params[:category] %></span>
     <h3 class="mb-0">Oggetti in vendita</h3>
   </div>
-  <% @insertions.each do |insertion| %>
-    <div>
-      <%= insertion.title %>
-      <%= insertion.description %>
-      <%= insertion.price %>
-      <%= insertion.categories %>
-      <%= User.full_name(User.find(insertion.seller_id)) %>
-      <%= User.find(insertion.seller_id).location %>
-    </div>
-  <% end %>
+  <div class="row row-cols-4">
+    <% @insertions.each do |insertion| %>
+      <div class="col mx-auto">
+        <%= render "shared/insertion", insertion: insertion %>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -1,0 +1,17 @@
+<%= link_to show_insertion_path(insertion.id) do %>
+  <div class="card border-0 p-0">
+    <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="card-img-top img-fluid mb-2" alt="...">
+    <div class="card-body p-0">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <h6 class="card-title mb-0"><%= insertion.title %></h6>
+        <span class="fw-bold"><%= sprintf('%.2f', insertion.price)%> €</span>
+      </div>
+      <div class="d-inline-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 15px; height: 15px;" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+        </svg>
+        <span class="card-text fw-light ms-1"><%= User.full_name(User.find(insertion.seller_id)) %></span>
+      </div>
+    </div>
+  </div>
+<% end %>

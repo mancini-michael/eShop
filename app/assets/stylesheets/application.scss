@@ -16,7 +16,9 @@ body > .container-fluid {
   background: #ffffff;
 }
 
-input:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none !important;
   -webkit-appearance: none !important;
   box-shadow: none !important;
@@ -34,6 +36,11 @@ svg {
   width: 12px;
   height: 12px;
   margin: 0 auto;
+}
+
+.form-control {
+  resize: none;
+  height: 100% !important;
 }
 
 .dropdown {
@@ -164,4 +171,13 @@ svg {
 .categories-container {
   padding-left: 15%;
   padding-right: 15%;
+}
+
+.img-fluid {
+  border-radius: 25px;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    box-shadow: 1px 1px 5px $gray-500;
+  }
 }

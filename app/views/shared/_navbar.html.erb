@@ -11,21 +11,29 @@
       <% end %>
       <div class="d-inline-flex align-items-center">
         <% if user_signed_in? && Seller.find_by(user_id: current_user.id, active: true) %>
-          <%= button_to restore_user_path(current_user.id), class: "border-0 bg-transparent" do %>
-            <span class="fw-bold me-3">Fai una pausa dalle vendite</span>
+          <%= button_to restore_user_path(current_user.id), class: "border-0 bg-transparent px-0" do %>
+            <span class="fw-bold">Fai una pausa dalle vendite</span>
           <% end %>
         <% else %>
           <% if user_signed_in? %> 
-            <%= button_to update_user_path(current_user.id), class: "border-0 bg-transparent" do %>
-              <span class="fw-bold me-3">Diventa un venditore</span>
+            <%= button_to update_user_path(current_user.id), class: "border-0 bg-transparent px-0" do %>
+              <span class="fw-bold">Diventa un venditore</span>
             <% end %>
           <% else %>
-            <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#modal">
-              <span class="fw-bold me-3">Diventa un venditore</span>
+            <button class="border-0 bg-transparent px-0" data-bs-toggle="modal" data-bs-target="#modal">
+              <span class="fw-bold">Diventa un venditore</span>
             </button>
           <% end %>
         <% end %>
-        <div class="dropdown-link m-0 p-1">
+        <% if user_signed_in? && Seller.find_by(user_id: current_user.id) %>
+          <button class="border-0 bg-transparent ms-3 px-0" data-bs-toggle="modal" data-bs-target="#insertion">
+            <svg xmlns="http://www.w3.org/2000/svg" style="fill: green; width: 25px; height: 25px;" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <%= render "shared/create" %>
+        <% end %>
+        <div class="dropdown-link m-0 ms-3 p-1">
             <div class="dropdown">
               <a class="d-inline-flex align-items-center" id="dropdown" data-bs-toggle="dropdown">
                 <span class="icon mx-2"></span>

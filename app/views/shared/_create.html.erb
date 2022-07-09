@@ -1,0 +1,40 @@
+<div class="modal fade" id="insertion" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title mx-auto">
+          <span class="fw-bold">Crea un annuncio</span>
+        </h5>
+      </div>
+      <div class="modal-body py-4">
+        <div class="mb-3">
+          <h5 class="mb-0">Vendi su Commerce</h5>
+        </div>
+        <%= form_for(:insertion, url: insertion_path) do |f| %>
+          <%= f.hidden_field :seller_id, value: current_user.id %>
+          <div class="row mb-3">
+            <div class="col-8">
+              <div class="form-floating">
+                <%= f.text_field :title, class: "form-control", placeholder: "title" %>
+                <%= f.label :title %>
+              </div>
+            </div>
+            <div class="col-4">
+              <%= f.select :categories, Insertion.categories, {}, { class: "form-select h-100" } %>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <%= f.text_area :description, class: "form-control", rows: "20", placeholder: "description" %>
+            <%= f.label :description %>
+          </div>
+          <div class="form-floating mb-3">
+            <%= f.number_field :price, class: "form-control", placeholder: "price" %>
+            <%= f.label :price %>
+          </div>
+          <%= f.submit "Continua", class: "modal-btn p-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

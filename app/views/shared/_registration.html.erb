@@ -13,15 +13,15 @@
         </div>
         <%= form_for(:user, url: registration_path(:user), html: { class: "registration-form" }, data: { turbo: false }) do |f| %>
           <div class="form-floating">
-            <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com" %>
             <%= f.label :first_name %>
           </div>
           <div class="form-floating">
-            <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com" %>
             <%= f.label :last_name %>
           </div>
           <div class="form-floating">
-            <%= f.text_field :city, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.text_field :city, class: "form-control", placeholder: "name@example.com" %>
             <%= f.label :city %>
           </div>
           <div class="form-floating">
@@ -29,7 +29,7 @@
             <%= f.label :zip_code %>
           </div>
           <div class="form-floating">
-            <%= f.email_field :email, class: "form-control", placeholder: "name@example.com"%>
+            <%= f.email_field :email, class: "form-control", placeholder: "name@example.com" %>
             <%= f.label :email %>
           </div>
           <div class="form-floating mb-3">
