@@ -19,6 +19,7 @@ gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
+gem 'dotenv-rails'
 # gem "bcrypt", "~> 3.1.7"
 # gem "image_processing", "~> 1.2"
 # gem "kredis"
