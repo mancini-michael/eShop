@@ -26,4 +26,5 @@
 # Ignore lock files.
 /*.lock
 
-/.env
+# Ignore .env files
+/*.env
