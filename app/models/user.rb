@@ -44,8 +44,6 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      # user.city = "Zagarolo"
-      # user.zip_code = "00039"
       parse_name(user, auth.info.name)
     end
   end
@@ -55,14 +53,4 @@ class User < ApplicationRecord
     user.last_name = name_arr.pop
     user.first_name = name_arr.join(" ")
   end
-
-  # def self.new_with_session(params, session)
-  #   super.tap do |oauth|
-  #     if data =
-  #          session["devise.facebook_data"] &&
-  #            session["devise.facebook_data"]["extra"]["raw_info"]
-  #       oauth.email = data["email"] if oauth.email.blank?
-  #     end
-  #   end
-  # end
 end
