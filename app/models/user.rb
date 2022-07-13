@@ -7,7 +7,7 @@ class User < ApplicationRecord
          :rememberable,
          :validatable,
          :omniauthable,
-         omniauth_providers: [:facebook]
+         omniauth_providers: [:facebook, :google_oauth2]
 
   has_one :seller
   has_many :review
