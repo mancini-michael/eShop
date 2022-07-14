@@ -29,34 +29,36 @@ user_3 =
 seller_1 = Seller.create(user: user_2)
 seller_2 = Seller.create(user: user_3)
 
-Insertion.create(
-  seller: seller_1,
-  title: "Iphone 13",
-  description: "Iphone 13 by Apple California",
-  price: 895,
-  categories: 3
-)
-Insertion.create(
-  seller: seller_1,
-  title: "Iphone 14",
-  description: "Iphone 14 by Apple California",
-  price: 1050,
-  categories: 3
-)
-Insertion.create(
-  seller: seller_1,
-  title: "MacBook PRO M2",
-  description: "MacBook PRO M2 by Apple California",
-  price: 2500,
-  categories: 3
-)
-Insertion.create(
-  seller: seller_2,
-  title: "Iron Man",
-  description: "Iron Man by Marvel",
-  price: 10,
-  categories: 4
-)
+(1..20).each do
+  Insertion.create(
+    seller: seller_1,
+    title: "Iphone 13",
+    description: "Iphone 13 by Apple California",
+    price: 895,
+    categories: 3
+  )
+  Insertion.create(
+    seller: seller_1,
+    title: "Iphone 14",
+    description: "Iphone 14 by Apple California",
+    price: 1050,
+    categories: 3
+  )
+  Insertion.create(
+    seller: seller_1,
+    title: "MacBook PRO M2",
+    description: "MacBook PRO M2 by Apple California",
+    price: 2500,
+    categories: 3
+  )
+  Insertion.create(
+    seller: seller_2,
+    title: "Iron Man",
+    description: "Iron Man by Marvel",
+    price: 10,
+    categories: 4
+  )
 
-Review.create(user: user_1, seller: seller_2, rating: 4)
-Review.create(user: user_2, seller: seller_2, rating: 2)
+  Review.create(user: user_1, seller: seller_2, rating: 4)
+  Review.create(user: user_2, seller: seller_2, rating: 2)
+end

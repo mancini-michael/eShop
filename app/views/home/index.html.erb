@@ -1,11 +1,43 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<% if current_user %>
-  <%= current_user.first_name %>
-  <%= current_user.last_name %>
-  <%= current_user.email %>
-  <%= current_user.city %>
-  <%= current_user.zip_code %>
-  <%= current_user.uid %>
-  <%= current_user.provider %>
+<% if user_signed_in? %>
+  <% if current_user.city == "" || current_user.zip_code == "" %>
+    <div class="container-md" style="padding-left: 25%; padding-right: 25%;">
+      <h6 class="text-center mb-2">Completa il tuo profilo</h6>
+      <%= form_for(:user, url: registration_path(:user), data: { turbo: false }, html: { method: :put }) do |f| %>
+        <div class="form-floating mb-1">
+          <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com", value: current_user.first_name, disabled: true %>
+          <%= f.label :first_name %>
+        </div>
+        <div class="form-floating mb-1">
+          <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com", value: current_user.last_name, disabled: true %>
+          <%= f.label :last_name %>
+        </div>
+        <div class="form-floating mb-1">
+          <%= f.email_field :email, class: "form-control", placeholder: "name@example.com", value: current_user.email, disabled: true %>
+          <%= f.label :email %>
+        </div>
+        <div class="form-floating mb-1">
+          <%= f.text_field :city, class: "form-control", placeholder: "password", value: current_user.city %>
+          <%= f.label :city %>
+        </div>
+        <div class="form-floating mb-2">
+          <%= f.text_field :zip_code, class: "form-control", placeholder: "password", value: current_user.zip_code %>
+          <%= f.label :zip_code %>
+        </div>
+        <%= f.submit "Continua", class: "edit-btn mx-auto p-2" %>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
+<div class="mb-3">
+  <div class="mb-4">
+    <span class="fw-light">Categoria: -</span>
+    <h3 class="mb-0">Oggetti in vendita</h3>
+  </div>
+  <div class="row row-cols-4">
+    <% @insertions.each do |insertion| %>
+      <div class="col mx-auto">
+        <%= render "shared/insertion", insertion: insertion %>
+      </div>
+    <% end %>
+  </div>
+</div>

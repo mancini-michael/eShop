@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    @insertions = Insertion.all
   end
 
   def show

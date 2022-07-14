@@ -181,3 +181,11 @@ svg {
     box-shadow: 1px 1px 5px $gray-500;
   }
 }
+
+.edit-btn {
+  display: block;
+  background: linear-gradient(to right, #219ebc, #4cc9f0);
+  border: 0;
+  border-radius: 25px;
+  color: #ffffff !important;
+}
