@@ -1,30 +1,27 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = User.from_omniauth(auth)
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
-      # if is_navigational_format?
-      #   set_flash_message(:notice, :success, kind: "Facebook")
-      # end
     else
-      session["devise.facebook_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_registration_url
+      redirect_to root_path
     end
   end
 
   def google_oauth2
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = User.from_omniauth(auth)
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
-      # flash[:notice] = I18n.t "devise.omniauth_callbacks.success",
-      #        kind: "Google"
     else
-      session["devise.google_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_registration_url
+      redirect_to root_path
     end
   end
 
   def failure
     redirect_to root_path
+  end
+
+  def auth
+    @auth ||= request.env["omniauth.auth"]
   end
 end

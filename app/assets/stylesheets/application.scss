@@ -1,41 +1,64 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap");
 @import "bootstrap";
 
+/* Generic stylesheets */
 * {
-  text-decoration: none !important;
-  color: $black !important;
+  color: #000000;
   font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-body > .container-fluid {
-  padding: 0 100px;
+a {
+  text-decoration: none;
 }
 
-.dropdown-item .active,
-.dropdown-item:active {
-  background: #ffffff;
+body {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+hr {
+  background: #717171;
+}
+
+svg {
+  margin: 0 auto;
 }
 
 input:focus,
-textarea:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none !important;
   -webkit-appearance: none !important;
   box-shadow: none !important;
 }
 
-hr {
-  background: $black;
+/* Bootstrap components */
+.container-fluid {
+  padding: 0 75px;
 }
 
-span {
-  font-size: 12px;
-}
+/* navbar logo */
+.navbar-brand {
+  svg {
+    fill: #fe385c;
+    height: 50px;
+    width: 50px;
+  }
 
-svg {
-  width: 12px;
-  height: 12px;
-  margin: 0 auto;
+  h4 {
+    color: #fe385c;
+    font-weight: 700;
+  }
 }
 
 .form-control {
@@ -43,134 +66,105 @@ svg {
   height: 100% !important;
 }
 
-.dropdown {
+/* seller button */
+.seller-btn {
+  background: initial;
+  border: 0;
+  border-radius: 15px;
+  transition: background 0.3s ease-in-out;
+
   &:hover {
+    background: #e0e0e0;
+  }
+}
+
+/* navbar user */
+.dropdown-link {
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  transition: all 0.5s ease-in-out;
+
+  svg {
+    fill: #717171;
+    height: 30px;
+    width: 30px;
+  }
+
+  &:hover {
+    box-shadow: 1px 1px 5px #e0e0e0;
     cursor: pointer;
   }
 }
 
 .dropdown-menu {
   border: 0;
-  border-radius: 25px;
-}
+  border-radius: 15px;
 
-.dropdown-link {
-  border: 1px solid $gray-300;
-  border-radius: 30px;
-  transition: all 0.5s ease-in-out;
+  span {
+    background: transparent;
+  }
 
-  &:hover {
-    box-shadow: 1px 1px 5px $gray-500;
+  .dropdown-item:hover {
+    background: #e0e0e0;
   }
 }
 
-.dropdown-item > span {
-  font-size: 14px;
-}
-
-.icon {
-  display: block;
-  background-color: $black;
-  width: 15px;
-  height: 1.5px;
-  position: relative;
-
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    background-color: $black;
-    width: 15px;
-    height: 1.5px;
-    position: absolute;
-  }
-
-  &::before {
-    top: 5px;
-  }
-
-  &::after {
-    bottom: 5px;
-  }
-
-  & ~ svg {
-    fill: $gray-700;
-  }
-}
-
+/* login modal */
 .modal-content {
   border-radius: 15px;
-}
-
-.modal-title > span {
-  font-size: 14px;
 }
 
 .modal-btn {
   width: 100%;
   border: 0;
   border-radius: 10px;
-  background: linear-gradient(to right, #219ebc, #4cc9f0);
-  color: #ffffff !important;
+  background: #fe385c;
+  color: #ffffff;
 }
 
 .other-btn {
-  border: 2px solid $black;
+  border: 2px solid #717171;
   border-radius: 10px;
 
   &:hover {
-    background: $gray-300 !important;
+    background: #e0e0e0 !important;
   }
 }
 
 .login-form > .form-floating {
+  & > input {
+    &:focus {
+      border: 2px solid #fe385c;
+    }
+  }
+
   & > input[type="email"] {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-
-    &:focus {
-      border: 3px solid #219ebc;
-    }
   }
+
   & > input[type="password"] {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-
-    &:focus {
-      border: 3px solid #219ebc;
-    }
   }
 }
 
 .registration-form > .form-floating {
+  & > input {
+    &:focus {
+      border: 2px solid #fe385c;
+    }
+  }
+
   & > #user_first_name {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-
-    &:focus {
-      border: 3px solid #219ebc;
-    }
   }
 
   & > input[type="password"] {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-
-    &:focus {
-      border: 3px solid #219ebc;
-    }
   }
-
-  & > input {
-    &:hover {
-      border: 3px solid #219ebc;
-    }
-  }
-}
-
-.categories-container {
-  padding-left: 15%;
-  padding-right: 15%;
 }
 
 .img-fluid {
