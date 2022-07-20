@@ -28,12 +28,6 @@ class InsertionController < ApplicationController
   end
 
   def insertion_params
-    params.require(:insertion).permit(
-      :seller_id,
-      :title,
-      :description,
-      :price,
-      :categories
-    )
+    params.require(:insertion).permit(:seller_id, :title, :description, :price, :categories)
   end
 end
