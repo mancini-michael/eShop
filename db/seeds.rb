@@ -59,6 +59,8 @@ seller_2 = Seller.create(user: user_3)
     categories: 4
   )
 
+  Review.create(user: user_2, seller: seller_1, rating: 5)
+  Review.create(user: user_2, seller: seller_1, rating: 4)
   Review.create(user: user_1, seller: seller_2, rating: 4)
   Review.create(user: user_2, seller: seller_2, rating: 2)
 end

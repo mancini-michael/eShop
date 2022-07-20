@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   delete "/insertion/:id", to: "insertion#delete", as: "destroy_insertion"
 
   get "home/index"
-  get "/category/:category", to: "home#show", as: "category_insertions"
+  get "/category/:category", to: "home#index", as: "home"
   post "/update_user/:id", to: "home#user_to_seller", as: "update_user"
   post "/restore_user/:id", to: "home#seller_to_user", as: "restore_user"
 end

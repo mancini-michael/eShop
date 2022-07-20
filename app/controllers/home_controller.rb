@@ -1,10 +1,7 @@
 class HomeController < ApplicationController
-  def index
-    @insertions = Insertion.all
-  end
+  before_action :get_insertion, only: %i[index]
 
-  def show
-    @insertions = Insertion.where(categories: params[:category])
+  def index
   end
 
   def user_to_seller
@@ -25,5 +22,12 @@ class HomeController < ApplicationController
       seller.update(active: !seller.active)
       respond_to { |format| format.html { redirect_to root_path } }
     end
+  end
+
+  private
+
+  def get_insertion
+    return @insertions = Insertion.where(categories: params[:category]) if params[:category]
+    @insertions = Insertion.all
   end
 end

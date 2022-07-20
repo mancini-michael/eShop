@@ -30,7 +30,13 @@
 <% end %>
 <div class="mb-3">
   <div class="mb-4">
-    <span class="fw-light">Categoria: -</span>
+    <span class="fw-light">Categoria: 
+    <% if params[:category] %>
+      <%= params[:category] %>
+    <% else %>
+      -
+    <% end %>
+    </span>
     <h3 class="mb-0">Oggetti in vendita</h3>
   </div>
   <div class="row row-cols-4">

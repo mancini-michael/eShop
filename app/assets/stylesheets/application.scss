@@ -167,12 +167,26 @@ textarea:focus {
   }
 }
 
+/* insertion */
 .img-fluid {
   border-radius: 25px;
   transition: all 0.5s ease-in-out;
 
   &:hover {
     box-shadow: 1px 1px 5px $gray-500;
+  }
+}
+
+.rating {
+  svg {
+    height: 13px;
+    margin: 0 auto;
+    width: 13px;
+  }
+
+  .fw-light,
+  .fw-bold {
+    font-size: 10px;
   }
 }
 

@@ -7,7 +7,7 @@
   <% end %>
   <% categories.each do |category| %>
     <div class="d-flex justify-content-center">
-      <%= link_to category_insertions_path(category[0]), class: "d-inline-flex flex-column text-center" do %>
+      <%= link_to home_path(category[0]), class: "d-inline-flex flex-column text-center" do %>
         <% case category[0] %>
           <% when "accessories" %>
             <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
