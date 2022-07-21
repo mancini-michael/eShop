@@ -29,5 +29,6 @@ class HomeController < ApplicationController
   def get_insertion
     return @insertions = Insertion.where(categories: params[:category]) if params[:category]
     @insertions = Insertion.all
+    @latest = Insertion.order(:timestamp).reverse.first(5)
   end
 end

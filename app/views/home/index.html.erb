@@ -28,6 +28,44 @@
     </div>
   <% end %>
 <% end %>
+<div class="container-md my-4 ">
+  <h2 class="text-center my-3">Ultime aggiunte</h2>
+  <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <% @latest.each_with_index do |insertion, index| %>
+          <button type="button" data-bs-target="#carousel" data-bs-slide-to="<%= index %>" class="<%= "active" if index == 0 %>" aria-current="true" aria-label="Slide <%= index %>"></button>
+        <% end %>
+      </div>
+      <div class="carousel-inner">
+        <% @latest.each_with_index do |insertion, index| %>
+          <div class="carousel-item <%= "active" if index == 0 %> text-center">
+            <%= link_to show_insertion_path(insertion.id) do %>
+              <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="...">
+              <div class="carousel-caption mx-auto">
+                <div class="lh-1">
+                  <span><%= User.full_name(Seller.find(insertion.seller_id).user_id) %></span>
+                  <h5 class="mb-0"><%= insertion.title %></h5>
+                  <span><%= sprintf('%.2f', insertion.price) %> €</span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true">
+          <i class="fa-solid fa-angle-left fa-2xl"></i>
+        </span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true">
+          <i class="fa-solid fa-angle-right fa-2xl"></i>
+        </span>
+        <span class="visually-hidden">Next</span>
+      </button>
+  </div>
+</div>
 <div class="mb-3">
   <div class="mb-4">
     <span class="fw-light">Categoria: 
