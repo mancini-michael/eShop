@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   has_one :seller
   has_many :review
+  has_many :cart
+  has_many :wishlist
 
   geocoded_by :address
   after_validation :geocode

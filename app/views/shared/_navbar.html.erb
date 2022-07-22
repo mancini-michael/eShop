@@ -15,46 +15,56 @@
           <span class="fw-bold">Diventa un venditore</span>
         </button>
       <% else %>
-        
+        <div class="d-inline-flex align-items-center">
+          <%= link_to user_cart_path, class: "position-relative" do %>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%= Cart.where(user_id: current_user.id).length %></span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+          <% end %>
+        </div>
       <% end %>
-        <div class="dropdown-link ms-4 px-3 py-2">
-            <div class="dropdown">
-              <a id="dropdown" data-bs-toggle="dropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" class="position-relative" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                  <% if user_signed_in? && current_user.provider.in?(["facebook", "google_oauth2"]) %>
-                    <% if current_user.city == "" || current_user.zip_code == "" %>
-                      <span class="position-absolute bg-danger rounded-circle" style="width: 10px; height: 10px; top: 5%; left: 80%;"></span>
-                    <% end %>
-                  <% end %>
-                </svg>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
-                <% if !user_signed_in? %>
-                  <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registration">
-                    <span class="fw-bold">Registrati</span>
-                  </button>
-                  <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">
-                    <span>Accedi</span>
-                  </button>
-                <% else %>
-                  <%= link_to "#", class: "dropdown-item" do %>
-                    <span class="fw-bold">Profilo</span>
-                  <% end %>
-                  <%= link_to "#", class: "dropdown-item" do %>
-                    <span>Preferiti</span>
-                  <% end %>
-                  <hr class="my-2"/>
-                  <%= link_to destroy_user_session_path, class: "dropdown-item", data: { turbo_method: :delete } do %>
-                    <span>Esci</span>
+      <div class="dropdown-link ms-4 px-3 py-2">
+          <div class="dropdown">
+            <a id="dropdown" data-bs-toggle="dropdown">
+              <svg xmlns="http://www.w3.org/2000/svg" class="position-relative" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+                <% if user_signed_in? && current_user.provider.in?(["facebook", "google_oauth2"]) %>
+                  <% if current_user.city == "" || current_user.zip_code == "" %>
+                    <span class="position-absolute bg-danger rounded-circle" style="width: 10px; height: 10px; top: 5%; left: 80%;"></span>
                   <% end %>
                 <% end %>
-              </div>
+              </svg>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+              <% if !user_signed_in? %>
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registration">
+                  <span class="fw-bold">Registrati</span>
+                </button>
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">
+                  <span>Accedi</span>
+                </button>
+              <% else %>
+                <%= link_to user_profile_path, class: "dropdown-item" do %>
+                  <span class="fw-bold">Profilo</span>
+                <% end %>
+                <%= link_to user_cart_path, class: "dropdown-item" do %>
+                  <span>Carrello</span>
+                <% end %>
+                <%= link_to user_wishlist_path, class: "dropdown-item" do %>
+                  <span>Preferiti (<%= Wishlist.where(user_id: current_user.id).length %>)</span>
+                <% end %>
+                <hr class="my-2"/>
+                <%= link_to destroy_user_session_path, class: "dropdown-item", data: { turbo_method: :delete } do %>
+                  <span>Esci</span>
+                <% end %>
+              <% end %>
             </div>
-        </div>
+          </div>
       </div>
-      <%= render "shared/login" %>
-      <%= render "shared/registration" %>
+    </div>
+    <%= render "shared/login" %>
+    <%= render "shared/registration" %>
     </div>
   </nav>
 </header>

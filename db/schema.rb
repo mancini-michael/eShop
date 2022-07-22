@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_20_170130) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_21_135429) do
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "insertion_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["insertion_id"], name: "index_carts_on_insertion_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "insertions", force: :cascade do |t|
     t.integer "seller_id", null: false
     t.string "title", default: "", null: false
@@ -61,8 +70,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_170130) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wishlists", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "insertion_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["insertion_id"], name: "index_wishlists_on_insertion_id"
+    t.index ["user_id"], name: "index_wishlists_on_user_id"
+  end
+
+  add_foreign_key "carts", "insertions"
+  add_foreign_key "carts", "users"
   add_foreign_key "insertions", "sellers"
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"
   add_foreign_key "sellers", "users"
+  add_foreign_key "wishlists", "insertions"
+  add_foreign_key "wishlists", "users"
 end

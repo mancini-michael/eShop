@@ -31,6 +31,7 @@ hr {
 }
 
 svg {
+  display: block;
   margin: 0 auto;
 }
 
@@ -178,13 +179,14 @@ textarea:focus {
   }
 }
 
-.rating {
-  /*   svg {
-    height: 13px;
-    margin: 0 auto;
-    width: 13px;
-  } */
+.insertion-features {
+  button {
+    background: transparent;
+    border: none;
+  }
+}
 
+.rating {
   .fw-light,
   .fw-bold {
     font-size: 10px;
