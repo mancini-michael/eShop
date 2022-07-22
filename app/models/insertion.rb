@@ -20,6 +20,15 @@ class Insertion < ApplicationRecord
   validates :description, presence: true
   validates :price, presence: true, numericality: { greater_than: 0 }
 
+  def seller_location
+    User.find(seller_id).location
+  end
+
+  def map 
+    response = HTTP.get("https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&maptype=roadmap&key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&signature=YOUR_SIGNATURE")
+    response.parse
+  end 
+
   private
 
   def self.seller_name(id)

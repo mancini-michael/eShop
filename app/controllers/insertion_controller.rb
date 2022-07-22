@@ -2,7 +2,12 @@ class InsertionController < ApplicationController
   before_action :sanitize_insertion_params
   before_action :set_insertion, only: %i[show edit destroy]
 
-  def show
+  def show 
+    @seller_id = Insertion.find(params[:id]).seller_id
+    @lat = User.find(@seller_id).location[0]
+    @lng = User.find(@seller_id).location[1]
+    gon.lat = @lat
+    gon.lng = @lng
   end
 
   def create
