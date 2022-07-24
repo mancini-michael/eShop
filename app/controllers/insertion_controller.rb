@@ -4,8 +4,9 @@ class InsertionController < ApplicationController
 
   def show 
     @seller_id = Insertion.find(params[:id]).seller_id
-    @lat = User.find(@seller_id).location[0]
-    @lng = User.find(@seller_id).location[1]
+    @user_id = Seller.find(@seller_id).user_id
+    @lat = User.find(@user_id).location[0]
+    @lng = User.find(@user_id).location[1]
     gon.lat = @lat
     gon.lng = @lng
   end
