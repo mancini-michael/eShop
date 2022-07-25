@@ -1,13 +1,17 @@
 class UserController < ApplicationController
   def profile
+    return if !user_signed_in?
+    @profile = User.where(id: current_user.id)
   end
 
   def cart
-    @cart = Cart.where(user_id: params[:id])
+    return if !user_signed_in?
+    @cart = Cart.where(user_id: current_user.id)
   end
-
+  
   def wishlist
-    @wishlist = Wishlist.where(user_id: params[:id])
+    return if !user_signed_in?
+    @wishlist = Wishlist.where(user_id: current_user.id)
   end
 
   def user_to_seller
@@ -40,21 +44,21 @@ class UserController < ApplicationController
   def remove_to_cart
     if user_signed_in?
       Cart.destroy_by(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
-
+  
   def add_to_wishlist
     if user_signed_in?
       Wishlist.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
       respond_to { |format| format.html { redirect_to root_path } }
     end
   end
-
+  
   def remove_to_wishlist
     if user_signed_in?
       Wishlist.destroy_by(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
 end

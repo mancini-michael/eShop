@@ -1,2 +1,30 @@
-<h1>User#shopping_cart</h1>
-<p>Find me in app/views/user/shopping_cart.html.erb</p>
+<div class="my-4">
+  <h3 class="mb-3">Il tuo carrello</h3>
+  <% if @cart.length == 0 %>
+    <h6 class="mb-0">Nessun elemento</h6>
+  <% end %>
+  <% @cart.each do |elem| %>
+    <div class="row mb-5 mx-auto">
+      <div class="cart-container">
+        <div class="d-flex align-items-center">
+          <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="...">
+          <div class="ms-4">
+            <h4 class="mb-0"><%= Insertion.find(elem.insertion_id).title %></h4>
+            <h6 class="fw-light mb-1"><%= Insertion.find(elem.insertion_id).description %></h6>
+            <span class="fw-light"><%= Insertion.seller_name(Insertion.find(elem.insertion_id).seller_id) %></span>
+            <h5 class="fw-bold mt-1"><%= Insertion.find(elem.insertion_id).price %> €</h5>
+          </div>
+        </div>
+        <div class="d-inline-flex align-items-center">
+          <%= button_to remove_cart_path(elem.insertion_id), class: "me-3", method: :delete do %>
+            <span class="btn btn-danger">Rimuovi</span>
+          <% end %>
+          <%= link_to "#", class: "btn btn-outline-success" do %>
+            Procedi
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

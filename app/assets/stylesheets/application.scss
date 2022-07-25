@@ -224,3 +224,20 @@ textarea:focus {
     width: 720px;
   }
 }
+
+/* cart */
+.cart-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .img-fluid {
+    height: 150px;
+    width: 150px;
+  }
+
+  button {
+    border: 0;
+    border-radius: 25px;
+  }
+}
