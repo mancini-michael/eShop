@@ -22,10 +22,12 @@
     </div>
   <% end %>
   <% if user_signed_in? %>
-    <% if (distance = User.find(current_user.id).distance_from(User.find(Seller.find(insertion.seller_id).user_id).location)) > 10 %>
-      <span class="fw-light"><%= distance %> kilometers away</span>
-    <% else %>
-      <span class="fw-light">Near to you</span>
+    <% if (distance = User.find(current_user.id).distance_from(User.find(Seller.find(insertion.seller_id).user_id).location)) %>
+      <% if distance > 20 %>
+        <span class="fw-light"><%= distance %> kilometers away</span>      
+      <% else %>
+        <span class="fw-light">Near to you</span>
+      <% end %>
     <% end %>
     <div class="d-flex justify-content-evenly align-items-center insertion-features mt-2">
       <% if Wishlist.find_by(user_id: current_user.id, insertion_id: insertion.id)&.insertion_id == insertion.id %>

@@ -81,9 +81,17 @@
   </div>
   <div class="row row-cols-4">
     <% @insertions.each do |insertion| %>
-      <div class="col mx-auto mb-4">
-        <%= render "shared/insertion", insertion: insertion %>
-      </div>
+      <% if !user_signed_in? %>        
+        <div class="col mx-auto mb-4">
+          <%= render "shared/insertion", insertion: insertion %>
+        </div>
+      <% else %>
+        <% if Seller.find(insertion.seller_id).user_id != current_user.id %>
+          <div class="col mx-auto mb-4">
+            <%= render "shared/insertion", insertion: insertion %>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
