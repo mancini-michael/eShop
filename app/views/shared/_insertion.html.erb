@@ -22,7 +22,12 @@
     </div>
   <% end %>
   <% if user_signed_in? %>
-    <div class="d-flex justify-content-evenly align-items-center insertion-features">
+    <% if (distance = User.find(current_user.id).distance_from(User.find(Seller.find(insertion.seller_id).user_id).location)) > 10 %>
+      <span class="fw-light"><%= distance %> kilometers away</span>
+    <% else %>
+      <span class="fw-light">Near to you</span>
+    <% end %>
+    <div class="d-flex justify-content-evenly align-items-center insertion-features mt-2">
       <% if Wishlist.find_by(user_id: current_user.id, insertion_id: insertion.id)&.insertion_id == insertion.id %>
         <%= button_to remove_wishlist_path(insertion.id), method: :delete, class: "mt-1" do %>
           <svg xmlns="http://www.w3.org/2000/svg" fill="#fe385c" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
