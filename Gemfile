@@ -7,6 +7,7 @@ gem "bootsnap", require: false
 gem "bootstrap", "~> 5.1"
 gem "devise", "~> 4.8"
 gem "geocoder", "~> 1.8"
+gem "gon", "~> 6.4"
 gem "importmap-rails"
 gem "jbuilder"
 gem "omniauth-facebook", "~> 9.0"
@@ -20,7 +21,6 @@ gem "sqlite3", "~> 1.4"
 gem "stimulus-rails"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem "gon"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
