@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'questions/show'
+  get 'questions/create'
+  get 'questions/edit'
+  get 'questions/destroy'
   devise_for :users, controllers: {
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
