@@ -1,2 +1,45 @@
-<h1>User#profile</h1>
-<p>Find me in app/views/user/profile.html.erb</p>
+<div class="container-md">
+  <div class="d-flex align-items-center justify-content-evenly my-5">
+    <div>
+      <h5 class="mb-0"><%= @profile.first_name %> <%= @profile.last_name %></h5>
+      <h6 class="mb-0"><%= @profile.zip_code %>, <%= @profile.city %></h6>
+      <span class="fw-light fst-italic mb-0"><%= @profile.email %></span>
+    </div>
+    <%= link_to edit_user_registration_path do %>
+      modifica
+    <% end %>
+  </div>
+  <h3 class="mb-2">I tuoi annunci</h3>
+  <div class="row row-cols-4">
+    <% @insertions.each do |item| %>
+      <div class="col mx-auto mb-4">
+        <div class="card border-0 p-0">
+          <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="card-img-top img-fluid mb-2" alt="...">
+          <div class="card-body lh-1 p-0">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <h6 class="card-title mb-0"><%= item.title %></h6>
+              <span class="fw-bold"><%= sprintf('%.2f', item.price) %> €</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-light"><%= Insertion.seller_name(item.seller_id) %></span>
+              <div class="rating d-inline-flex align-items-center">
+                <% if Seller.average_rating(item.seller_id) == 0 %>
+                  <span class="fw-light">Nessuna recensione</span>
+                <% else%>
+                  <span class="fw-bold">(<%= Seller.total_reviews(item.seller_id) %>) <%= Seller.average_rating(item.seller_id) %></span>
+                  <i class="fa-solid fa-star fa-2xs"></i>          
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-evenly mt-3">
+            <%= button_to destroy_insertion_path(item.id), method: :delete, class: "btn btn-danger" do %>
+              elimina
+            <% end %>
+            <span class="btn btn-success">Modifica</span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

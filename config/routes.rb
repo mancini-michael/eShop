@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get "/insertion/:id", to: "insertion#show", as: "show_insertion"
   post "/insertion", to: "insertion#create"
   post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
-  delete "/insertion/:id", to: "insertion#delete", as: "destroy_insertion"
+  delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
 
   get "home/index"
   get "/category/:category", to: "home#index", as: "home"

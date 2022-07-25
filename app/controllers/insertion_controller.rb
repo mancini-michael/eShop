@@ -4,9 +4,8 @@ class InsertionController < ApplicationController
 
   def show 
     @seller_id = Insertion.find(params[:id]).seller_id
-    @user_id = Seller.find(@seller_id).user_id
-    gon.lat = User.find(@user_id).location[0]
-    gon.lng = User.find(@user_id).location[1]
+    gon.lat = User.find(Seller.find(@seller_id).user_id).location[0]
+    gon.lng = User.find(Seller.find(@seller_id).user_id).location[1]
   end
 
   def create
@@ -16,9 +15,17 @@ class InsertionController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      if @insertion.update(insertion_params)
+        respond_to { |format| @insertion.update(insertion_params) }
+      end
+    end
   end
-
+  
   def destroy
+    @insertion.destroy
+
+    respond_to { |format| format.js { render inline: "location.reload();" } }
   end
 
   private

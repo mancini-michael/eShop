@@ -1,7 +1,8 @@
 class UserController < ApplicationController
   def profile
     return if !user_signed_in?
-    @profile = User.where(id: current_user.id)
+    @profile = User.find(current_user.id)
+    @insertions = Insertion.where(seller_id: Seller.find_by(user_id: current_user.id).id)
   end
 
   def cart
