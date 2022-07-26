@@ -23,7 +23,7 @@ class UserController < ApplicationController
       else
         seller.update(active: !seller.active)
       end
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
   
@@ -31,7 +31,7 @@ class UserController < ApplicationController
     if user_signed_in? and current_user.id == params[:id].to_i
       seller = Seller.find_by(user_id: params[:id])
       seller.update(active: !seller.active)
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
   

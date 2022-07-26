@@ -241,3 +241,19 @@ textarea:focus {
     border-radius: 25px;
   }
 }
+
+/* profile */
+.profile-container {
+  text-align: center;
+
+  button {
+    background: transparent;
+    border: 0;
+    border-radius: 25px;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+}
