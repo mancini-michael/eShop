@@ -6,6 +6,7 @@ class InsertionController < ApplicationController
     @seller_id = Insertion.find(params[:id]).seller_id
     gon.lat = User.find(Seller.find(@seller_id).user_id).location[0]
     gon.lng = User.find(Seller.find(@seller_id).user_id).location[1]
+    @questions = Question.all
   end
 
   def create

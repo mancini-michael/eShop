@@ -53,5 +53,25 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly"
       defer
     ></script>
+    <p style="color: green"><%= notice %></p>
+
+    <h1>Domande</h1>
+    <% if @questions.count == 0 %>
+      <p> Non ci sono domande relative all'oggetto selezionato </p>
+    <% else %>
+      <div id="questions">
+        <% @questions.each do |question| %>
+          <strong>Domanda: </strong>
+          <%= question.question%>
+          <br>
+          <strong>Risposta: </strong>
+          <%= question.reply%>
+          <br>
+        <% end %>
+      </div>
+    <% end %>
+    <p>
+      <%= link_to "Fai una domanda per questo prodotto", new_question_path %>
+    </p>
   </body> 
 </html>
