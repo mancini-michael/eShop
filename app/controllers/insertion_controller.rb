@@ -36,6 +36,7 @@ class InsertionController < ApplicationController
 
   def sanitize_insertion_params
     params[:id] = params[:id].to_i
+    params[:insertion][:categories] = params[:insertion][:categories].to_i
   end
 
   def insertion_params

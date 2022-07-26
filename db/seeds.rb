@@ -29,7 +29,7 @@ user_3 =
 seller_1 = Seller.create(user: user_2)
 seller_2 = Seller.create(user: user_3)
 
-(1..20).each do
+(1..5).each do
   Insertion.create(
     seller: seller_1,
     title: "Iphone 13",
