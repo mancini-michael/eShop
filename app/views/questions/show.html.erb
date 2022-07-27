@@ -1,2 +1,10 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
+<p style="color: green"><%= notice %></p>
+
+<%= render @question %>
+
+<div>
+  <%= link_to "Modifica la domanda", edit_question_path(@question) %> |
+  <%= link_to "Torna indietro", questions_path %>
+
+  <%= button_to "Elimina la domanda", @question, method: :delete %>
+</div>
