@@ -1,25 +1,25 @@
 class UserController < ApplicationController
+  before_action :set_user, only: %i[profile cart wishlist user_to_seller seller_to_user]
+
   def profile
-    return if !user_signed_in?
-    @profile = User.find(current_user.id)
-    @insertions = Insertion.where(seller_id: Seller.find_by(user_id: current_user.id).id)
+    @insertions = Insertion.where(seller_id: Seller.find_by(user_id: @user).id) if Seller.find_by(user_id: @user)
   end
 
   def cart
-    return if !user_signed_in?
-    @cart = Cart.where(user_id: current_user.id)
+    redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+    @cart = Cart.where(user_id: @user)
   end
   
   def wishlist
-    return if !user_signed_in?
-    @wishlist = Wishlist.where(user_id: current_user.id)
+    redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+    @wishlist = Wishlist.where(user_id: @user)
   end
 
   def user_to_seller
     if user_signed_in? and current_user.id == params[:id].to_i
-      seller = Seller.find_by(user_id: params[:id])
+      seller = Seller.find_by(user_id: @user)
       if !seller
-        seller = Seller.create(user: User.find(params[:id]))
+        seller = Seller.create(user: User.find(@user))
       else
         seller.update(active: !seller.active)
       end
@@ -29,7 +29,7 @@ class UserController < ApplicationController
   
   def seller_to_user
     if user_signed_in? and current_user.id == params[:id].to_i
-      seller = Seller.find_by(user_id: params[:id])
+      seller = Seller.find_by(user_id: @user)
       seller.update(active: !seller.active)
       respond_to { |format| format.js { render inline: "location.reload();" } }
     end
@@ -61,5 +61,11 @@ class UserController < ApplicationController
       Wishlist.destroy_by(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
       respond_to { |format| format.js { render inline: "location.reload();" } }
     end
+  end
+
+  private 
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

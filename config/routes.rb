@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   
   root "home#index"
 
-  get 'user/profile', to: "user#profile", as: "user_profile"
-  get 'user/cart', to: "user#cart", as: "user_cart"
-  get 'user/wishlist', to: "user#wishlist", as: "user_wishlist"
+  get 'user/profile/:id', to: "user#profile", as: "user_profile"
+  get 'user/cart/:id', to: "user#cart", as: "user_cart"
+  get 'user/wishlist/:id', to: "user#wishlist", as: "user_wishlist"
   post "/user/update_user/:id", to: "user#user_to_seller", as: "update_user"
   post "/user/restore_user/:id", to: "user#seller_to_user", as: "restore_user"
   post "/user/cart/add/:insertion", to: "user#add_to_cart", as: "add_cart"

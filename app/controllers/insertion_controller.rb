@@ -9,6 +9,7 @@ class InsertionController < ApplicationController
   end
 
   def create
+    params[:insertion][:categories] = params[:insertion][:categoris].to_i
     @insertion = Insertion.new(insertion_params)
 
     respond_to { |format| @insertion.save if @insertion.valid? }
@@ -36,7 +37,6 @@ class InsertionController < ApplicationController
 
   def sanitize_insertion_params
     params[:id] = params[:id].to_i
-    params[:insertion][:categories] = params[:insertion][:categories].to_i
   end
 
   def insertion_params
