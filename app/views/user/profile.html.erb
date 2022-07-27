@@ -63,11 +63,29 @@
                   elimina
                 <% end %>
                 <span class="btn btn-success">Modifica</span>
+                <a href="/">
+                  <span class="btn btn-primary">Domande</span>
+                </a>
               </div>
             <% end %>
           </div>
         </div>
       <% end %>
     </div>
+    <h3 class="mb-3">Le domande che hai ricevuto</h3>
+      <% if @questions.where(seller_id: @seller_id).count == 0 %>
+        Non hai ricevuto domande
+      <% else %>
+        <% @questions.each do |question| %>
+        <% if question.seller_id.to_i == @seller_id %>
+          <strong>Domanda:</strong>
+          <%= question.question%>
+          <br>
+          <strong>Risposta:</strong>
+          <%= question.reply %>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>

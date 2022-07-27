@@ -3,6 +3,9 @@ class UserController < ApplicationController
 
   def profile
     @insertions = Insertion.where(seller_id: Seller.find_by(user_id: @user).id) if Seller.find_by(user_id: @user)
+    @questions = Question.all
+    @user_id = params[:id]
+    @seller_id = Seller.find_by(user_id: @user_id).id
   end
 
   def cart
