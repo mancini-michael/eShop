@@ -22,7 +22,8 @@ class QuestionsController < ApplicationController
   # POST /questions or /questions.json
   def create
     @question = Question.new(question_params)
-
+    @question.insertion_id = $insertion_id
+    @question.seller_id = $seller_id
     respond_to do |format|
       if @question.save
         format.html { redirect_to question_url(@question), notice: "Hai posto correttamente la domanda al venditore" }
