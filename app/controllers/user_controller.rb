@@ -22,7 +22,7 @@ class UserController < ApplicationController
     if user_signed_in? and current_user.id == params[:id].to_i
       seller = Seller.find_by(user_id: @user)
       if !seller
-        seller = Seller.create(user: User.find(@user))
+        seller = Seller.create(user: User.find(@user.id))
       else
         seller.update(active: !seller.active)
       end
