@@ -2,7 +2,10 @@ class UserController < ApplicationController
   before_action :set_user, only: %i[profile cart wishlist user_to_seller seller_to_user]
 
   def profile
-    @insertions = Insertion.where(seller_id: Seller.find_by(user_id: @user).id) if Seller.find_by(user_id: @user)
+    if seller = Seller.find_by(user_id: @user)
+      @insertions = Insertion.where(seller_id: seller).limit(4)
+      @reviews = Review.where(seller_id: seller).limit(4)
+    end
   end
 
   def cart
