@@ -3,8 +3,8 @@ class UserController < ApplicationController
 
   def profile
     if seller = Seller.find_by(user_id: @user)
-      @insertions = Insertion.where(seller_id: seller).limit(4)
-      @reviews = Review.where(seller_id: seller).limit(4)
+      @insertions = Insertion.where(seller_id: seller).order(:timestamp).reverse.first(4)
+      @reviews = Review.where(seller_id: seller).order(:timestamp).reverse.first(4)
     end
   end
 
