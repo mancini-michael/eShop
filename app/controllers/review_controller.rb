@@ -16,6 +16,12 @@ class ReviewController < ApplicationController
 
   private
 
+  def sanitize_review_params
+    params[:review][:user_id] = params[:review][:user_id].to_i
+    params[:review][:seller_id] = params[:review][:seller_id].to_i
+    params[:review][:rating] = params[:review][:rating].to_i
+  end
+
   def set_review
     @review = Review.find(params[:id])
   end

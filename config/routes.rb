@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
   delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
 
+  post "/review/create", to: "review#create", as: "create_review"
+
   get "home/index"
   get "/category/:category", to: "home#index", as: "home"
 end
