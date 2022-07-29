@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def distance_from(coordinates)
-      return if location.include?(nil)
+      return if coordinates.include?(nil)
       Geocoder::Calculations.distance_between(location, coordinates, units: :km).to_i
   end
 
