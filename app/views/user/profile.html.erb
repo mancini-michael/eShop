@@ -77,13 +77,12 @@
             <% end %>
             <% if user_signed_in? && current_user == @user %>              
               <div class="d-flex justify-content-evenly mt-3">
-                <%= button_to destroy_insertion_path(item.id), method: :delete, class: "btn btn-danger" do %>
-                  elimina
+                <%= button_to destroy_insertion_path(item.id), method: :delete, class: "bg-transparent border-0" do %>
+                  <span class="fw-bold">Elimina</span>
                 <% end %>
-                <span class="btn btn-success">Modifica</span>
-                <a href="/">
-                  <span class="btn btn-primary">Domande</span>
-                </a>
+                <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#insertion">
+                  <span class="fw-bold">Modifica</span>
+                </button>
               </div>
             <% end %>
           </div>
