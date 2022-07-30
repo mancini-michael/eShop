@@ -7,6 +7,7 @@ class InsertionController < ApplicationController
     gon.lat = user.location[0]
     gon.lng = user.location[1]
     @questions = Question.where(insertion_id: params[:id])
+    $insertion_id = params[:id]
   end
 
   def create

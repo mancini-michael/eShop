@@ -32,14 +32,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.integer "seller_id", null: false
     t.integer "insertion_id", null: false
     t.string "question", default: ""
     t.string "reply", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["insertion_id"], name: "index_questions_on_insertion_id"
-    t.index ["seller_id"], name: "index_questions_on_seller_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -94,7 +92,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
   add_foreign_key "carts", "users"
   add_foreign_key "insertions", "sellers"
   add_foreign_key "questions", "insertions"
-  add_foreign_key "questions", "sellers"
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"
   add_foreign_key "sellers", "users"
