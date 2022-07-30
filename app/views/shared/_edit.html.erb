@@ -1,0 +1,42 @@
+<div class="modal fade" id="edit<%= insertion.id %>" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title mx-auto">
+          <span class="fw-bold">Modifica annuncio</span>
+        </h5>
+      </div>
+      <div class="modal-body py-4">
+        <div class="mb-3">
+          <h5 class="mb-0">Vendi su Commerce</h5>
+        </div>
+        <%= form_for(:insertion, url: edit_insertion_path(insertion.id), html: { class: "form" }) do |f| %>
+          <%= f.hidden_field :seller_id, value: Seller.find_by(user_id: @user).id %>
+          <div class="row mb-3">
+            <div class="col-7">
+              <div class="form-floating">
+                <%= f.text_field :title, class: "form-control", placeholder: "title", value: insertion.title %>
+                <%= f.label :title %>
+              </div>
+            </div>
+            <div class="col-3">
+              <%= f.select :categories, Insertion.categories, { selected: Insertion.categories[insertion.categories] }, class: "form-select h-100" %>
+            </div>
+            <div class="col-2">
+              <div class="form-floating">
+                <%= f.number_field :price, class: "form-control", placeholder: "price", value: insertion.price %>
+                <%= f.label :price %>
+              </div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <%= f.text_area :description, class: "form-control", rows: "10", placeholder: "description", value: insertion.description %>
+            <%= f.label :description %>
+          </div>
+          <%= f.submit "Modifica", class: "modal-btn p-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

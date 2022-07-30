@@ -80,10 +80,11 @@
                 <%= button_to destroy_insertion_path(item.id), method: :delete, class: "bg-transparent border-0" do %>
                   <span class="fw-bold">Elimina</span>
                 <% end %>
-                <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#insertion">
+                <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#edit<%= item.id %>">
                   <span class="fw-bold">Modifica</span>
                 </button>
               </div>
+              <%= render "shared/edit", insertion: item %>
             <% end %>
           </div>
         </div>

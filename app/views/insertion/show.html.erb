@@ -13,6 +13,9 @@
       <%= link_to user_profile_path(Seller.find(@insertion.seller_id).user_id) do %>
         <h6 class="fw-light"><%= Insertion.seller_name(@insertion.seller_id) %></h6>
       <% end %>
+      <%= link_to home_path(@insertion.categories) do %>
+        <span class="fw-bold btn btn-sm btn-success"><%= @insertion.categories %></span>
+      <% end %>
     </div>
     <div class="d-inline-flex align-items-center flex-column">
       <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>

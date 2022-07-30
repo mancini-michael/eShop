@@ -17,9 +17,11 @@ class InsertionController < ApplicationController
   end
 
   def edit
+    params[:insertion][:categories] = params[:insertion][:categories].to_i
+
     respond_to do |format|
       if @insertion.update(insertion_params)
-        respond_to { |format| @insertion.update(insertion_params) }
+        respond_to { |format| render inline: "location.reload();" }
       end
     end
   end
