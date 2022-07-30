@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'questions/reply'
   resources :questions
   devise_for :users, controllers: {
     registrations: "users/registrations",

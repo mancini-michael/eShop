@@ -10,6 +10,10 @@ class QuestionsController < ApplicationController
   def show
   end
 
+  def reply
+    @question = Question.find_by(insertion_id: $insertion_id)
+  end
+
   # GET /questions/new
   def new
     @question = Question.new
