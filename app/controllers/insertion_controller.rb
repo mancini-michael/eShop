@@ -3,13 +3,10 @@ class InsertionController < ApplicationController
   before_action :set_insertion, only: %i[show edit destroy]
 
   def show 
-    @seller_id = Insertion.find(params[:id]).seller_id
-    gon.lat = User.find(Seller.find(@seller_id).user_id).location[0]
-    gon.lng = User.find(Seller.find(@seller_id).user_id).location[1]
-    $insertion_id = params[:id]
-    $seller_id = @seller_id
-    @ins = params[:id]
-    @questions = Question.where(insertion_id: @ins.to_s)
+    user = User.find(Seller.find(@insertion.seller_id).user_id)
+    gon.lat = user.location[0]
+    gon.lng = user.location[1]
+    @questions = Question.where(insertion_id: params[:id])
   end
 
   def create

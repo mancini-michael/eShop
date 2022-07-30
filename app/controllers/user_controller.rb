@@ -41,7 +41,7 @@ class UserController < ApplicationController
   def add_to_cart
     if user_signed_in?
       Cart.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
   
@@ -55,7 +55,7 @@ class UserController < ApplicationController
   def add_to_wishlist
     if user_signed_in?
       Wishlist.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-      respond_to { |format| format.html { redirect_to root_path } }
+      respond_to { |format| format.js { render inline: "location.reload();" } }
     end
   end
   

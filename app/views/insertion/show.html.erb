@@ -1,79 +1,96 @@
-<html>
-  <head>
-    <title>Add Map</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script type="module" src="./index.js"></script>
-    <style> 
-        /**
-        * @license
-        * Copyright 2019 Google LLC. All Rights Reserved.
-        * SPDX-License-Identifier: Apache-2.0
-        */
-        /* Set the size of the div element that contains the map */
-        #map {
-            height: 400px;
-            /* The height is 400 pixels */
-            width: 50%;
-            /* The width is the width of the web page */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -100px 0 0 -175px;
-        }
-    </style>
-  </head>
-  <body>
-    <!--The div element for the map -->
-    <div id="map"></div>
-    <script>
-        var map;
-        function initMap() {
-            const myLatLng = { lat: gon.lat, lng: gon.lng };
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: gon.lat,  lng: gon.lng},
-                zoom: 12
-            });
-
-            new google.maps.Marker({
-              position: myLatLng,
-              map,
-              title: "Hello World!",
-            });
-        }
-    </script>
-    <!-- 
-     The `defer` attribute causes the callback to execute after the full HTML
-     document has been parsed. For non-blocking uses, avoiding race conditions,
-     and consistent behavior across browsers, consider loading using Promises
-     with https://www.npmjs.com/package/@googlemaps/js-api-loader.
-    -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly"
-      defer
-    ></script>
-    <p style="color: green"><%= notice %></p>
-
-    <h1>Domande</h1>
-    <% if @questions.count == 0 %>
-      <p> Non ci sono domande relative all'oggetto selezionato </p>
-    <% else %>
-      <div id="questions">
-        <% @questions.each do |question| %>
-          <% if question.insertion_id.to_i == @ins %>
-            <strong>Domanda: </strong>
-            <%= question.question%>
-            <br>
-            <strong>Risposta: </strong>
-            <%= question.reply%>
-            <br>
-          <% end %>
+<div class="container-md">
+  <div class="d-flex align-items-center justify-content-between my-5">
+    <div>
+      <% if !Seller.find(@insertion.seller_id).active %>
+        <span class="fw-bold">Venditore attualmente non attivo</span>
+      <% else %>
+        <%= link_to "#", class: "fw-bold" do %>
+          Prenota incontro
         <% end %>
-      </div>
-    <% end %>
-    <p>
-      <%= link_to "Fai una domanda per questo prodotto", new_question_path %>
-    </p>
-  </body> 
-</html>
+      <% end %>
+      <h3 class="mb-0"><%= @insertion.title %></h3>
+      <span><%= @insertion.description %></span>
+      <%= link_to user_profile_path(Seller.find(@insertion.seller_id).user_id) do %>
+        <h6 class="fw-light"><%= Insertion.seller_name(@insertion.seller_id) %></h6>
+      <% end %>
+    </div>
+    <div class="d-inline-flex align-items-center flex-column">
+      <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>
+      <% if user_signed_in? %>
+        <div class="d-inline-flex insertion-features mt-2">
+          <% if Wishlist.find_by(user_id: current_user.id, insertion_id: @insertion)&.insertion_id == @insertion.id %>
+            <%= button_to remove_wishlist_path(@insertion), method: :delete, class: "mt-1 me-2" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#fe385c" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            <% end %>
+          <% else %>
+            <%= button_to add_wishlist_path(@insertion), class: "mt-1 me-2" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            <% end %>
+          <% end %>
+          <% if Cart.find_by(user_id: current_user.id, insertion_id: @insertion)&.insertion_id == @insertion.id %>
+            <%= button_to remove_cart_path(@insertion), method: :delete do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="d-block m-auto" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+              </svg>
+            <% end %>
+          <% else %>
+            <%= button_to add_cart_path(@insertion), class: "mt-1" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+              </svg>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-center mb-5">
+    <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="...">
+  </div>
+  <div class="mb-5">
+    <h3 class="mb-1">Posizione del venditore</h3>
+    <div id="map"></div>
+  </div>
+
+  <p style="color: green"><%= notice %></p>
+  <h1>Domande</h1>
+  <% if @questions.count == 0 %>
+    <p> Non ci sono domande relative all'oggetto selezionato </p>
+  <% else %>
+    <div id="questions">
+    <% @questions.each do |question| %>
+        <strong>Domanda: </strong>
+        <%= question.question%>
+        <br>
+        <strong>Risposta: </strong>
+        <%= question.reply%>
+        <br>
+      <% end %>
+    </div>
+  <% end %>
+  <p>
+    <%= link_to "Fai una domanda per questo prodotto", new_question_path %>
+  </p>
+
+  <script>
+      var map;
+      function initMap() {
+          const myLatLng = { lat: gon.lat, lng: gon.lng };
+          map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: gon.lat,  lng: gon.lng},
+              zoom: 12
+          });
+
+          new google.maps.Marker({
+            position: myLatLng,
+            map,
+            title: "Hello World!",
+          });
+      }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly" defer></script>
+</div>

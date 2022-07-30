@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_26_135146) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "insertion_id", null: false
@@ -32,12 +32,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_135146) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "seller_id"
-    t.string "question"
-    t.string "reply"
+    t.integer "seller_id", null: false
+    t.integer "insertion_id", null: false
+    t.string "question", default: ""
+    t.string "reply", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "insertion_id"
+    t.index ["insertion_id"], name: "index_questions_on_insertion_id"
+    t.index ["seller_id"], name: "index_questions_on_seller_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -91,6 +93,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_135146) do
   add_foreign_key "carts", "insertions"
   add_foreign_key "carts", "users"
   add_foreign_key "insertions", "sellers"
+  add_foreign_key "questions", "insertions"
+  add_foreign_key "questions", "sellers"
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"
   add_foreign_key "sellers", "users"
