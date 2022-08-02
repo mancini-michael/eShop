@@ -4,8 +4,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
   has_one :seller
-  has_many :review
   has_many :cart
+  has_many :meeting
+  has_many :review
   has_many :wishlist
 
   geocoded_by :address

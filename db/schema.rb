@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "insertion_id", null: false
@@ -29,6 +29,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["seller_id"], name: "index_insertions_on_seller_id"
+  end
+
+  create_table "meetings", force: :cascade do |t|
+    t.integer "insertion_id", null: false
+    t.integer "seller_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "date"
+    t.string "place"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["insertion_id"], name: "index_meetings_on_insertion_id"
+    t.index ["seller_id"], name: "index_meetings_on_seller_id"
+    t.index ["user_id"], name: "index_meetings_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -91,6 +104,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_130722) do
   add_foreign_key "carts", "insertions"
   add_foreign_key "carts", "users"
   add_foreign_key "insertions", "sellers"
+  add_foreign_key "meetings", "insertions"
+  add_foreign_key "meetings", "sellers"
+  add_foreign_key "meetings", "users"
   add_foreign_key "questions", "insertions"
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"

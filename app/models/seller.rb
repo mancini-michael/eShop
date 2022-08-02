@@ -1,5 +1,6 @@
 class Seller < ApplicationRecord
   belongs_to :user
+  has_many :meeting
   has_many :review
 
   private

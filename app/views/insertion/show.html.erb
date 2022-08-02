@@ -4,8 +4,14 @@
       <% if !Seller.find(@insertion.seller_id).active %>
         <span class="fw-bold">Venditore attualmente non attivo</span>
       <% else %>
-        <%= link_to "#", class: "fw-bold" do %>
-          Prenota incontro
+        <% if user_signed_in? %>
+          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#meeting">
+            <span class="fw-bold">Prenota un incontro</span>
+          </button>
+        <% else %>
+          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#login">
+            <span class="fw-bold">Accedi per acquistare</span>
+          </button>
         <% end %>
       <% end %>
       <h3 class="mb-0"><%= @insertion.title %></h3>
@@ -17,6 +23,11 @@
         <span class="fw-bold btn btn-sm btn-success"><%= @insertion.categories %></span>
       <% end %>
     </div>
+    <% if user_signed_in? %>
+      <%= render "shared/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
+    <% else %>
+      <%= render "shared/login" %>
+    <% end %>
     <div class="d-inline-flex align-items-center flex-column">
       <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>
       <% if user_signed_in? %>

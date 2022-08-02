@@ -1,0 +1,29 @@
+<div class="modal fade" id="meeting" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title mx-auto">
+          <span class="fw-bold">Prenota incontro</span>
+        </h5>
+      </div>
+      <div class="modal-body py-4">
+        <div class="mb-3">
+          <h5 class="mb-0">Seleziona una data e un luogo</h5>
+          <%= form_for(:meeting, url: meeting_path) do |f| %>
+            <%= f.hidden_field :user_id, value: user.id %>
+            <%= f.hidden_field :seller_id, value: seller.id %>
+            <%= f.hidden_field :insertion_id, value: insertion.id %>
+            <div class="mb-3">
+              <%= f.datetime_local_field :date %>
+            </div>
+            <div class="mb-3">
+              <%= f.text_field :place %>
+            </div>
+            <%= f.submit "Prenota", class: "modal-btn p-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
