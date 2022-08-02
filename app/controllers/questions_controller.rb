@@ -21,6 +21,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
+    @question = Question.find_by(id: params[:id])
   end
 
   # POST /questions or /questions.json

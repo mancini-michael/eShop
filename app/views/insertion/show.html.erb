@@ -83,7 +83,7 @@
         <strong>Risposta: </strong>
         <%= question.reply%>
         <br>
-        <%= link_to "Rispondi alla domanda", questions_reply_path%>
+        <%= link_to "Rispondi alla domanda", "/questions/"+question.id.to_s+"/edit" %>
         <br>
       <% end %>
     </div>
