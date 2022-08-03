@@ -46,11 +46,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
 
   create_table "questions", force: :cascade do |t|
     t.integer "insertion_id", null: false
+    t.integer "user_id", null: false
     t.string "question", default: ""
     t.string "reply", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["insertion_id"], name: "index_questions_on_insertion_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -108,6 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
   add_foreign_key "meetings", "sellers"
   add_foreign_key "meetings", "users"
   add_foreign_key "questions", "insertions"
+  add_foreign_key "questions", "users"
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"
   add_foreign_key "sellers", "users"

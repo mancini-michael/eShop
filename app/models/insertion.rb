@@ -15,6 +15,7 @@ class Insertion < ApplicationRecord
   prefix: true
 
   belongs_to :seller
+  has_many :question
 
   validates :title, presence: true
   validates :description, presence: true

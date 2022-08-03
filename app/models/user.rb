@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :meeting
   has_many :review
   has_many :wishlist
+  has_many :question
 
   geocoded_by :address
   after_validation :geocode
