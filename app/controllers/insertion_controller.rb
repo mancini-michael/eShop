@@ -16,7 +16,7 @@ class InsertionController < ApplicationController
 
     respond_to { |format| @insertion.save if @insertion.valid? }
   end
-
+  
   def edit
     params[:insertion][:categories] = params[:insertion][:categories].to_i
 
@@ -29,12 +29,16 @@ class InsertionController < ApplicationController
   
   def destroy
     @insertion.destroy
-
+    
     respond_to { |format| format.js { render inline: "location.reload();" } }
   end
 
-  private
+  def search
+    @insertion = Insertion.where("title like ?", "%#{params[:search]}%") if params[:search] != ""
+  end
 
+  private
+  
   def set_insertion
     @insertion = Insertion.find(params[:id])
   end

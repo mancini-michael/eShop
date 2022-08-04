@@ -18,8 +18,10 @@ Rails.application.routes.draw do
   delete "/user/cart/remove/:insertion", to: "user#remove_to_cart", as: "remove_cart"
   delete "/user/wishlist/remove/:insertion", to: "user#remove_to_wishlist", as: "remove_wishlist"
 
+  get "/insertion/search", to: "insertion#search", as: "search_insertion"
   get "/insertion/:id", to: "insertion#show", as: "show_insertion"
   post "/insertion", to: "insertion#create"
+  # post "/insertion/search", to: "insertion#search", as: "search_insertion"
   post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
   delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
 

@@ -1,0 +1,15 @@
+<% if !@insertion %>
+  <div class="text-center my-5">
+  <h2 class="mb-0">La tua ricerca non ha prodotto alcun risultato</h2>
+  <%= link_to root_path, class: "fw-bold" do %>Torna alla home<% end %>
+  </div>
+<% else %>
+  <h2 class="text-center my-5">Risultati della ricerca</h2>
+  <div class="row row-cols-4">
+    <% @insertion.each do |ins| %>    
+      <div class="col mx-auto mb-4">
+        <%= render "shared/insertion", insertion: ins %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
