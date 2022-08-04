@@ -5,9 +5,11 @@
         <span class="fw-bold">Venditore attualmente non attivo</span>
       <% else %>
         <% if user_signed_in? %>
-          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#meeting">
-            <span class="fw-bold">Prenota un incontro</span>
-          </button>
+          <% if current_user.id != Seller.find(@insertion.seller_id).user_id %>            
+            <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#meeting">
+              <span class="fw-bold">Prenota un incontro</span>
+            </button>
+          <% end %>
         <% else %>
           <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#login">
             <span class="fw-bold">Accedi per acquistare</span>
