@@ -31,3 +31,9 @@ end
 group :development do
   gem "web-console"
 end
+
+group :test do
+  gem "capybara", "~> 3.37"
+  gem "cucumber-rails", "~> 2.5", require: false
+  gem "database_cleaner", "~> 2.0"
+end
