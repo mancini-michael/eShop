@@ -32,13 +32,7 @@ class User < ApplicationRecord
       Geocoder::Calculations.distance_between(location, coordinates, units: :km).to_i
   end
 
-  private
-
-  def self.full_name(id)
-    user = User.find(id)
-    "#{user.first_name} #{user.last_name}"
-  end
-
+  
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -46,6 +40,13 @@ class User < ApplicationRecord
       user.avatar = auth.info.image
       parse_name(user, auth.info.name)
     end
+  end
+
+  private
+
+  def self.full_name(id)
+    user = User.find(id)
+    "#{user.first_name} #{user.last_name}"
   end
 
   def self.parse_name(user, name)
