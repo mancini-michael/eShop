@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-05 12:50:03", null: false
+    t.datetime "date", default: "2022-08-05 13:15:33", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
@@ -108,7 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
   add_foreign_key "carts", "insertions"
   add_foreign_key "carts", "users"
   add_foreign_key "insertions", "sellers"
-  add_foreign_key "meetings", "insertions"
+  add_foreign_key "meetings", "insertions", on_delete: :cascade
   add_foreign_key "meetings", "sellers"
   add_foreign_key "meetings", "users"
   add_foreign_key "questions", "insertions"

@@ -1,10 +1,10 @@
-<% if !@insertion %>
+<h2 class="text-center my-5">Risultati della ricerca: <%= params[:search] %></h2>
+<% if !@insertion || @insertion.length == 0%>
   <div class="text-center my-5">
   <h2 class="mb-0">La tua ricerca non ha prodotto alcun risultato</h2>
   <%= link_to root_path, class: "fw-bold" do %>Torna alla home<% end %>
   </div>
 <% else %>
-  <h2 class="text-center my-5">Risultati della ricerca</h2>
   <div class="row row-cols-4">
     <% @insertion.each do |ins| %>    
       <div class="col mx-auto mb-4">
