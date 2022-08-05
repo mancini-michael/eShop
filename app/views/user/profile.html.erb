@@ -10,8 +10,12 @@
         <% if Seller.find_by(user_id: @user) %>          
           <div class="mb-2">
             <h2 class="fw-bold">
-              (<%= Seller.total_reviews(Seller.find_by(user_id: @user).id) %>) <%= Seller.average_rating(Seller.find_by(user_id: @user).id) %>
-              <i class="fa-solid fa-star fa-2xs"></i>     
+              <% if !Seller.total_reviews(Seller.find_by(user_id: @user).id) %>
+                Nessuna valutazione disponibile
+              <% else %>
+                (<%= Seller.total_reviews(Seller.find_by(user_id: @user).id) %>) <%= Seller.average_rating(Seller.find_by(user_id: @user).id) %>
+                <i class="fa-solid fa-star fa-2xs"></i>     
+              <% end %>
             </h2>
           </div>
         <% end %>

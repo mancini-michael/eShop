@@ -7,7 +7,7 @@ class InsertionController < ApplicationController
   def show 
     user = User.find(Seller.find(@insertion.seller_id).user_id)
     geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:maps_api))
-    results = geocoder.geocode('Via Mastruccia 82, Frosinone')
+    results = geocoder.geocode("#{User.find(Seller.find(@insertion.seller_id).user_id).address}, #{User.find(Seller.find(@insertion.seller_id).user_id).city}")
     gon.lat = results.first.coordinates[0]
     gon.lng = results.first.coordinates[1]
     @questions = Question.where(insertion_id: params[:id]).limit(5)

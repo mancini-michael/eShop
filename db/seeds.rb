@@ -1,28 +1,31 @@
 user_1 =
   User.create(
-    first_name: "Johnny",
-    last_name: "Doe",
-    city: "New York",
-    zip_code: "10001",
-    email: "johnny.doe@gmail.com",
+    first_name: "Mario",
+    last_name: "Rossi",
+    city: "Zagarolo",
+    zip_code: "00039",
+    address: "Via vicinale colle dell'oro 7",
+    email: "mario.rossi@gmail.com",
     password: "password"
   )
 user_2 =
   User.create(
-    first_name: "John",
-    last_name: "Doe",
-    city: "New York",
-    zip_code: "10001",
-    email: "john.doe@gmail.com",
+    first_name: "Paolo",
+    last_name: "Verdi",
+    city: "Frosinone",
+    zip_code: "03100",
+    address: "Via Mastruccia 82",
+    email: "paolo.verdi@gmail.com",
     password: "password"
   )
 user_3 =
   User.create(
-    first_name: "Jake",
-    last_name: "Doe",
-    city: "Boston",
-    zip_code: "02108",
-    email: "jake.doe@gmail.com",
+    first_name: "Lorenzo",
+    last_name: "Blu",
+    city: "Anzio Colonia",
+    zip_code: "00042",
+    address: "Via Rimini 96",
+    email: "lorenzo.blu@gmail.com",
     password: "password"
   )
 

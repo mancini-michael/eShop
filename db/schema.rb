@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-05 14:36:50", null: false
+    t.datetime "date", default: "2022-08-05 17:08:51", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.string "last_name", default: "", null: false
     t.string "city", default: "", null: false
     t.string "zip_code", default: "", null: false
+    t.string "address", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
