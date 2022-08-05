@@ -6,8 +6,7 @@ class InsertionController < ApplicationController
     user = User.find(Seller.find(@insertion.seller_id).user_id)
     gon.lat = user.location[0]
     gon.lng = user.location[1]
-    @questions = Question.where(insertion_id: params[:id])
-    $insertion_id = params[:id]
+    @questions = Question.where(insertion_id: params[:id]).limit(5)
   end
 
   def create

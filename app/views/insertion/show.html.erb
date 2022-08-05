@@ -73,28 +73,36 @@
     <h3 class="mb-1">Posizione del venditore</h3>
     <div id="map"></div>
   </div>
-
-  <p style="color: green"><%= notice %></p>
-  <h1>Domande</h1>
-  <% if @questions.count == 0 %>
-    <p> Non ci sono domande relative all'oggetto selezionato </p>
-  <% else %>
-    <div id="questions">
-    <% @questions.each do |question| %>
-        <strong>Domanda: </strong>
-        <%= question.question%>
-        <br>
-        <strong>Risposta: </strong>
-        <%= question.reply%>
-        <br>
-        <%= link_to "Rispondi alla domanda", "/questions/"+question.id.to_s+"/edit" %>
-        <br>
+  <div>
+    <div class="d-flex justify-content-between">
+      <h3 class="mb-3">Domande</h3>
+      <%= link_to "#" do %>
+        <span class="fw-bold">Visualizza tutte le domande</span>
       <% end %>
     </div>
-  <% end %>
-  <p>
-    <%= link_to "Fai una domanda per questo prodotto", new_question_path %>
-  </p>
+    <% if @questions.count == 0 %>
+      <p> Non ci sono domande relative all'oggetto selezionato </p>
+    <% else %>
+      <div class="row row-cols-4 mx-auto">
+      <% @questions.each do |question| %>
+        <div class="col">
+          <div class="card shadow p-1">
+            <div class="d-flex justify-content-center flex-column mb-2 mx-auto">
+              <span class="fw-bold">Domanda</span>
+              <span class="fw-light"><%= question.question%></span>
+            </div>
+            <div class="d-flex justify-content-center flex-column mb-2 mx-auto">
+              <span class="fw-bold">Risposta</span>
+              <span class="fw-light"><%= if question.reply.empty? then "-" else question.reply end %></span>
+            </div>
+            <%= link_to "Rispondi alla domanda", "#", class: "fw-bold text-center" %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= render "shared/question" %>
+  </div>
 
   <script>
       var map;

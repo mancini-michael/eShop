@@ -1,45 +1,19 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[ show edit update destroy ]
-
-  # GET /questions or /questions.json
-  def index
-    @questions = Question.all
-  end
-
-  # GET /questions/1 or /questions/1.json
-  def show
-  end
+  before_action :set_question, only: %i[ edit update destroy ]
 
   def reply
-    @question = Question.find_by(insertion_id: $insertion_id)
+    # @question = Question.find_by(insertion_id: $insertion_id)
   end
 
-  # GET /questions/new
-  def new
-    @question = Question.new
-  end
-
-  # GET /questions/1/edit
   def edit
     @question = Question.find_by(id: params[:id])
   end
 
-  # POST /questions or /questions.json
   def create
-    @question = Question.new(question_params)
-    @question.insertion_id = $insertion_id
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to question_url(@question), notice: "Hai posto correttamente la domanda al venditore" }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
-    end
+    @question = Question.create(question_params)
+    respond_to { |format| format.js { render inline: "location.reload();"} }
   end
 
-  # PATCH/PUT /questions/1 or /questions/1.json
   def update
     respond_to do |format|
       if @question.update(question_params)
@@ -52,7 +26,6 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # DELETE /questions/1 or /questions/1.json
   def destroy
     @question.destroy
 
@@ -63,13 +36,11 @@ class QuestionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_question
       @question = Question.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:seller_id, :question, :reply)
+      params.require(:question).permit(:insertion_id, :user_id, :question, :reply)
     end
 end

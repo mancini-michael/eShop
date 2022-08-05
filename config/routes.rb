@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'questions/reply'
-  resources :questions
   devise_for :users, controllers: {
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
@@ -17,7 +15,7 @@ Rails.application.routes.draw do
   post "/user/wishlist/add/:insertion", to: "user#add_to_wishlist", as: "add_wishlist"
   delete "/user/cart/remove/:insertion", to: "user#remove_to_cart", as: "remove_cart"
   delete "/user/wishlist/remove/:insertion", to: "user#remove_to_wishlist", as: "remove_wishlist"
-
+  
   get "/insertion/search", to: "insertion#search", as: "search_insertion"
   get "/insertion/:id", to: "insertion#show", as: "show_insertion"
   post "/insertion", to: "insertion#create"
@@ -28,8 +26,13 @@ Rails.application.routes.draw do
   get "/meeting/:id", to: "meeting#show", as: "show_meeting"
   post "/meeting", to: "meeting#create"
   delete "/meeting/:id", to: "meeting#destroy", as: "destroy_meeting"
-
+  
   post "/review/create", to: "review#create", as: "create_review"
+
+  get "questions/reply"
+  post "/questions", to: "questions#create"
+  
+  resources :questions
 
   get "home/index"
   get "/category/:category", to: "home#index", as: "home"

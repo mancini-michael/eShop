@@ -1,0 +1,16 @@
+<div class="mt-5 mb-3">
+  <h3 class="mb-3">Fai una domanda</h3>
+  <div class="d-flex justify-content-center align-items-center">  
+    <%= form_for(:question, url: questions_path) do |form| %>
+      <div class="mb-2" style="width: 700px; height: 300px;">
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.hidden_field :insertion_id, value: @insertion.id %>
+        <%= form.text_area :question, class: "form-control" %>
+      </div>
+      <div class="text-center">
+        <%= form.submit "Invia", class: "modal-btn py-2" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
