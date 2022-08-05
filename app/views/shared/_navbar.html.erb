@@ -63,6 +63,9 @@
                 <%= link_to user_profile_path(current_user.id), class: "dropdown-item" do %>
                   <span class="fw-bold">Profilo</span>
                 <% end %>
+                <%= link_to show_meeting_path(current_user.id), class: "dropdown-item" do %>
+                  <span>Prenotazioni</span>
+                <% end %>
                 <%= link_to user_cart_path(current_user.id), class: "dropdown-item" do %>
                   <span>Carrello</span>
                 <% end %>

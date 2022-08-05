@@ -1,0 +1,31 @@
+
+<div class="container-md">
+  <div class="my-3">
+    <h2 class="mb-3">Prenotazioni</h2>
+    <% @meetings.each do |meeting| %>
+      <div class="meeting-container d-flex align-items-center justify-content-between">
+        <div class="d-inline-flex align-items-center gap-3">
+          <%= link_to show_insertion_path(meeting.insertion_id) do %>
+            <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="..." >
+          <% end %>
+          <div class="d-flex flex-column gap-2">
+            <div>
+              <span class="fw-bold"><%= Insertion.find(meeting.insertion.id).title %></span>
+              <span class="fw-bold"><%= sprintf('%.2f', Insertion.find(meeting.insertion.id).price) %> €</span>
+              <h4 class="mb-0"><%= meeting.date.strftime('%A, %m %B %Y, %H:%M') %></h4>
+              <span class="fw-bold"><%= meeting.place %></span>
+            </div>
+            <div>
+              <span class="btn btn-sm <%= if meeting.user_approvation then "btn-success" else "btn-danger" end %>">Utente</span>
+              <span class="btn btn-sm <%= if meeting.seller_approvation then "btn-success" else "btn-danger" end %>">Venditore</span>
+            </div>
+          </div>
+        </div>
+        <%= button_to destroy_meeting_path(meeting.id), class: "text-white btn btn-warning px-2 py-1", method: :delete do %>
+          elimina
+        <% end %>
+      </div>
+      <hr />
+    <% end %>
+  </div>
+</div>

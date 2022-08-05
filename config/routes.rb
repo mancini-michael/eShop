@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
   delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
 
+  get "/meeting/:id", to: "meeting#show", as: "show_meeting"
   post "/meeting", to: "meeting#create"
+  delete "/meeting/:id", to: "meeting#destroy", as: "destroy_meeting"
 
   post "/review/create", to: "review#create", as: "create_review"
 
