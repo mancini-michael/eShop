@@ -288,3 +288,27 @@ textarea:focus {
   height: 600px;
   width: 100%;
 }
+
+/* search form */
+.search-form {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+
+  input[type="submit"] {
+    background: #fe385c;
+    border-radius: 25px;
+    color: #ffffff;
+    padding: 5px 10px;
+  }
+
+  input {
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    padding: 5px 10px;
+
+    &:focus {
+      border: 2px solid #fe385c;
+    }
+  }
+}

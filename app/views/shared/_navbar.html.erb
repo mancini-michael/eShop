@@ -9,9 +9,9 @@
           <h4 class="m-0 ms-2">Commerce</h4>
         </div>
       <% end %>
-      <%= form_with url: search_insertion_path, method: :get, class:"d-flex align-items-center" do |f| %>
-        <%= f.text_field :search, class: "form-control", placeholder: "Cerca" %>
-        <%= f.submit "Cerca", class: "btn btn-sm btn-outline-success" %>
+      <%= form_with url: search_insertion_path, method: :get, class:"search-form" do |f| %>
+        <%= f.text_field :search, placeholder: "Cerca" %>
+        <%= f.submit "Cerca" %>
       <% end %>
       <div class="d-inline-flex align-items-center">
       <% if !user_signed_in? %>
