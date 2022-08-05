@@ -1,11 +1,15 @@
+require 'opencage/geocoder'
+
 class InsertionController < ApplicationController
   before_action :sanitize_insertion_params
   before_action :set_insertion, only: %i[show edit destroy]
 
   def show 
     user = User.find(Seller.find(@insertion.seller_id).user_id)
-    gon.lat = user.location[0]
-    gon.lng = user.location[1]
+    geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:maps_api))
+    results = geocoder.geocode('Via Mastruccia 82, Frosinone')
+    gon.lat = results.first.coordinates[0]
+    gon.lng = results.first.coordinates[1]
     @questions = Question.where(insertion_id: params[:id]).limit(5)
   end
 
