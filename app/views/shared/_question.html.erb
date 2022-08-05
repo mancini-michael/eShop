@@ -3,7 +3,9 @@
   <div class="d-flex justify-content-center align-items-center">  
     <%= form_for(:question, url: questions_path) do |form| %>
       <div class="mb-2" style="width: 700px; height: 300px;">
-        <%= form.hidden_field :user_id, value: current_user.id %>
+        <% if current_user != nil %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+        <% end %>
         <%= form.hidden_field :insertion_id, value: @insertion.id %>
         <%= form.text_area :question, class: "form-control" %>
       </div>
