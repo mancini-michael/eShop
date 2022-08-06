@@ -13,12 +13,6 @@ class User < ApplicationRecord
   geocoded_by :address
   after_validation :geocode
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :city, presence: true
-  validates :zip_code, presence: true, format: { with: /\A[0-9]{5}\z/ }
-  validates :address, presence: true
-
   def address
     [city, zip_code].join(", ")
   end
@@ -28,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def distance_from(coordinates)
-      return if coordinates.include?(nil)
+      return if location.include?(nil)
       Geocoder::Calculations.distance_between(location, coordinates, units: :km).to_i
   end
 
