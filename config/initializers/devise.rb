@@ -274,7 +274,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   # OmniAuth.config.allowed_request_methods = [:get]
-  config.omniauth :facebook, Rails.application.credentials.dig(:facebook_client_id), Rails.application.credentials.dig(:facebook_client_secret)
+  config.omniauth :facebook, Rails.application.credentials.dig(:facebook_client_id), Rails.application.credentials.dig(:facebook_client_secret), token_params: { parse: :json }
   config.omniauth :google_oauth2, Rails.application.credentials.dig(:google_client_id), Rails.application.credentials.dig(:google_client_secret), {}
 
   # ==> Warden configuration
