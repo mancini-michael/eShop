@@ -1,0 +1,61 @@
+<div class="modal fade" id="edit_registration" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title mx-auto">
+          <span class="fw-bold">Modifica</span>
+        </h5>
+      </div>
+      <div class="modal-body py-4">
+        <div class="mb-3">
+          <h5 class="mb-0">Benvenuto su Commerce</h5>
+        </div>
+        <%= form_for(:user, url: user_registration_url, method: :patch, html: { class: "registration-form" }, data: { turbo: false }) do |f| %>
+          <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+          <div class="form-floating">
+            <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com" %>
+            <%= f.label :first_name %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com" %>
+            <%= f.label :last_name %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :city, class: "form-control", placeholder: "name@example.com" %>
+            <%= f.label :city %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :zip_code, class: "form-control", placeholder: "name@example.com", pattern: "[0-9]{5}" %>
+            <%= f.label :zip_code %>
+          </div>
+          <div class="form-floating">
+            <%= f.text_field :address, class: "form-control", placeholder: "name@example.com" %>
+            <%= f.label :address %>
+          </div>
+          <div class="form-floating">
+            <%= f.email_field :email, class: "form-control", placeholder: "name@example.com" %>
+            <%= f.label :email %>
+          </div>
+          <div class="form-floating mb-3">
+            <%= f.password_field :password, class: "form-control", placeholder: "password" %>
+            <%= f.label :password %>
+          </div>
+          <%= f.submit "Continua", class: "modal-btn p-2" %>
+        <% end %>
+        <div class="d-flex justify-content-center align-items-center my-2">
+          <hr class="w-100 mx-3"/>
+          <span class="fw-light">oppure</span>
+          <hr class="w-100 mx-3"/>
+        </div>
+        <div class="d-flex justify-content-center flex-column">
+          <%= button_to user_registration_path, method: :delete, data: { turbo: false }, class: "position-relative other-btn text-center w-100 p-2" do %>
+            <span class="fw-bold">
+              Elimina account
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

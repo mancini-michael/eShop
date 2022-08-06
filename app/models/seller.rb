@@ -1,6 +1,6 @@
 class Seller < ApplicationRecord
   belongs_to :user
-  has_many :insertion
+  has_many :insertion, dependent: :destroy
   has_many :meeting, dependent: :destroy
   has_many :review
 

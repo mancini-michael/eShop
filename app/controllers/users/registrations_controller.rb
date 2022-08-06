@@ -30,8 +30,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
-    current_user.update_without_password(city: params[:user][:city], zip_code: params[:user][:zip_code])
-    redirect_to root_path
+    user = User.find(params[:user][:user_id])
+    if user.in?(["google_oauth2", "facebook"])
+      user.update_without_password(city: params[:user][:city], zip_code: params[:user][:zip_code], address: params[:user][:address])
+    else
+      user.update(account_update_params)
+    end
+    sign_in_and_redirect user
   end
 
   protected

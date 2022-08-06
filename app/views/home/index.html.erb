@@ -1,8 +1,9 @@
 <% if user_signed_in? %>
-  <% if current_user.city == "" || current_user.zip_code == "" %>
+  <% if current_user.city == "" || current_user.zip_code == "" || current_user.address == "" %>
     <div class="container-md" style="padding-left: 25%; padding-right: 25%;">
       <h6 class="text-center mb-2">Completa il tuo profilo</h6>
       <%= form_for(:user, url: registration_path(:user), data: { turbo: false }, html: { method: :put }) do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
         <div class="form-floating mb-1">
           <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com", value: current_user.first_name, disabled: true %>
           <%= f.label :first_name %>
@@ -19,11 +20,15 @@
           <%= f.text_field :city, class: "form-control", placeholder: "password", value: current_user.city %>
           <%= f.label :city %>
         </div>
-        <div class="form-floating mb-2">
+        <div class="form-floating mb-1">
           <%= f.text_field :zip_code, class: "form-control", placeholder: "password", value: current_user.zip_code %>
           <%= f.label :zip_code %>
         </div>
-        <%= f.submit "Continua", class: "edit-btn mx-auto p-2" %>
+        <div class="form-floating mb-2">
+          <%= f.text_field :address, class: "form-control", placeholder: "password", value: current_user.address %>
+          <%= f.label :address %>
+        </div>
+        <%= f.submit "Continua", class: "modal-btn mx-auto p-2" %>
       <% end %>
     </div>
   <% end %>

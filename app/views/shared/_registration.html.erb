@@ -36,9 +36,13 @@
             <%= f.email_field :email, class: "form-control", placeholder: "name@example.com" %>
             <%= f.label :email %>
           </div>
-          <div class="form-floating mb-3">
+          <div class="form-floating">
             <%= f.password_field :password, class: "form-control", placeholder: "password" %>
             <%= f.label :password %>
+          </div>
+          <div class="form-floating mb-3">
+            <%= f.password_field :validation_password, class: "form-control", placeholder: "password" %>
+            <%= f.label :validation_password %>
           </div>
           <%= f.submit "Continua", class: "modal-btn p-2" %>
         <% end %>

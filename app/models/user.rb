@@ -3,17 +3,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
-  has_one :seller
+  has_one :seller, dependent: :destroy
   has_many :cart
   has_many :meeting
   has_many :review
   has_many :wishlist
   has_many :question
 
-  geocoded_by :address
+  geocoded_by :geocoding_address
   after_validation :geocode
 
-  def address
+  def geocoding_address
     [city, zip_code].join(", ")
   end
 
