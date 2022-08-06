@@ -5,6 +5,9 @@ class UserController < ApplicationController
     if seller = Seller.find_by(user_id: @user)
       @insertions = Insertion.where(seller_id: seller).order(:timestamp).reverse.first(4)
       @reviews = Review.where(seller_id: seller).order(:timestamp).reverse.first(4)
+      @history = History.where(seller_id: seller).order(:timestamp).reverse.first(4)
+    else
+      @history = History.where(user_id: @user).order(:timestamp).reverse.first(4)
     end
   end
 

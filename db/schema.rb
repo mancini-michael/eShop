@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_06_133721) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "insertion_id", null: false
@@ -20,12 +20,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "histories", force: :cascade do |t|
+    t.integer "insertion_id", null: false
+    t.integer "seller_id", null: false
+    t.integer "user_id", null: false
+    t.date "date"
+    t.string "place"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["insertion_id"], name: "index_histories_on_insertion_id"
+    t.index ["seller_id"], name: "index_histories_on_seller_id"
+    t.index ["user_id"], name: "index_histories_on_user_id"
+  end
+
   create_table "insertions", force: :cascade do |t|
     t.integer "seller_id", null: false
     t.string "title", default: "", null: false
     t.string "description", default: "", null: false
     t.decimal "price", default: "0.0", null: false
     t.integer "categories", default: 0, null: false
+    t.boolean "sold", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["seller_id"], name: "index_insertions_on_seller_id"
@@ -35,7 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-06 12:23:33", null: false
+    t.datetime "date", default: "2022-08-06 13:53:12", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
@@ -108,6 +122,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
 
   add_foreign_key "carts", "insertions"
   add_foreign_key "carts", "users"
+  add_foreign_key "histories", "insertions"
+  add_foreign_key "histories", "sellers"
+  add_foreign_key "histories", "users"
   add_foreign_key "insertions", "sellers"
   add_foreign_key "meetings", "insertions", on_delete: :cascade
   add_foreign_key "meetings", "sellers"

@@ -6,6 +6,7 @@ class CreateInsertions < ActiveRecord::Migration[7.0]
       t.string :description, null: false, default: ""
       t.decimal :price, null: false, default: 0
       t.integer :categories, null: false, default: 0
+      t.boolean :sold, null: false, default: false
 
       t.timestamps
     end

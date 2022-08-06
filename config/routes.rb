@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   get "questions/reply"
   post "/questions", to: "questions#create"
+
+  post "/history/insertion/:id", to: "history#complete", as: "complete_purchase"
   
   resources :questions
 

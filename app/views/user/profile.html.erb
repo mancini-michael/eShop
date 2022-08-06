@@ -128,5 +128,64 @@
         <% end %>
       </div>
     </div>
+    <div class="mb-5">
+      <% if Seller.find_by(user_id: @user) %>
+        <div class="d-flex justify-content-between align-items-center">
+          <h3 class="mb-3">Vendite</h3>
+          <span class="fw-bold">Visulizza articoli</span>
+        </div>
+        <div class="row row-cols-4">
+          <% @history.each do |item| %>
+            <div class="col mx-auto">
+              <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="card-img-top img-fluid mb-2" alt="...">
+              <div class="card-body lh-1 p-0">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="card-title"><%= Insertion.find(item.insertion_id).title %></h6>
+                  <span class="fw-bold"><%= sprintf('%.2f', Insertion.find(item.insertion_id).price) %> €</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-light"><%= Insertion.seller_name(item.seller_id) %></span>
+                  <div class="rating d-inline-flex align-items-center">
+                    <% if Seller.average_rating(item.seller_id) == 0 %>
+                      <span class="fw-light">Nessuna recensione</span>
+                    <% else%>
+                      <span class="fw-bold">(<%= Seller.total_reviews(item.seller_id) %>) <%= Seller.average_rating(item.seller_id) %></span>
+                      <i class="fa-solid fa-star fa-2xs"></i>          
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>   
 <% end %>
+<div class="mb-5">
+  <h3 class="mb-3">Acquisti</h3>
+  <div class="row row-cols-4">
+    <% @history.each do |item| %>
+      <div class="col mx-auto">
+        <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="card-img-top img-fluid mb-2" alt="...">
+        <div class="card-body lh-1 p-0">
+          <div class="d-flex justify-content-between align-items-center">
+            <h6 class="card-title"><%= Insertion.find(item.insertion_id).title %></h6>
+            <span class="fw-bold"><%= sprintf('%.2f', Insertion.find(item.insertion_id).price) %> €</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="fw-light"><%= Insertion.seller_name(item.seller_id) %></span>
+            <div class="rating d-inline-flex align-items-center">
+              <% if Seller.average_rating(item.seller_id) == 0 %>
+                <span class="fw-light">Nessuna recensione</span>
+              <% else%>
+                <span class="fw-bold">(<%= Seller.total_reviews(item.seller_id) %>) <%= Seller.average_rating(item.seller_id) %></span>
+                <i class="fa-solid fa-star fa-2xs"></i>          
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
