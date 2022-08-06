@@ -4,7 +4,7 @@
       <% if !Seller.find(@insertion.seller_id).active %>
         <span class="fw-bold">Venditore attualmente non attivo</span>
       <% elsif Meeting.find_by(insertion_id: @insertion) %>
-        <span class="fw-bold">Attualmente prenotata</span>
+        <span class="fw-bold">Attualmente prenotato</span>
       <% else %>
         <% if user_signed_in? %>
           <% if current_user.id != Seller.find(@insertion.seller_id).user_id %>            

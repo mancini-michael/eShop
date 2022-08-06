@@ -1,5 +1,15 @@
 class MeetingController < ApplicationController
-  before_action :set_meeting, only: %i[destroy]
+  before_action :set_meeting, only: %i[accept destroy update]
+
+  def accept
+    if params[:owner]
+      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation)
+    else
+      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation)
+    end
+
+    respond_to { |format| format.js { render inline: "location.reload();" } }
+  end
 
   def create
     @meeting = Meeting.new(meeting_params)
@@ -18,6 +28,18 @@ class MeetingController < ApplicationController
     if Seller.find_by(user_id: params[:id]) && @meetings.length == 0
       @meetings = Meeting.where(seller_id: Seller.find_by(user_id: params[:id]).id)
     end
+  end
+
+  def update
+    @meeting.update_attribute(:date, params[:meeting][:date])
+    @meeting.update_attribute(:place, params[:meeting][:place])
+    if params[:owner]
+      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation)
+    else
+      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation)
+    end
+
+    respond_to { |format| format.js { render inline: "location.reload();" } }
   end
 
   private

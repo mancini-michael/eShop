@@ -21,9 +21,27 @@
             </div>
           </div>
         </div>
-        <%= button_to destroy_meeting_path(meeting.id), class: "text-white btn btn-warning px-2 py-1", method: :delete do %>
-          elimina
-        <% end %>
+        <div class="d-inline-flex align-items-center gap-2">
+          <% if !meeting.user_approvation || !meeting.seller_approvation %>            
+            <%= form_with url: accept_meeting_path(meeting.id), method: :post do |f| %>
+              <%= f.hidden_field :owner?, value: meeting.insertion.seller_id == Seller.find_by(user_id: current_user).id if Seller.find_by(user_id: current_user) %>
+              <%= f.hidden_field :user, value: current_user.id %>
+              <%= f.submit "Accetta", class: "btn btn-sm btn-success" %>
+            <% end %>
+          <% end %>
+          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#edit_meeting">
+            <span class="btn btn-sm btn-warning text-white">modifica</span>
+          </button>
+          <%= button_to destroy_meeting_path(meeting.id), class: "text-white btn btn-sm btn-danger px-2 py-1", method: :delete do %>
+            elimina
+          <% end %>
+          
+          <% if Seller.find_by(user_id: current_user) && meeting.seller_id == Seller.find_by(user_id: current_user).id %>
+            <%= link_to "Acquisto concluso", "#", class: "fw-bold" %>
+          <% end %>
+          
+        </div>
+        <%= render "shared/edit_meeting", meeting: meeting %>
       </div>
       <hr />
     <% end %>

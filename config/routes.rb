@@ -19,12 +19,13 @@ Rails.application.routes.draw do
   get "/insertion/search", to: "insertion#search", as: "search_insertion"
   get "/insertion/:id", to: "insertion#show", as: "show_insertion"
   post "/insertion", to: "insertion#create"
-  # post "/insertion/search", to: "insertion#search", as: "search_insertion"
   post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
   delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
 
   get "/meeting/:id", to: "meeting#show", as: "show_meeting"
+  post "/meeting/accept/:id", to: "meeting#accept", as: "accept_meeting"
   post "/meeting", to: "meeting#create"
+  post "/meeting/:id", to: "meeting#update", as: "edit_meeting"
   delete "/meeting/:id", to: "meeting#destroy", as: "destroy_meeting"
   
   post "/review/create", to: "review#create", as: "create_review"

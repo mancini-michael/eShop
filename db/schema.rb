@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_083953) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-06 11:04:41", null: false
+    t.datetime "date", default: "2022-08-06 12:23:33", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
