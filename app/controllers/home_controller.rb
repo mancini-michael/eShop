@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
   before_action :get_home, only: %i[index]
 
+  # * DONE
   def index
+    @seller = Seller.find_by(user_id: current_user) if user_signed_in?
   end
 
   private

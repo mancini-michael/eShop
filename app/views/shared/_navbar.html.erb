@@ -1,76 +1,69 @@
-<header class="container-fluid py-2">
+<%# * DONE %>
+<header class="container-fluid py-1">
   <nav class="navbar navbar-light p-0">
     <div class="container-fluid px-0">
+      <%# navbar logo %>
       <%= link_to root_path, class: "navbar-brand m-0" do %>
-        <div class="d-flex align-items-center">
+        <div class="d-inline-flex align-items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
           </svg>
-          <h4 class="m-0 ms-2">Commerce</h4>
+          <h4 class="m-0">eShop</h4>
         </div>
       <% end %>
+
+      <%# navbar search %>
       <%= form_with url: search_insertion_path, method: :get, class:"search-form" do |f| %>
         <%= f.text_field :search, placeholder: "Cerca" %>
-        <%= f.submit "Cerca" %>
+        <%= button_tag do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+        <% end %>
       <% end %>
+
+      <%# navbar user section %>
       <div class="d-inline-flex align-items-center">
-      <% if !user_signed_in? %>
-        <button class="seller-btn px-2 py-1" data-bs-toggle="modal" data-bs-target="#login">
-          <span class="fw-bold">Diventa un venditore</span>
-        </button>
-      <% else %>
-        <div class="d-inline-flex align-items-center">
-          <div class="profile-container">
-            <% if Seller.find_by(user_id: current_user.id) && Seller.find_by(user_id: current_user.id).active %>
-              <%= button_to restore_user_path(current_user.id), method: :post do %>
-                <span class="fw-bold mx-3 my-1">Fai una pausa dalle vendite</span>
+        <% if user_signed_in? %>          
+          <div class="seller-btn mx-2">
+            <% if @seller&.active %>
+              <%= button_to restore_user_path(current_user) do %>
+                <span class="fw-bold">Fai una pausa dalle vendite</span>
               <% end %>
             <% else %>
-              <%= button_to update_user_path(current_user.id), method: :post do %>
-                <span class="fw-bold mx-3 my-1">Diventa un venditore</span>
+              <%= button_to update_user_path(current_user) do %>
+                <span class="fw-bold">Diventa un venditore</span>
               <% end %>
             <% end %>
           </div>
-          <%= link_to user_cart_path(current_user.id), class: "position-relative mx-3" do %>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%= Cart.where(user_id: current_user.id).length %></span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-            </svg>
-          <% end %>
-        </div>
-      <% end %>
-      <div class="dropdown-link ms-4 px-3 py-2">
+        <% end %>
+        <div class="dropdown-link p-1">
           <div class="dropdown">
-            <a id="dropdown" data-bs-toggle="dropdown">
-              <svg xmlns="http://www.w3.org/2000/svg" class="position-relative" viewBox="0 0 20 20">
+            <a data-bs-toggle="dropdown">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                <% if user_signed_in? && current_user.provider.in?(["facebook", "google_oauth2"]) %>
-                  <% if current_user.city == "" || current_user.zip_code == "" %>
-                    <span class="position-absolute bg-danger rounded-circle" style="width: 10px; height: 10px; top: 5%; left: 80%;"></span>
-                  <% end %>
-                <% end %>
               </svg>
             </a>
-            <div class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+            <div class="dropdown-menu dropdown-menu-end mt-3">
               <% if !user_signed_in? %>
-                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registration">
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#sign_up">
                   <span class="fw-bold">Registrati</span>
                 </button>
-                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#sign_in">
                   <span>Accedi</span>
                 </button>
               <% else %>
-                <%= link_to user_profile_path(current_user.id), class: "dropdown-item" do %>
+                <%= link_to user_profile_path(current_user), class: "dropdown-item" do %>
                   <span class="fw-bold">Profilo</span>
                 <% end %>
-                <%= link_to show_meeting_path(current_user.id), class: "dropdown-item" do %>
+                <%= link_to show_meeting_path(current_user), class: "dropdown-item" do %>
                   <span>Prenotazioni</span>
                 <% end %>
-                <%= link_to user_cart_path(current_user.id), class: "dropdown-item" do %>
-                  <span>Carrello</span>
+                <%= link_to user_cart_path(current_user), class: "dropdown-item" do %>
+                  <span>Carrello (<%= Cart.where(user_id: current_user).length %>)</span>
                 <% end %>
-                <%= link_to user_wishlist_path(current_user.id), class: "dropdown-item" do %>
-                  <span>Preferiti (<%= Wishlist.where(user_id: current_user.id).length %>)</span>
+                <%= link_to user_wishlist_path(current_user), class: "dropdown-item" do %>
+                  <span>Preferiti (<%= Wishlist.where(user_id: current_user).length %>)</span>
                 <% end %>
                 <hr class="my-2"/>
                 <%= link_to destroy_user_session_path, class: "dropdown-item", data: { turbo_method: :delete } do %>
@@ -79,13 +72,10 @@
               <% end %>
             </div>
           </div>
+        </div>
       </div>
-    </div>
-    <%= render "shared/login" %>
-    <%= render "shared/registration" %>
     </div>
   </nav>
 </header>
-<hr class="my-0" />
 <%= render "shared/categories", categories: Insertion.categories %>
-<hr class="my-0" />
+<hr />

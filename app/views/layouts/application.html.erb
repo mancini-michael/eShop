@@ -12,9 +12,12 @@
     <%= javascript_include_tag "application" %>
   </head>
   <body>
-    <%= render "shared/navbar" %>
     <div class="container-fluid">
+      <%= render "shared/navbar" %>
       <%= yield %>
+      <%# render partials view %>
+      <%= render "shared/modal/sign_in" %>
+      <%= render "shared/modal/sign_up" %>
     </div>
   </body>
 </html>
