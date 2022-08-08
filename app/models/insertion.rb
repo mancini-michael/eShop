@@ -16,6 +16,7 @@ class Insertion < ApplicationRecord
 
   belongs_to :seller
   has_many :question
+  has_many :history
 
   validates :title, presence: true
   validates :description, presence: true

@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :review
   has_many :wishlist
   has_many :question
+  has_many :history
 
   geocoded_by :geocoding_address
   after_validation :geocode

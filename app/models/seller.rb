@@ -3,6 +3,7 @@ class Seller < ApplicationRecord
   has_many :insertion, dependent: :destroy
   has_many :meeting, dependent: :destroy
   has_many :review
+  has_many :history
 
   private
 

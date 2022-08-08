@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="d-inline-flex align-items-center gap-2">
-          <% if !meeting.user_approvation || !meeting.seller_approvation %>            
+          <% if !meeting.user_approvation || (!meeting.seller_approvation && Seller.find_by(user_id: current_user) ) %>            
             <%= form_with url: accept_meeting_path(meeting.id), method: :post do |f| %>
               <%= f.hidden_field :owner?, value: meeting.insertion.seller_id == Seller.find_by(user_id: current_user).id if Seller.find_by(user_id: current_user) %>
               <%= f.hidden_field :user, value: current_user.id %>

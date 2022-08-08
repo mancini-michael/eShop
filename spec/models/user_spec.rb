@@ -8,5 +8,6 @@ RSpec.describe User, type: :model do
     it { should have_many(:review) }
     it { should have_many(:wishlist) }
     it { should have_many(:question) }
+    it { should have_many(:history) }
   end
 end

@@ -6,5 +6,6 @@ RSpec.describe Seller, type: :model do
     it { should have_many(:insertion) }
     it { should have_many(:meeting) }
     it { should have_many(:review) }
+    it { should have_many(:history) }
   end
 end
