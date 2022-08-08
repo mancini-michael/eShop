@@ -18,6 +18,8 @@ class Insertion < ApplicationRecord
   has_many :question
   has_many :history
 
+  has_one_attached :image
+
   validates :title, presence: true
   validates :description, presence: true
   validates :price, presence: true, numericality: { greater_than: 0 }

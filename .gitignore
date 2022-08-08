@@ -31,3 +31,6 @@
 
 # Ignore credentials files
 /config/credentials.yml.enc
+
+# Ignore images for test
+/db/seeds/*

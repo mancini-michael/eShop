@@ -46,7 +46,8 @@
           <% @latest.each_with_index do |insertion, index| %>
             <div class="carousel-item <%= "active" if index == 0 %> text-center">
               <%= link_to show_insertion_path(insertion.id) do %>
-                <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="...">
+                <%= image_tag(insertion.image, class: "img-fluid") %>
+                <%# <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="..."> %>
                 <div class="carousel-caption mx-auto">
                   <div class="lh-1">
                     <span><%= User.full_name(Seller.find(insertion.seller_id).user_id) %></span>
