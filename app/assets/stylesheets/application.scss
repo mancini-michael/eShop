@@ -55,16 +55,15 @@ svg {
   margin: 0 auto;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  // outline: none !important;
-  // -webkit-appearance: none !important;
-  // box-shadow: none !important;
-
+input,
+select,
+textarea,
+.form-control {
   &:focus {
     border: 2px solid $primary-color;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
   }
 }
 
@@ -205,6 +204,12 @@ textarea:focus {
   border-radius: 25px;
   padding: 10px 15px;
   width: 100%;
+}
+
+/* welcome stylesheet */
+.welcome-container {
+  margin: 50px 0;
+  text-align: center;
 }
 
 // .form-control {

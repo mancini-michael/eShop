@@ -1,3 +1,10 @@
+
+<% if !user_signed_in? %>
+  <div class="welcome-container">
+    <h1 class="mb-0">Benvenuto</h1>
+  </div>
+<% end %>
+
 <% if user_signed_in? %>
   <% if current_user.city == "" || current_user.zip_code == "" || current_user.address == "" %>
     <div class="container-md" style="padding-left: 25%; padding-right: 25%;">
