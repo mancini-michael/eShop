@@ -17,8 +17,10 @@
       <%= yield %>
       
       <%# render partials view %>
-      <%= render "shared/modal/sign_in" %>
-      <%= render "shared/modal/sign_up" %>
+      <% if !user_signed_in? %>        
+        <%= render "shared/modal/sign_in" %>
+        <%= render "shared/modal/sign_up" %>
+      <% end %>
     </div>
   </body>
 </html>
