@@ -14,6 +14,8 @@ $fs-13: 13px;
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
+$fw-700: 700;
+$fw-800: 800;
 
 /* transition global variable */
 $transition: all 0.5s ease-in-out;
@@ -206,10 +208,46 @@ textarea,
   width: 100%;
 }
 
-/* welcome stylesheet */
-.welcome-container {
-  margin: 50px 0;
+/* carousel stylesheet */
+.carousel-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+}
+
+.carousel-content {
+  background: $light-gray-color;
+  border-radius: 25px;
+  line-height: normal;
+  padding: 15px 20px;
   text-align: center;
+
+  a {
+    font-size: 12px;
+
+    span {
+      color: $primary-color;
+      font-weight: $fw-700;
+    }
+  }
+
+  h2 {
+    color: $primary-color;
+  }
+
+  h2,
+  span {
+    font-weight: $fw-800;
+  }
+}
+
+.carousel-image {
+  height: 250px;
+  object-fit: contain;
+  margin: 0 5px;
+  width: 250px;
 }
 
 // .form-control {
