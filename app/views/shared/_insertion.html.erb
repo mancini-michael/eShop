@@ -1,64 +1,72 @@
-<div class="mb-4">
+<%# * DONE %>
+<div class="mb-5">
   <%= link_to show_insertion_path(insertion) do %>
-    <div class="card border-0 p-0">
-      <%= image_tag(insertion.image, class: "card-image-top img-fluid mb-2") %>
-      <%# <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="card-img-top img-fluid mb-2" alt="..."> %>
-      <div class="card-body lh-1 p-0">
-        <div class="d-flex justify-content-between align-items-center mb-1">
-          <h6 class="card-title mb-0"><%= insertion.title %></h6>
+    <%# card %>
+    <div class="card">
+      <%= image_tag(insertion.image, class: "insertion-image") %>
+
+      <%# card-body %>
+      <div class="card-body">
+        <div>
+          <h6 class="fw-bold mb-0"><%= insertion.title %></h6>
           <span class="fw-bold"><%= sprintf('%.2f', insertion.price) %> €</span>
         </div>
-        <div class="d-flex align-items-center">
-          <%= link_to user_profile_path(Seller.find(insertion.seller_id).user_id), class: "fw-light text-black me-auto" do %>
-            <%= Insertion.seller_name(insertion.seller_id) %>
+        <div>
+          <% seller = insertion.seller_id %>
+          <%= link_to user_profile_path(Seller.find(seller).user_id), class: "me-auto" do %>
+            <%= Insertion.seller_name(seller) %>
           <% end %>
-          <div class="rating d-inline-flex align-items-center">
-            <% if Seller.average_rating(insertion.seller_id) == 0 %>
-              <span class="fw-light">Nessuna recensione</span>
-            <% else%>
-              <span class="fw-bold">(<%= Seller.total_reviews(insertion.seller_id) %>) <%= Seller.average_rating(insertion.seller_id) %></span>
-              <i class="fa-solid fa-star fa-2xs"></i>          
+          <% if Seller.average_rating(seller) == 0 %>
+            <span class="fw-light">Nessuna recensione</span>
+          <% else%>
+            <span class="fw-bold">
+              (<%= Seller.total_reviews(seller) %>) <%= Seller.average_rating(seller) %>
+              <i class="fa-solid fa-star fa-2xs"></i>    
+            </span>
+          <% end %>
+        </div>
+        <% if user_signed_in? %>
+          <% if (distance = User.find(current_user.id).distance_from(User.find(Seller.find(insertion.seller_id).user_id).location)) %>
+            <% if distance > 20 %>
+              <span><%= distance %> kilometers away</span>      
+            <% else %>
+              <span>Near to you</span>
+            <% end %>
+          <% end %>
+          <div class="card-interaction">
+            <%# wishlist section %>
+            <% if @wishlist.find_by(insertion_id: insertion) %>
+              <%= button_to remove_wishlist_path(insertion), method: :delete do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#fe385c" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              <% end %>
+            <% else %>
+              <%= button_to add_wishlist_path(insertion) do %>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              <% end %>
+            <% end %>
+            
+            <%# cart section %>
+            <% if @cart.find_by(insertion_id: insertion) %>
+              <%= button_to remove_cart_path(insertion), method: :delete do %>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg>
+              <% end %>
+            <% else %>
+              <%= button_to add_cart_path(insertion) do %>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+              <% end %>
             <% end %>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   <% end %>
-  <% if user_signed_in? %>
-    <% if (distance = User.find(current_user.id).distance_from(User.find(Seller.find(insertion.seller_id).user_id).location)) %>
-      <% if distance > 20 %>
-        <span class="fw-light"><%= distance %> kilometers away</span>      
-      <% else %>
-        <span class="fw-light">Near to you</span>
-      <% end %>
-    <% end %>
-    <div class="d-flex justify-content-evenly align-items-center insertion-features mt-2">
-      <% if Wishlist.find_by(user_id: current_user.id, insertion_id: insertion.id)&.insertion_id == insertion.id %>
-        <%= button_to remove_wishlist_path(insertion.id), method: :delete, class: "mt-1" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fe385c" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        <% end %>
-      <% else %>
-        <%= button_to add_wishlist_path(insertion.id), class: "mt-1" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        <% end %>
-      <% end %>
-      <% if Cart.find_by(user_id: current_user.id, insertion_id: insertion.id)&.insertion_id == insertion.id %>
-        <%= button_to remove_cart_path(insertion.id), method: :delete do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="d-block m-auto" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-          </svg>
-        <% end %>
-      <% else %>
-        <%= button_to add_cart_path(insertion.id), class: "mt-1" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-          </svg>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
+
 </div>

@@ -250,6 +250,46 @@ textarea,
   width: 250px;
 }
 
+/* insertion stylesheet */
+.insertion-image {
+  display: block;
+  height: 250px;
+  margin: 0 auto;
+  object-fit: contain;
+  padding: 10px;
+  width: 250px;
+}
+
+.card-body {
+  background: $light-gray-color;
+  line-height: normal;
+
+  a {
+    color: $primary-color;
+    font-weight: $fw-700;
+  }
+
+  div {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  a,
+  span {
+    font-size: 12px;
+  }
+}
+
+.card-interaction {
+  margin-top: 10px;
+
+  button {
+    background: transparent;
+    border: none;
+  }
+}
+
 // .form-control {
 //   resize: none;
 //   height: 100% !important;

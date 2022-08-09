@@ -1,43 +1,8 @@
-<% if user_signed_in? %>
-  <% if current_user.city == "" || current_user.zip_code == "" || current_user.address == "" %>
-    <div class="container-md" style="padding-left: 25%; padding-right: 25%;">
-      <h6 class="text-center mb-2">Completa il tuo profilo</h6>
-      <%= form_for(:user, url: registration_path(:user), data: { turbo: false }, html: { method: :put }) do |f| %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-        <div class="form-floating mb-1">
-          <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com", value: current_user.first_name, disabled: true %>
-          <%= f.label :first_name %>
-        </div>
-        <div class="form-floating mb-1">
-          <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com", value: current_user.last_name, disabled: true %>
-          <%= f.label :last_name %>
-        </div>
-        <div class="form-floating mb-1">
-          <%= f.email_field :email, class: "form-control", placeholder: "name@example.com", value: current_user.email, disabled: true %>
-          <%= f.label :email %>
-        </div>
-        <div class="form-floating mb-1">
-          <%= f.text_field :city, class: "form-control", placeholder: "password", value: current_user.city %>
-          <%= f.label :city %>
-        </div>
-        <div class="form-floating mb-1">
-          <%= f.text_field :zip_code, class: "form-control", placeholder: "password", value: current_user.zip_code %>
-          <%= f.label :zip_code %>
-        </div>
-        <div class="form-floating mb-2">
-          <%= f.text_field :address, class: "form-control", placeholder: "password", value: current_user.address %>
-          <%= f.label :address %>
-        </div>
-        <%= f.submit "Continua", class: "modal-btn mx-auto p-2" %>
-      <% end %>
-    </div>
-  <% end %>
-<% end %>
-
-<%# carousel section %>
+<%# * DONE %>
 <% if @latest_insertions %>
-  <div class="container-md text-center">
-    <div class="text-center mt-3">
+  <%# carousel section %>
+  <div class="container-md text-center mt-3">
+    <div class="text-center">
       <span class="fw-bold">Ultime Novità</span>
     </div>
 
@@ -85,24 +50,20 @@
 <% end %>
 
 <%# insertion grid %>
-<div class="">
-  <div class="">
-    <span class="fw-light">Categoria: 
-    <% if params[:category] %>
-      <%= params[:category] %>
-    <% else %>
-      -
+<div class="text-center my-3">
+  <h6 class="fw-bold mb-0">In vendita</h6>
+  <% if @category %>
+    <span style="font-size: 12px;">categoria: <%= @category %></span>
+  <% else %>
+    <span style="font-size: 12px;">Tutti gli articoli</span>
+  <% end %>
+</div>
+<div class="row row-cols-4">
+  <% @insertions.each do |insertion| %>
+    <% if !insertion.sold %>      
+      <div class="col mb-4">
+        <%= render "shared/insertion", insertion: insertion %>
+      </div>
     <% end %>
-    </span>
-    <h3 class="mb-0">Oggetti in vendita</h3>
-  </div>
-  <div class="row row-cols-4">
-    <% @insertions.each do |insertion| %>
-      <% if !insertion.sold %>      
-        <div class="col mx-auto mb-4">
-          <%= render "shared/insertion", insertion: insertion %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+  <% end %>
 </div>
