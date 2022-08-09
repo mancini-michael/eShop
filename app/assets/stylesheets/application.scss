@@ -290,123 +290,62 @@ textarea,
   }
 }
 
+/* profile stylesheet */
+.profile-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+
+  span {
+    font-size: 12px;
+    font-weight: $fw-600;
+  }
+}
+
+.insertion-section {
+  align-items: center;
+  display: flex;
+
+  button {
+    background: transparent;
+    border: none;
+    margin-left: 5px;
+  }
+
+  svg {
+    fill: $primary-color;
+  }
+}
+
+.insertion-features {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
+
+  button {
+    background: transparent;
+    border: none;
+    margin-left: 5px;
+
+    span {
+      font-size: 12px;
+      font-weight: $fw-700;
+    }
+  }
+
+  svg {
+    fill: $primary-color;
+  }
+}
+
+.review-container {
+  text-align: center;
+}
+
 // .form-control {
 //   resize: none;
 //   height: 100% !important;
-// }
-
-// /* seller button */
-// .seller-btn {
-//   background: initial;
-//   border: 0;
-//   border-radius: 15px;
-//   transition: background 0.3s ease-in-out;
-
-//   &:hover {
-//     background: #e0e0e0;
-//   }
-// }
-
-// .other-btn {
-//   border: 2px solid #717171;
-//   border-radius: 10px;
-
-//   &:hover {
-//     background: #e0e0e0 !important;
-//   }
-// }
-
-// .login-form > .form-floating {
-//   & > input {
-//     &:focus {
-//       border: 2px solid $primary-color;
-//     }
-//   }
-
-//   & > input[type="email"] {
-//     border-top-left-radius: 15px;
-//     border-top-right-radius: 15px;
-//   }
-
-//   & > input[type="password"] {
-//     border-bottom-left-radius: 15px;
-//     border-bottom-right-radius: 15px;
-//   }
-// }
-
-// .registration-form > .form-floating {
-//   & > input {
-//     &:focus {
-//       border: 2px solid $primary-color;
-//     }
-//   }
-
-//   & > #user_first_name {
-//     border-top-left-radius: 15px;
-//     border-top-right-radius: 15px;
-//   }
-
-//   & > #user_validation_password {
-//     border-bottom-left-radius: 15px;
-//     border-bottom-right-radius: 15px;
-//   }
-// }
-
-// /* insertion */
-// .img-fluid {
-//   border-radius: 25px;
-//   object-fit: cover;
-//   transition: all 0.5s ease-in-out;
-
-//   &:hover {
-//     box-shadow: 1px 1px 5px $gray-500;
-//   }
-// }
-
-// .insertion-features {
-//   button {
-//     background: transparent;
-//     border: none;
-//   }
-// }
-
-// .rating {
-//   .fw-light,
-//   .fw-bold {
-//     font-size: 10px;
-//   }
-// }
-
-// .edit-btn {
-//   display: block;
-//   background: linear-gradient(to right, #219ebc, #4cc9f0);
-//   border: 0;
-//   border-radius: 25px;
-//   color: #ffffff !important;
-// }
-
-// /* carousel */
-// .carousel-control-prev-icon,
-// .carousel-control-next-icon {
-//   background-image: none;
-// }
-
-// .carousel-indicators [data-bs-target] {
-//   background-color: $primary-color;
-// }
-
-// .carousel-caption {
-//   background: #e0e0e099;
-//   border-radius: 25px;
-//   padding-top: 10px;
-//   width: 500px;
-// }
-
-// .carousel-item {
-//   .img-fluid {
-//     height: 360px;
-//     width: 720px;
-//   }
 // }
 
 // /* cart */
@@ -423,22 +362,6 @@ textarea,
 //   button {
 //     border: 0;
 //     border-radius: 25px;
-//   }
-// }
-
-// /* profile */
-// .profile-container {
-//   text-align: center;
-
-//   button {
-//     background: transparent;
-//     border: 0;
-//     border-radius: 25px;
-//     transition: background 0.3s ease-in-out;
-
-//     &:hover {
-//       background: #e0e0e0;
-//     }
 //   }
 // }
 

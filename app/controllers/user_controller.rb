@@ -2,12 +2,12 @@ class UserController < ApplicationController
   before_action :set_user, only: %i[profile cart wishlist user_to_seller seller_to_user]
 
   def profile
-    if seller = Seller.find_by(user_id: @user)
-      @insertions = Insertion.where(seller_id: seller).order(:timestamp).reverse.first(4)
-      @reviews = Review.where(seller_id: seller).order(:timestamp).reverse.first(4)
-      @history = History.where(seller_id: seller).order(:timestamp).reverse.first(4)
-    else
-      @history = History.where(user_id: @user).order(:timestamp).reverse.first(4)
+    @seller = Seller.find_by(user_id: @user)
+    
+    if @seller
+      @insertions = Insertion.where(seller_id: @seller).order(:timestamp).reverse.first(4)
+      @sold_insertions = History.where(seller_id: @seller).order(:timestamp).reverse.first(4)
+      @reviews = Review.where(seller_id: @seller).order(:timestamp).reverse.first(4)
     end
   end
 
