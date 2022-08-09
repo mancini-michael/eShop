@@ -16,7 +16,7 @@ $fw-500: 500;
 $fw-600: 600;
 
 /* transition global variable */
-$transition: all 0.7s ease-in-out;
+$transition: all 0.5s ease-in-out;
 
 /* generic stylesheet */
 * {
@@ -160,18 +160,21 @@ textarea:focus {
 
 /* sign_in, sign_up stylesheets */
 .modal-form {
-  // TODO border radius 25 px on first and last input field
-  // &:first-child {
-  //   background-color: yellow;
-  //   border-top-left-radius: 25px;
-  //   border-top-right-radius: 25px;
-  // }
+  .form-floating {
+    &:nth-child(2) {
+      .form-control {
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+      }
+    }
 
-  // &:last-child {
-  //   background-color: green;
-  //   border-bottom-left-radius: 25px;
-  //   border-bottom-right-radius: 25px;
-  // }
+    &:nth-last-child(2) {
+      .form-control {
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+    }
+  }
 }
 
 .modal-btn {

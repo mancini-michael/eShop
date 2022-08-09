@@ -15,23 +15,23 @@
         <%= form_for(:user, url: registration_path(:user), class: "modal-form") do |f| %>
           <div class="form-floating">
             <%= f.text_field :first_name, class: "form-control", placeholder: "name@example.com" %>
-            <%= f.label :first_name %>
+            <%= f.label :first_name, "Nome" %>
           </div>
           <div class="form-floating">
             <%= f.text_field :last_name, class: "form-control", placeholder: "name@example.com" %>
-            <%= f.label :last_name %>
+            <%= f.label :last_name, "Cognome" %>
           </div>
           <div class="form-floating">
             <%= f.text_field :city, class: "form-control", placeholder: "name@example.com" %>
-            <%= f.label :city %>
+            <%= f.label :city, "Città" %>
           </div>
           <div class="form-floating">
             <%= f.text_field :zip_code, class: "form-control", placeholder: "name@example.com", pattern: "[0-9]{5}" %>
-            <%= f.label :zip_code %>
+            <%= f.label :zip_code, "CAP" %>
           </div>
           <div class="form-floating">
             <%= f.text_field :address, class: "form-control", placeholder: "name@example.com" %>
-            <%= f.label :address %>
+            <%= f.label :address, "Indirizzo" %>
           </div>
           <div class="form-floating">
             <%= f.email_field :email, class: "form-control", placeholder: "name@example.com" %>
@@ -43,8 +43,9 @@
           </div>
           <div class="form-floating mb-3">
             <%= f.password_field :validation_password, class: "form-control", placeholder: "password" %>
-            <%= f.label :validation_password %>
+            <%= f.label :validation_password, "Conferma password" %>
           </div>
+          <%= f.submit "Continua", class: "modal-btn" %>
         <% end %>
         <div class="d-flex align-items-center my-2">
           <hr class="w-100 mx-3"/>
