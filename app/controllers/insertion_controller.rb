@@ -1,16 +1,24 @@
-require 'opencage/geocoder'
+require "opencage/geocoder"
 
 class InsertionController < ApplicationController
   before_action :sanitize_insertion_params
   before_action :set_insertion, only: %i[show edit destroy]
 
-  def show 
+  # * DONE
+  def show
+    @questions = Question.where(insertion_id: @insertion).limit(5)
     user = User.find(Seller.find(@insertion.seller_id).user_id)
+    
+    if user_signed_in?
+      @cart = Cart.where(user_id: current_user)
+      @seller = Seller.find_by(user_id: current_user)
+      @wishlist = Wishlist.where(user_id: current_user)
+    end
+
     geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:maps_api))
-    results = geocoder.geocode("#{User.find(Seller.find(@insertion.seller_id).user_id).address}, #{User.find(Seller.find(@insertion.seller_id).user_id).city}")
+    results = geocoder.geocode("#{user.address}, #{user.city}")
     gon.lat = results.first.coordinates[0]
     gon.lng = results.first.coordinates[1]
-    @questions = Question.where(insertion_id: params[:id]).limit(5)
   end
 
   def create
@@ -36,20 +44,33 @@ class InsertionController < ApplicationController
     respond_to { |format| format.js { render inline: "location.reload();" } }
   end
 
+  # * DONE
   def search
-    @insertion = Insertion.where("title like ?", "%#{params[:search]}%") if params[:search] != ""
+    if params[:search] != ""
+      @insertions = Insertion.where("title like ?", "%#{params[:search]}%")
+      
+      if user_signed_in?
+        @seller = Seller.find_by(user_id: current_user)
+        @cart = Cart.where(user_id: current_user)
+        @insertions = @insertions.filter { |insertion| insertion.seller_id != @seller.id }
+        @wishlist = Wishlist.where(user_id: current_user)
+      end
+    end
   end
 
   private
   
+  # * DONE
   def set_insertion
     @insertion = Insertion.find(params[:id])
   end
-
+  
+  # * DONE
   def sanitize_insertion_params
     params[:id] = params[:id].to_i
   end
-
+  
+  # * DONE
   def insertion_params
     params.require(:insertion).permit(:seller_id, :image, :title, :description, :price, :categories)
   end

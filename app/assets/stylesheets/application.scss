@@ -347,86 +347,19 @@ textarea,
   text-align: center;
 }
 
-// .form-control {
-//   resize: none;
-//   height: 100% !important;
-// }
+/* insertion page stylesheet*/
+.insertion-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 
-// /* cart */
-// .cart-container {
-//   align-items: center;
-//   display: flex;
-//   justify-content: space-between;
+  button {
+    border: none;
+    background: transparent;
+  }
+}
 
-//   .img-fluid {
-//     height: 150px;
-//     width: 150px;
-//   }
-
-//   button {
-//     border: 0;
-//     border-radius: 25px;
-//   }
-// }
-
-// /* review card */
-// .review-card {
-//   align-items: center;
-//   border: 1px solid #e0e0e0;
-//   border-radius: 25px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   padding: 30px 20px;
-//   transition: all 0.5s ease-in-out;
-
-//   &:hover {
-//     box-shadow: 1px 1px 5px #e0e0e0;
-//   }
-// }
-
-// /* insertion form */
-// .form {
-//   .form-floating > .form-control {
-//     &:focus {
-//       border: 2px solid $primary-color !important;
-//     }
-//   }
-// }
-
-// /* maps */
-// #map {
-//   height: 600px;
-//   width: 100%;
-// }
-
-// /* search form */
-// .search-form {
-//   align-items: center;
-//   display: flex;
-//   gap: 5px;
-
-//   input[type="submit"] {
-//     background: $primary-color;
-//     border-radius: 25px;
-//     color: #ffffff;
-//     padding: 5px 10px;
-//   }
-
-//   input {
-//     border: 1px solid #e0e0e0;
-//     border-radius: 25px;
-//     padding: 5px 10px;
-
-//     &:focus {
-//       border: 2px solid $primary-color;
-//     }
-//   }
-// }
-
-// /* meeting container */
-// .meeting-container {
-//   .img-fluid {
-//     width: 200px;
-//   }
-// }
+#map {
+  height: 600px;
+  width: 100%;
+}

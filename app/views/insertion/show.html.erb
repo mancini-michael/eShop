@@ -1,6 +1,8 @@
-<div class="container-md">
-  <div class="d-flex align-items-center justify-content-between my-5">
-    <div>
+<%# * DONE %>
+<div class="container-fluid">
+  <div class="insertion-container">
+    <%# insertion information %>
+    <div class="mt-3">
       <% if !Seller.find(@insertion.seller_id).active %>
         <span class="fw-bold">Venditore attualmente non attivo</span>
       <% elsif Meeting.find_by(insertion_id: @insertion) %>
@@ -9,55 +11,58 @@
         <% if user_signed_in? %>
           <% if current_user.id != Seller.find(@insertion.seller_id).user_id %>            
             <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#meeting">
-              <span class="fw-bold">Prenota un incontro</span>
+              <span class="fw-bold" style="font-size: 12px;">Prenota un incontro</span>
             </button>
           <% end %>
         <% else %>
-          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#login">
-            <span class="fw-bold">Accedi per acquistare</span>
+          <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#sign_in">
+            <span class="fw-bold" style="font-size: 12px;">Accedi per acquistare</span>
           </button>
         <% end %>
       <% end %>
-      <h3 class="mb-0"><%= @insertion.title %></h3>
+      <h5 class="fw-bold mt-1 mb-0"><%= @insertion.title %></h5>
       <span><%= @insertion.description %></span>
       <%= link_to user_profile_path(Seller.find(@insertion.seller_id).user_id) do %>
-        <h6 class="fw-light"><%= Insertion.seller_name(@insertion.seller_id) %></h6>
+        <h6 class="my-1" style="font-size: 12px;"><%= Insertion.seller_name(@insertion.seller_id) %></h6>
       <% end %>
       <%= link_to home_path(@insertion.categories) do %>
-        <span class="fw-bold btn btn-sm btn-success"><%= @insertion.categories %></span>
+        <span class="fw-bold btn btn-sm btn-primary"><%= @insertion.categories %></span>
       <% end %>
     </div>
     <% if user_signed_in? %>
-      <%= render "shared/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
-    <% else %>
-      <%= render "shared/login" %>
+      <%= render "shared/modal/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
     <% end %>
-    <div class="d-inline-flex align-items-center flex-column">
-      <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>
+    <div>
+      <div>
+        <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>
+      </div>
       <% if user_signed_in? %>
-        <div class="d-inline-flex insertion-features mt-2">
-          <% if Wishlist.find_by(user_id: current_user.id, insertion_id: @insertion)&.insertion_id == @insertion.id %>
-            <%= button_to remove_wishlist_path(@insertion), method: :delete, class: "mt-1 me-2" do %>
+        <div class="d-flex justify-content-center">
+          <%# wishlist section %>
+          <% if @wishlist&.find_by(insertion_id: @insertion) %>
+            <%= button_to remove_wishlist_path(@insertion), method: :delete do %>
               <svg xmlns="http://www.w3.org/2000/svg" fill="#fe385c" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             <% end %>
           <% else %>
-            <%= button_to add_wishlist_path(@insertion), class: "mt-1 me-2" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <%= button_to add_wishlist_path(@insertion) do %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             <% end %>
           <% end %>
-          <% if Cart.find_by(user_id: current_user.id, insertion_id: @insertion)&.insertion_id == @insertion.id %>
+          
+          <%# cart section %>
+          <% if @cart&.find_by(insertion_id: @insertion) %>
             <%= button_to remove_cart_path(@insertion), method: :delete do %>
-              <svg xmlns="http://www.w3.org/2000/svg" class="d-block m-auto" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
               </svg>
             <% end %>
           <% else %>
-            <%= button_to add_cart_path(@insertion), class: "mt-1" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <%= button_to add_cart_path(@insertion) do %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
               </svg>
             <% end %>
@@ -66,27 +71,28 @@
       <% end %>
     </div>
   </div>
-  <div class="text-center mb-5">
-    <%= image_tag(@insertion.image, class: "img-fluid") %>
-    <%# <img src="https://a0.muscache.com/im/pictures/c0e10c8f-d0c3-4875-bae8-0f664a55bbc6.jpg?im_w=720" class="img-fluid" alt="..."> %>
+
+  <div class="text-center">
+    <%# insertion image %>
+    <%= image_tag(@insertion.image, class: "insertion-image") %>
   </div>
-  <div class="mb-5">
-    <h3 class="mb-1">Posizione del venditore</h3>
-    <div id="map"></div>
+
+  <div class="mt-2 mb-5">
+    <span class="fw-bold">Posizione del venditore</span>
+    <div class="mt-2" id="map"></div>
   </div>
+
   <div>
-    <div class="d-flex justify-content-between">
-      <h3 class="mb-3">Domande</h3>
-      <%= link_to "#" do %>
-        <span class="fw-bold">Visualizza tutte le domande</span>
-      <% end %>
+    <%# answer section %>
+    <div class="mb-2">
+      <span class="fw-bold">Domande</span>
     </div>
     <% if @questions.count == 0 %>
-      <p> Non ci sono domande relative all'oggetto selezionato </p>
+      <span>Nessuna domanda per l'articolo</span>
     <% else %>
-      <div class="row row-cols-4 mx-auto">
+      <div class="row row-cols-4">
       <% @questions.each do |question| %>
-        <div class="col">
+        <div class="col mb-4">
           <div class="card shadow p-1">
             <div class="d-flex justify-content-center flex-column mb-2 mx-auto">
               <span class="fw-bold">Domanda</span>
@@ -102,24 +108,38 @@
         <% end %>
       </div>
     <% end %>
-    <%= render "shared/question" %>
+
+    <%# question section %>
+    <% if user_signed_in? %>
+      <div class="mt-5 mb-3">
+        <h3 class="mb-3">Fai una domanda</h3>        
+        <div class="d-flex justify-content-center align-items-center">  
+          <%= form_for(:question, url: questions_path) do |form| %>
+            <div class="mb-2" style="width: 700px; height: 300px;">
+              <%= form.hidden_field :user_id, value: current_user.id %>
+              <%= form.hidden_field :insertion_id, value: @insertion.id %>
+              <%= form.text_area :question, class: "form-control" %>
+            </div>
+            <div class="text-center">
+              <%= form.submit "Invia", class: "modal-btn py-2" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <script>
-      var map;
-      function initMap() {
-          const myLatLng = { lat: gon.lat, lng: gon.lng };
-          map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: gon.lat,  lng: gon.lng},
-              zoom: 12
-          });
-
-          new google.maps.Marker({
-            position: myLatLng,
-            map,
-            title: "Hello World!",
-          });
-      }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly" defer></script>
 </div>
+
+<script>
+    function initMap() {
+        const coordinates = { lat: gon.lat, lng: gon.lng };
+        const map = new google.maps.Map(
+          document.getElementById("map"), { 
+            center: { lat: gon.lat,  lng: gon.lng }, 
+            zoom: 12
+        });
+
+        new google.maps.Marker({ position: coordinates, map, title: "Seller position" });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly" defer></script>

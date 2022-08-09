@@ -1,15 +1,23 @@
-<h2 class="text-center my-5">Risultati della ricerca: <%= params[:search] %></h2>
-<% if !@insertion || @insertion.length == 0%>
-  <div class="text-center my-5">
-  <h2 class="mb-0">La tua ricerca non ha prodotto alcun risultato</h2>
-  <%= link_to root_path, class: "fw-bold" do %>Torna alla home<% end %>
+<div class="text-center mt-5">
+  <div class="mb-3">
+    <span class="fw-bold">Risultati della ricerca: <%= params[:search] %></span>
   </div>
-<% else %>
-  <div class="row row-cols-4">
-    <% @insertion.each do |ins| %>    
-      <div class="col mx-auto mb-4">
-        <%= render "shared/insertion", insertion: ins %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+  <% if !@insertions || @insertions.length == 0%>
+    <div>
+        <span class="fw-bold">La tua ricerca non ha prodotto alcun risultato</span>
+    </div>
+    <div class="mt-5">
+      <%= link_to root_path, class: "fw-bold" do %>
+        Torna alla home
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row row-cols-4">
+      <% @insertions.each do |insertion| %>    
+        <div class="col mb-4">
+          <%= render "shared/insertion", insertion: insertion %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

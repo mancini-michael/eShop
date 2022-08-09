@@ -4,6 +4,11 @@ class UserController < ApplicationController
   # * DONE
   def profile
     @seller = Seller.find_by(user_id: @user)
+
+    if user_signed_in?
+      @cart = Cart.where(user_id: current_user)
+      @wishlist = Wishlist.where(user_id: current_user)
+    end
     
     if @seller
       @insertions = Insertion.where(seller_id: @seller).order(:timestamp).reverse.first(4)
