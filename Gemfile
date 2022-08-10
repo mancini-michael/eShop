@@ -8,6 +8,7 @@ gem "bootstrap", "~> 5.1"
 gem "devise", "~> 4.8"
 gem "geocoder", "~> 1.8"
 gem "gon", "~> 6.4"
+gem "google-api-client", "~> 0.53.0"
 gem "image_processing", "~> 1.2"
 gem "importmap-rails"
 gem "jbuilder"
@@ -39,3 +40,4 @@ group :test do
   gem "cucumber-rails", "~> 2.5", require: false
   gem "database_cleaner", "~> 2.0"
 end
+

@@ -1,0 +1,14 @@
+<% user = User.find(current_user.id) %>
+<% if user.zip_code.empty? || user.city.empty? || user.address.empty? %>  
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <span class="fw-bold">Completa la tua registrazione</span>
+    </div>
+    <div class="toast-body">
+      <div class="mb-2">
+        <span>Per sbloccare tutte le potenzialità del sito, aggiungi le ultime informazioni richieste!</span>
+      </div>
+      <%= link_to "Clicca qui", user_profile_path(user), style: "color: #fe385c" %>
+    </div>
+  </div>
+<% end %>

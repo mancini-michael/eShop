@@ -15,7 +15,9 @@
   <% end %>
   <div class="d-inline-flex align-items-center flex-column">
     <h6 class="fw-bold mb-0"><%= @user.first_name %> <%= @user.last_name %></h6>
-    <span class="mb-0"><%= @user.zip_code %>, <%= @user.city %></span>
+    <% if !@user.zip_code.empty? && !@user.city.empty? && !@user.address.empty? %>
+      <span class="mb-0"><%= @user.zip_code %>, <%= @user.address %>, <%= @user.city %></span>
+    <% end %>
     <span><%= @user.email %></span>
     <% if user_signed_in? && current_user == @user %>        
       <button class="bg-transparent border-0" data-bs-toggle="modal" data-bs-target="#edit_registration">
