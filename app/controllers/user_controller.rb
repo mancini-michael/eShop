@@ -20,17 +20,21 @@ class UserController < ApplicationController
   # * DONE
   def cart
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+    @seller = Seller.find_by(user_id: current_user)
     @cart = Cart.where(user_id: @user)
   end
   
   # * DONE
   def wishlist
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+    @seller = Seller.find_by(user_id: current_user)
     @wishlist = Wishlist.where(user_id: @user)
   end
   
   def history
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+
+    @seller = Seller.find_by(user_id: current_user)
 
     if user_signed_in?
       @cart = Cart.where(user_id: current_user)

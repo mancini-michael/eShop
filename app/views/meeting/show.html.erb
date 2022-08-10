@@ -13,7 +13,7 @@
       <% end %>
       <div class="ms-5">
         <div>
-          <h6 class="fw-bold mb-1"><%= meeting.date.strftime('%A, %m %B %Y, %H:%M') %></h6>
+          <h6 class="fw-bold mb-1"><%= meeting.date %></h6>
           <span class="fw-bold"><%= meeting.place %></span>
         </div>
         <div class="mt-2">
@@ -56,9 +56,7 @@
     
     <%= render "shared/modal/edit_meeting", meeting: meeting %>
   </div>
-  <div class="container-fluid">
-    <hr />
-  </div>
+  <hr />
 
   <% results = @geocoder.geocode(meeting.place) %>
   <script>

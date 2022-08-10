@@ -1,25 +1,100 @@
+require "google/apis/calendar_v3"
 require "opencage/geocoder"
 
 class MeetingController < ApplicationController
   before_action :set_meeting, only: %i[accept destroy update]
 
   def accept
-    if params[:owner]
-      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation)
+    # update or create Google Calendar event if user is logged with Google Account
+    if current_user.provider == "google_oauth2"      
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
+      event = Google::Apis::CalendarV3::Event.new(
+        summary: Insertion.find(@meeting.insertion_id).title,
+        location: @meeting.place,
+        description: Insertion.find(@meeting.insertion_id).description,
+        start: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date.to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+      end: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date.to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+        attendees: [
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(@meeting.user_id).email
+          ),
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(Seller.find(@meeting.seller_id).user_id).email
+          )
+        ],
+      )
+      
+      if @meeting.calendar_id == ""
+        event_created = service.insert_event("primary", event)    
+        @meeting.calendar_id = event_created.id
+      else
+        service.update_event("primary", @meeting.calendar_id, event)
+      end
+    end
+
+    if ActiveModel::Type::Boolean.new.cast(params[:owner])
+      @meeting.update_attribute(:seller_approvation, true)
     else
-      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation)
+      @meeting.update_attribute(:user_approvation, true)
     end
 
     respond_to { |format| format.js { render inline: "location.reload();" } }
   end
-
+  
   def create
     @meeting = Meeting.new(meeting_params)
+
+    # create Google Calendar event if user is logged with Google Account
+    if current_user.provider == "google_oauth2"
+      event = Google::Apis::CalendarV3::Event.new(
+        summary: Insertion.find(@meeting.insertion_id).title,
+        location: @meeting.place,
+        description: Insertion.find(@meeting.insertion_id).description,
+        start: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date,
+          time_zone: "Europe/Rome"
+        ),
+      end: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date,
+          time_zone: "Europe/Rome"
+        ),
+        attendees: [
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(@meeting.user_id).email
+          ),
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(Seller.find(@meeting.seller_id).user_id).email
+          )
+        ],
+      )
+
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
+
+      event_created = service.insert_event("primary", event)    
+      @meeting.calendar_id = event_created.id
+    end
 
     respond_to { |format| @meeting.save if @meeting.valid? }
   end
 
   def destroy
+    if current_user.provider == "google_oauth2"
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
+      
+      if @meeting.calendar_id != ""
+        service.delete_event("primary", @meeting.calendar_id)
+      end
+    end
+
     @meeting.destroy
     respond_to { |format| format.js { render inline: "location.reload();" } }
   end
@@ -27,6 +102,7 @@ class MeetingController < ApplicationController
   def show
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
 
+    @seller = Seller.find_by(user_id: current_user)
     @geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
     @meetings = Meeting.where(user_id: params[:id])
     
@@ -36,13 +112,48 @@ class MeetingController < ApplicationController
   end
 
   def update
+    if current_user.provider == "google_oauth2"      
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
+      event = Google::Apis::CalendarV3::Event.new(
+        summary: Insertion.find(@meeting.insertion_id).title,
+        location: params[:meeting][:place],
+        description: Insertion.find(@meeting.insertion_id).description,
+        start: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: params[:meeting][:date].to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+      end: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: params[:meeting][:date].to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+        attendees: [
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(@meeting.user_id).email
+          ),
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(Seller.find(@meeting.seller_id).user_id).email
+          )
+        ],
+      )
+      
+      if @meeting.calendar_id == ""
+        event_created = service.insert_event("primary", event)    
+        @meeting.calendar_id = event_created.id
+      else
+        service.update_event("primary", @meeting.calendar_id, event)
+      end
+    end
+
     @meeting.update_attribute(:date, params[:meeting][:date])
     @meeting.update_attribute(:place, params[:meeting][:place])
 
-    if params[:owner]
-      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation) if @meeting.user_approvation
+    if ActiveModel::Type::Boolean.new.cast(params[:meeting][:owner])
+      @meeting.update_attribute(:user_approvation, false)
+      @meeting.update_attribute(:seller_approvation, true)
     else
-      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation) if @meeting.seller_approvation
+      @meeting.update_attribute(:user_approvation, true)
+      @meeting.update_attribute(:seller_approvation, false)
     end
 
     respond_to { |format| format.js { render inline: "location.reload();" } }

@@ -8,6 +8,7 @@ class CreateMeetings < ActiveRecord::Migration[7.0]
       t.string :place, null: false, default: ""
       t.boolean :user_approvation, null: false, default: true
       t.boolean :seller_approvation, null: false, default: false
+      t.string :calendar_id, null: false, default: ""
 
       t.timestamps
     end

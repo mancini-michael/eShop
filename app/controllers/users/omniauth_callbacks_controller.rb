@@ -9,6 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     @user = User.from_omniauth(auth)
     if @user.present?
+      session[:access_token] = auth[:credentials][:token]
       sign_in_and_redirect @user, event: :authentication
     end
   end

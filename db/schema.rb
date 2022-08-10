@@ -77,10 +77,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_170531) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-10 15:26:50", null: false
+    t.datetime "date", default: "2022-08-10 21:34:17", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
+    t.string "calendar_id", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["insertion_id"], name: "index_meetings_on_insertion_id"
