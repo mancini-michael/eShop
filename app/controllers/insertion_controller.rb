@@ -46,14 +46,16 @@ class InsertionController < ApplicationController
 
   # * DONE
   def search
+    @seller = Seller.find_by(user_id: current_user)
+    
     if params[:search] != ""
       @insertions = Insertion.where("title like ?", "%#{params[:search]}%")
       
       if user_signed_in?
-        @seller = Seller.find_by(user_id: current_user)
         @cart = Cart.where(user_id: current_user)
-        @insertions = @insertions.filter { |insertion| insertion.seller_id != @seller.id }
         @wishlist = Wishlist.where(user_id: current_user)
+
+        @insertions = @insertions.filter { |insertion| insertion.seller_id != @seller.id } if @seller
       end
     end
   end

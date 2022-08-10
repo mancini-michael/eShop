@@ -17,6 +17,5 @@ class HomeController < ApplicationController
 
     @category = params[:category]
     @insertions = @insertions.filter { |insertion| insertion.categories == @category } if @category
-
   end
 end
