@@ -31,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     user = User.find(params[:user][:user_id])
-    if user.in?(["google_oauth2", "facebook"])
+    if user.provider.in?(["google_oauth2", "facebook"])
       user.update_without_password(city: params[:user][:city], zip_code: params[:user][:zip_code], address: params[:user][:address])
     else
       user.update(account_update_params)

@@ -1,0 +1,38 @@
+<div class="my-3">
+  <span class="fw-bold">I tuoi acquisti</span>
+  <% if @cart.length == 0 %>
+    <h6 class="mt-3">Nessun elemento</h6>
+  <% end %>
+</div>
+<div class="row row-cols-4">
+  <% @insertions.each do |insertion| %>
+    <div class="col mb-4">
+      <div class="card">
+        <%= image_tag(Insertion.find(insertion.id).image, class: "insertion-image") %>
+
+        <%# card-body %>
+        <div class="card-body">
+          <div>
+            <h6 class="fw-bold mb-0"><%= Insertion.find(insertion.id).title %></h6>
+            <span class="fw-bold"><%= sprintf('%.2f', Insertion.find(insertion.id).price) %> €</span>
+          </div>
+          <div>
+            <% seller = insertion.seller_id %>
+            <%= link_to user_profile_path(Seller.find(seller).user_id), class: "me-auto" do %>
+              <%= Insertion.seller_name(seller) %>
+            <% end %>
+            <% if Seller.average_rating(seller) == 0 %>
+              <span class="fw-light">Nessuna recensione</span>
+            <% else%>
+              <span class="fw-bold">
+                (<%= Seller.total_reviews(seller) %>) <%= Seller.average_rating(seller) %>
+                <i class="fa-solid fa-star fa-2xs"></i>    
+              </span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

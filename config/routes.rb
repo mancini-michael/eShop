@@ -2,10 +2,15 @@ Rails.application.routes.draw do
   # root path
   root "home#index"
 
+  # home routes
+  get "/home/index",         to: "home#index"
+  get "/category/:category", to: "home#index", as: "home"
+
   # user routes
   get "profile/:id",   to: "user#profile",   as: "user_profile"
   get "cart/:id",      to: "user#cart",      as: "user_cart"
   get "wishlist/:id",  to: "user#wishlist",  as: "user_wishlist"
+  get "history/:id",   to: "user#history",   as: "user_history"
 
   # user API routes
   post "/update_user/:id",               to: "api/api#user_to_seller",     as: "update_user"
@@ -17,11 +22,14 @@ Rails.application.routes.draw do
   delete "/cart/remove/:insertion",      to: "api/api#remove_to_cart",     as: "remove_cart"
   delete "/wishlist/remove/:insertion",  to: "api/api#remove_to_wishlist", as: "remove_wishlist"
   
-  get "/insertion/search", to: "insertion#search", as: "search_insertion"
-  get "/insertion/:id", to: "insertion#show", as: "show_insertion"
-  post "/insertion", to: "insertion#create"
-  post "/insertion/:id", to: "insertion#edit", as: "edit_insertion"
-  delete "/insertion/:id", to: "insertion#destroy", as: "destroy_insertion"
+  # insertion routes
+  get "/insertion/search",  to: "insertion#search",   as: "search_insertion"
+  get "/insertion/:id",     to: "insertion#show",     as: "show_insertion"
+
+  post "/insertion",        to: "insertion#create"
+  post "/insertion/:id",    to: "insertion#edit",     as: "edit_insertion"
+
+  delete "/insertion/:id",  to: "insertion#destroy",  as: "destroy_insertion"
 
   get "/meeting/:id", to: "meeting#show", as: "show_meeting"
   post "/meeting/accept/:id", to: "meeting#accept", as: "accept_meeting"
@@ -37,9 +45,6 @@ Rails.application.routes.draw do
   post "/history/insertion/:id", to: "history#complete", as: "complete_purchase"
   
   resources :questions
-
-  get "home/index"
-  get "/category/:category", to: "home#index", as: "home"
 
   # devise routes
   devise_for :users, controllers: {

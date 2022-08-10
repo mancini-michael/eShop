@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_170531) do
     t.integer "insertion_id", null: false
     t.integer "seller_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", default: "2022-08-09 11:14:50", null: false
+    t.datetime "date", default: "2022-08-10 11:16:53", null: false
     t.string "place", default: "", null: false
     t.boolean "user_approvation", default: true, null: false
     t.boolean "seller_approvation", default: false, null: false
@@ -150,7 +150,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_170531) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "carts", "insertions"
+  add_foreign_key "carts", "insertions", on_delete: :cascade
   add_foreign_key "carts", "users"
   add_foreign_key "histories", "insertions"
   add_foreign_key "histories", "sellers"
@@ -164,6 +164,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_170531) do
   add_foreign_key "reviews", "sellers"
   add_foreign_key "reviews", "users"
   add_foreign_key "sellers", "users"
-  add_foreign_key "wishlists", "insertions"
+  add_foreign_key "wishlists", "insertions", on_delete: :cascade
   add_foreign_key "wishlists", "users"
 end

@@ -8,7 +8,7 @@ module Api
         seller = Seller.find_by(user_id: current_user)
 
         if !seller
-          seller = Seller.create(user: User.find(current_user))
+          seller = Seller.create(user: User.find(current_user.id))
         else
           seller.update(active: !seller.active)
         end
@@ -36,7 +36,7 @@ module Api
     # API for add insertion to user's cart
     def add_to_cart
       if user_signed_in?
-        Cart.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
+        Cart.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion])) if !Insertion.find(params[:insertion]).sold
         respond_to { |format| format.js { render inline: "location.reload();" } }
       else
         respond_to { head :unauthorized  }
@@ -58,7 +58,7 @@ module Api
     # API for add insertion to user's wishlist
     def add_to_wishlist
       if user_signed_in?
-        Wishlist.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
+        Wishlist.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion])) if !Insertion.find(params[:insertion]).sold
         respond_to { |format| format.js { render inline: "location.reload();" } }
       else
         respond_to { |format| head :unauthorized }

@@ -29,9 +29,7 @@
         <span class="fw-bold btn btn-sm btn-primary"><%= @insertion.categories %></span>
       <% end %>
     </div>
-    <% if user_signed_in? %>
-      <%= render "shared/modal/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
-    <% end %>
+
     <div>
       <div>
         <span class="fw-bold"><%= sprintf('%.2f', @insertion.price) %> €</span>
@@ -88,21 +86,25 @@
       <span class="fw-bold">Domande</span>
     </div>
     <% if @questions.count == 0 %>
-      <span>Nessuna domanda per l'articolo</span>
+      <div class="mb-4">
+        <span>Nessuna domanda per l'articolo</span>
+      </div>
     <% else %>
       <div class="row row-cols-4">
       <% @questions.each do |question| %>
         <div class="col mb-4">
-          <div class="card shadow p-1">
-            <div class="d-flex justify-content-center flex-column mb-2 mx-auto">
-              <span class="fw-bold">Domanda</span>
+          <div class="card">
+            <div class="text-center mt-2">
+              <h6 class="fw-bold mb-0">Domanda</h6>
               <span class="fw-light"><%= question.question%></span>
             </div>
-            <div class="d-flex justify-content-center flex-column mb-2 mx-auto">
-              <span class="fw-bold">Risposta</span>
+            <div class="text-center mt-4">
+              <h6 class="fw-bold mb-0">Risposta</h6>
               <span class="fw-light"><%= if question.reply.empty? then "-" else question.reply end %></span>
             </div>
-            <%= link_to "Rispondi alla domanda", "#", class: "fw-bold text-center" %>
+            <% if user_signed_in? && current_user.id == Seller.find(@insertion.seller_id).user_id %>
+              <%= link_to "Rispondi alla domanda", "#", class: "fw-bold text-center" %>
+            <% end %>
           </div>
         </div>
         <% end %>
@@ -111,17 +113,17 @@
 
     <%# question section %>
     <% if user_signed_in? %>
-      <div class="mt-5 mb-3">
-        <h3 class="mb-3">Fai una domanda</h3>        
-        <div class="d-flex justify-content-center align-items-center">  
-          <%= form_for(:question, url: questions_path) do |form| %>
-            <div class="mb-2" style="width: 700px; height: 300px;">
-              <%= form.hidden_field :user_id, value: current_user.id %>
-              <%= form.hidden_field :insertion_id, value: @insertion.id %>
-              <%= form.text_area :question, class: "form-control" %>
-            </div>
-            <div class="text-center">
-              <%= form.submit "Invia", class: "modal-btn py-2" %>
+      <div>
+        <div class="mb-2">
+          <span class="fw-bold">Fai una domanda</span>
+        </div>      
+        <div class="d-flex justify-content-center align-items-center mb-2">  
+          <%= form_for(:question, url: questions_path, class: "question-form") do |form| %>
+            <%= form.hidden_field :user_id, value: current_user.id %>
+            <%= form.hidden_field :insertion_id, value: @insertion.id %>
+            <%= form.text_area :question, class: "form-control" %>
+            <div class="mt-2">
+              <%= form.submit "Invia", class: "modal-btn" %>
             </div>
           <% end %>
         </div>
@@ -130,16 +132,19 @@
   </div>
 </div>
 
-<script>
-    function initMap() {
-        const coordinates = { lat: gon.lat, lng: gon.lng };
-        const map = new google.maps.Map(
-          document.getElementById("map"), { 
-            center: { lat: gon.lat,  lng: gon.lng }, 
-            zoom: 12
-        });
+<% if user_signed_in? %>
+  <%= render "shared/modal/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
+<% end %>
 
-        new google.maps.Marker({ position: coordinates, map, title: "Seller position" });
-    }
+<script>
+  function initMap() {
+      const coordinates = { lat: gon.lat, lng: gon.lng };
+      const map = new google.maps.Map(
+        document.getElementById("map"), { 
+          center: coordinates, 
+          zoom: 12
+      });
+
+      new google.maps.Marker({ position: coordinates, map, title: "Seller position" });
+  }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJc3-uSJdVUa1YJbAua2NRnqZx3UxnlI&callback=initMap&v=weekly" defer></script>

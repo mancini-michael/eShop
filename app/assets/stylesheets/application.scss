@@ -60,13 +60,20 @@ svg {
 input,
 select,
 textarea,
-.form-control {
+.form-control,
+.form-select {
+  transition: none;
+
   &:focus {
     border: 2px solid $primary-color;
     box-shadow: none;
     outline: none;
     -webkit-appearance: none;
   }
+}
+
+.form-control {
+  resize: none;
 }
 
 /* container-fluid stylesheet */
@@ -362,4 +369,11 @@ textarea,
 #map {
   height: 600px;
   width: 100%;
+}
+
+.question-form {
+  .form-control {
+    height: 300px;
+    width: 700px;
+  }
 }

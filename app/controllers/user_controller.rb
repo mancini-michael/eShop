@@ -28,6 +28,17 @@ class UserController < ApplicationController
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
     @wishlist = Wishlist.where(user_id: @user)
   end
+  
+  def history
+    redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+
+    if user_signed_in?
+      @cart = Cart.where(user_id: current_user)
+      @wishlist = Wishlist.where(user_id: current_user)
+    end
+
+    @insertions = History.where(user_id: current_user)
+  end
 
   private 
 

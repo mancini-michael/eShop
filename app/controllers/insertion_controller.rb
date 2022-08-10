@@ -15,14 +15,14 @@ class InsertionController < ApplicationController
       @wishlist = Wishlist.where(user_id: current_user)
     end
 
-    geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:maps_api))
+    geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
     results = geocoder.geocode("#{user.address}, #{user.city}")
     gon.lat = results.first.coordinates[0]
     gon.lng = results.first.coordinates[1]
   end
 
   def create
-    params[:insertion][:categories] = params[:insertion][:categoris].to_i
+    params[:insertion][:categories] = params[:insertion][:categories].to_i
     @insertion = Insertion.new(insertion_params)
 
     respond_to { |format| @insertion.save if @insertion.valid? }

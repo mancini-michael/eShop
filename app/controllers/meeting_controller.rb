@@ -1,3 +1,5 @@
+require "opencage/geocoder"
+
 class MeetingController < ApplicationController
   before_action :set_meeting, only: %i[accept destroy update]
 
@@ -24,7 +26,10 @@ class MeetingController < ApplicationController
 
   def show
     redirect_to root_path if !user_signed_in? || current_user.id != params[:id].to_i
+
+    @geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
     @meetings = Meeting.where(user_id: params[:id])
+    
     if Seller.find_by(user_id: params[:id]) && @meetings.length == 0
       @meetings = Meeting.where(seller_id: Seller.find_by(user_id: params[:id]).id)
     end
@@ -33,10 +38,11 @@ class MeetingController < ApplicationController
   def update
     @meeting.update_attribute(:date, params[:meeting][:date])
     @meeting.update_attribute(:place, params[:meeting][:place])
+
     if params[:owner]
-      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation)
+      @meeting.update_attribute(:user_approvation, !@meeting.user_approvation) if @meeting.user_approvation
     else
-      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation)
+      @meeting.update_attribute(:seller_approvation, !@meeting.seller_approvation) if @meeting.seller_approvation
     end
 
     respond_to { |format| format.js { render inline: "location.reload();" } }

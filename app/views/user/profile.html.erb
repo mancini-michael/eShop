@@ -48,8 +48,8 @@
         </svg>
       </button>
     <% end %>
-    <%= render "shared/modal/create" %>
   </div>
+  <%= render "shared/modal/create" %>
 
   <%# seller's insertions %>
   <div class="row row-cols-4">
@@ -82,9 +82,9 @@
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
         </svg>
       </button>
-      <%= render "shared/modal/review" %>
     <% end %>
   </div>
+  <%= render "shared/modal/review" %>
   <div class="row row-cols-4">
     <% @reviews.each do |review| %>
       <div class="col mb-4">
@@ -114,13 +114,13 @@
       <% @sold_insertions.each do |insertion| %>
         <div class="col mb-4">
           <div class="card">
-            <%= image_tag(insertion.image, class: "insertion-image") %>
+            <%= image_tag(Insertion.find(insertion.id).image, class: "insertion-image") %>
 
             <%# card-body %>
             <div class="card-body">
               <div>
-                <h6 class="fw-bold mb-0"><%= insertion.title %></h6>
-                <span class="fw-bold"><%= sprintf('%.2f', insertion.price) %> €</span>
+                <h6 class="fw-bold mb-0"><%= Insertion.find(insertion.id).title %></h6>
+                <span class="fw-bold"><%= sprintf('%.2f', Insertion.find(insertion.id).price) %> €</span>
               </div>
               <div>
                 <% seller = insertion.seller_id %>
