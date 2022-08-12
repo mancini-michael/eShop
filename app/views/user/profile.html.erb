@@ -42,14 +42,19 @@
 <% if Seller.find_by(user_id: @user) %>
   <%# insertion section %>
   <div class="insertion-section my-3">
-    <span class="fw-bold">Annunci</span>
-    <% if user_signed_in? && current_user == @user %>
-      <button data-bs-toggle="modal" data-bs-target="#insertion">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-        </svg>
-      </button>
-    <% end %>
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div>
+        <span class="fw-bold">Annunci</span>
+        <% if user_signed_in? && current_user == @user %>
+          <button data-bs-toggle="modal" data-bs-target="#insertion">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        <% end %>
+      </div>
+      <%= link_to "Visualizza annunci", user_insertion_path(@user), class: "fw-bold", style: "color: #fe385c; font-size: 12px;" %>
+    </div>
   </div>
   <%= render "shared/modal/create" %>
 
@@ -110,7 +115,9 @@
   <%# seller's sold history %>
   <% if Seller.find_by(user_id: @user) %>
     <div class="insertion-section mb-3">
-      <span class="fw-bold">Articoli venduti</span>
+      <% if @sold_insertions.length > 0 %>
+        <span class="fw-bold">Articoli venduti</span>
+      <% end %>
     </div>
     <div class="row row-cols-4">
       <% @sold_insertions.each do |insertion| %>

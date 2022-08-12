@@ -44,6 +44,11 @@ class UserController < ApplicationController
     @insertions = History.where(user_id: current_user)
   end
 
+  def insertion
+    seller = Seller.find(params[:id])
+    @insertions = Insertion.where(seller_id: seller)
+  end
+
   private 
 
   # * DONE

@@ -1,0 +1,13 @@
+<div class="my-3">
+  <span class="fw-bold">Annunci</span>
+  <% if @insertions.length == 0 %>
+    <h6 class="mt-3">Nessun elemento</h6>
+  <% end %>
+</div>
+<div class="row row-cols-4">
+  <% @insertions.each do |insertion| %>
+    <div class="col mb-4">
+      <%= render "shared/insertion", insertion: insertion %>
+    </div>
+  <% end %>
+</div>

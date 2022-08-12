@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   get "/category/:category", to: "home#index", as: "home"
 
   # user routes
-  get "profile/:id",   to: "user#profile",   as: "user_profile"
-  get "cart/:id",      to: "user#cart",      as: "user_cart"
-  get "wishlist/:id",  to: "user#wishlist",  as: "user_wishlist"
-  get "history/:id",   to: "user#history",   as: "user_history"
+  get "cart/:id",           to: "user#cart",      as: "user_cart"
+  get "history/:id",        to: "user#history",   as: "user_history"
+  get "user/insertion/:id", to: "user#insertion", as: "user_insertion"
+  get "profile/:id",        to: "user#profile",   as: "user_profile"
+  get "wishlist/:id",       to: "user#wishlist",  as: "user_wishlist"
 
   # user API routes
   post "/update_user/:id",               to: "api/api#user_to_seller",     as: "update_user"
