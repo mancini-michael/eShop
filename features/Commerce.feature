@@ -19,6 +19,10 @@ Scenario: As a guest I want to sign-up with Google so that I can became a new us
 Scenario: As a guest I want to sign-up with Facebook so that I can became a new user
 
 Scenario: As a guest I want to sign-in with email so that I can be recognized as user
+    Given I am not logged in
+    When I click on the Access button
+    And I write my access_credentials
+    Then I can be recognized as user 
 
 Scenario: As a guest I want to sign-in with Google so that I can be recognized as user
 

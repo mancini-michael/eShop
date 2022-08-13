@@ -24,6 +24,22 @@ When('I write my credentials') do
     end
 end
 
+When('I click on the Access button') do
+    click_link_or_button 'Accedi'
+end
+  
+When('I write my access_credentials') do
+    within find('#sign_in') do
+        fill_in 'Email', with: 'prova@prova.it'
+        fill_in 'Password', with: 'prova'
+        click_link_or_button 'Continua'
+    end
+end
+
+Then('I can be recognized as user') do
+    click_link_or_button 'Profilo'
+end
+
 Then('I become a new User') do
-    expect(page).to have_content("Fai una pausa dalle vendite")
+    click_link_or_button 'Profilo'
 end
