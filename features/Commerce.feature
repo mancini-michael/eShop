@@ -22,8 +22,27 @@ Scenario: As a guest I want to sign-in with email so that I can be recognized as
     Given I am not logged in
     When I click on the Access button
     And I write my access_credentials
-    Then I can be recognized as user 
+    Then I can be recognized as user
 
 Scenario: As a guest I want to sign-in with Google so that I can be recognized as user
 
 Scenario: As a guest I want to sign-in with Facebook so that I can be recognized as user
+
+Scenario: As a user I want to have a personal area so that I can display my information
+    Given I am logged in
+    When I click on the profile button
+    Then I should display my information
+
+Scenario: As a user I want to be able to update my credentials so that I can change my password
+
+Scenario: As a user I want to be able to update my role so that I can became a SELLER
+
+Scenario: As a user I want to display last purchases so that I can see my purchases history
+
+Scenario: As a user I want to add items to my wishlist so that I can buy it in the future
+
+Scenario: As a user I want to remove items from my wishlist so that I can update it
+
+Scenario: As a user I want to add items in my shopping cart so that I can buy it
+
+Scenario: As a user I want to remove items from my shopping cart so that I can update it

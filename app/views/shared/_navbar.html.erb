@@ -53,8 +53,8 @@
                   <span>Accedi</span>
                 </button>
               <% else %>
-                <%= link_to user_profile_path(current_user), class: "dropdown-item" do %>
-                  <span class="fw-bold">Profilo</span>
+                <%= link_to user_profile_path(current_user), class: "dropdown-item", name: "Profilo" do %>
+                  <span class="fw-bold" name="Profilo">Profilo</span>
                 <% end %>
                 <%= link_to show_meeting_path(current_user), class: "dropdown-item" do %>
                   <span>Prenotazioni</span>
