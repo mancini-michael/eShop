@@ -72,10 +72,29 @@ Given('I am logged in') do
 end
   
 When('I click on the profile button') do
-    page.should have_no_content("Wait for the text which is available in the sign in page but not on next page")
-    expect(page).to have_content("Signed in successfully.")
+    click_on 'Profilo'
 end
   
 Then('I should display my information') do
-    pending # Write code here that turns the phrase above into concrete actions
+    expect(page).to have_content("Virgilio Caiani")
+end
+
+When('I click on the purchases button') do
+    click_on 'Acquisti'
+end
+  
+Then('I display my purchases') do
+    expect(page).to have_content("I tuoi acquisti")
+end
+
+When('I click on the change button') do
+    click_on 'modifica'
+end
+  
+Then('I can change my password') do
+    within find('#edit_registration') do
+        fill_in 'Password', with: 'weSoFranco'
+        fill_in 'Conferma password', with: 'weSoFranco'
+        click_on 'Continua'
+    end
 end
