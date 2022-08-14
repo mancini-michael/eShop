@@ -98,3 +98,39 @@ Then('I can change my password') do
         click_on 'Continua'
     end
 end
+
+Given('I am logged in as a seller') do
+    user = User.create(
+        first_name: "Virgilio",
+        last_name: "Caiani",
+        city: "Terracina",
+        zip_code: "00039",
+        address: "Via Italcanada 1",
+        email: "baia@verde.it",
+        password: "weSoFranco1")
+
+    visit('http://localhost:3000')
+    click_on 'Accedi'
+    within find('#sign_in') do
+        fill_in 'Email', with: 'baia@verde.it'
+        fill_in 'Password', with: 'weSoFranco1'
+        click_on 'continua'
+    end
+    click_on 'Diventa un venditore'
+end
+
+When('I click write the item\'s name in the search bar') do
+    within first('#search') do
+        fill_in 'Cerca', with: 'iphone 12'
+    end
+end
+
+When('I press the search button') do
+    within first('#search') do
+        click_on 'Submit'
+    end
+end
+
+Then('I display that item') do
+    expect(page).to have_content("iphone 12")
+end

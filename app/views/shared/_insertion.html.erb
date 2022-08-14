@@ -1,6 +1,6 @@
 <%# * DONE %>
-<div class>
-  <%= link_to show_insertion_path(insertion) do %>
+<div class="insertion_class">
+  <%= link_to show_insertion_path(insertion) id:insertion.title.to_s do %>
     <%# card %>
     <div class="card">
       <%= image_tag(insertion.image, class: "insertion-image") %>

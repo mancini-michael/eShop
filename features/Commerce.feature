@@ -59,6 +59,50 @@ Scenario: As a user I want to review a seller of a sale so that people can share
 Scenario: As a user I want to make question for any item in selling list so that I can get further information about a selling item
 
 Scenario: As a user I want to be able to search items so that I can display specific items
+    Given I am logged in
+    When I click write the item's name in the search bar
+    And I press the search button
+    Then I display that item
 
 Scenario: As a user I want to block temporarily item so that I can organize a meeting with seller of item
+
+Scenario: As a user I want to select a place from a map and to set a meeting hour for a blocked item so that I can organize a meeting with the seller to finalize the sale
+
+Scenario: As a user I want to accept meeting place and hour so that I can meet seller to complete the sale
+
+Scenario: As a user I want decline meeting place and hour so that I can ask to seller a new one 
+
+Scenario: As a user I want to my accepted selling meeting synchronized with my Google Calendar so that I can display the event on the google calendar
+
+Scenario: As a seller I want to have a personal area so that I can display my information
+    Given I am logged in
+    When I click on the profile button
+    Then I should display my information
+
+Scenario: As a seller I want to be able to update my credentials so that I can change my password
+    Given I am logged in
+    When I click on the profile button
+    And I click on the change button
+    Then I can change my password
+
+Scenario: As a seller I want to be able to update my role so that I can became an USER
+
+Scenario: As a seller I want to display my selling list so that I can see the items I've listed
+
+Scenario: As a seller I want to display my sold list so that I can see the items I've sold
+
+Scenario: As a seller I want to add an item for sale so that I can sale items on the application
+
+Scenario: As a seller I want to remove an item for sale so that I can remove items in not longer interested to sale 
+
+Scenario: As a seller I want to answer to the questions I received on the items on sale so that I can provide additional information to the interested users
+
+Scenario: As a seller I want to display reviews I received so that I can improve my service
+
+Scenario: As a seller I want to decline meeting place and hour so that I can ask to user a new one
+
+Scenario: As a seller I want to accept meeting place and hour so that I can meet user to complete the sale
+
+Scenario: As a seller I want to close sale of any items after meeting with user so that I can update my selling list
+
 
