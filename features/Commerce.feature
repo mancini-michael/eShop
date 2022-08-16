@@ -5,6 +5,10 @@ Scenario: As a guest I want to display the selling list so that I can see items 
     Then I display the items for sale
 
 Scenario: As a guest I want to display details of any item so that I can see their information
+    Given I am not logged in
+    And I click any insertion
+    Then I display the information of item
+
 
 Scenario: As a guest I want to display profile of any seller so that I can see their information
 

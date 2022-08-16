@@ -51,9 +51,11 @@ class MeetingController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
 
+    geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
+    results = geocoder.geocode(@meeting.place)
     
     respond_to do |format| 
-      if @meeting.save
+      if results.length > 0 && @meeting.save
         # create Google Calendar event if user is logged with Google Account
         if current_user.provider == "google_oauth2"
           event = Google::Apis::CalendarV3::Event.new(

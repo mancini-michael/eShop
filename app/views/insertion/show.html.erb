@@ -112,7 +112,7 @@
     <% end %>
 
     <%# question section %>
-    <% if user_signed_in? && @insertion.seller_id != @seller.id %>
+    <% if user_signed_in? && @insertion.seller_id != @seller&.id %>
       <div>
         <div class="mb-2">
           <span class="fw-bold">Fai una domanda</span>
