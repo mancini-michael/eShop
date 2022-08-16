@@ -1,0 +1,13 @@
+<% if alert %>  
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <span class="fw-bold" style="color: #fe385c">Errore</span>
+      <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="mb-2">
+        <span><%= alert %></span>
+      </div>
+    </div>
+  </div>
+<% end %>

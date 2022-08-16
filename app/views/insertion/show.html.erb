@@ -112,7 +112,7 @@
     <% end %>
 
     <%# question section %>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @insertion.seller_id != @seller.id %>
       <div>
         <div class="mb-2">
           <span class="fw-bold">Fai una domanda</span>
@@ -135,16 +135,3 @@
 <% if user_signed_in? %>
   <%= render "shared/modal/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
 <% end %>
-
-<script>
-  function initMap() {
-      const coordinates = { lat: gon.lat, lng: gon.lng };
-      const map = new google.maps.Map(
-        document.getElementById("map"), { 
-          center: coordinates, 
-          zoom: 12
-      });
-
-      new google.maps.Marker({ position: coordinates, map, title: "Seller position" });
-  }
-</script>

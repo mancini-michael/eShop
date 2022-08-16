@@ -25,15 +25,23 @@ class InsertionController < ApplicationController
     params[:insertion][:categories] = params[:insertion][:categories].to_i
     @insertion = Insertion.new(insertion_params)
 
-    respond_to { |format| @insertion.save if @insertion.valid? }
+    respond_to do |format| 
+      if @insertion.valid? 
+        @insertion.save
+      else
+       format.html { redirect_to user_profile_path(current_user), alert: "Completa tutti i campi per vendere un articolo" }
+      end
+    end
   end
   
   def edit
     params[:insertion][:categories] = params[:insertion][:categories].to_i
-
+    
     respond_to do |format|
       if @insertion.update(insertion_params)
         respond_to { |format| render inline: "location.reload();" }
+      else
+        format.html { redirect_to user_profile_path(current_user), alert: "Completa tutti i campi per vendere un articolo" }
       end
     end
   end

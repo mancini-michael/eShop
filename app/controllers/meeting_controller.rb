@@ -51,38 +51,45 @@ class MeetingController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
 
-    # create Google Calendar event if user is logged with Google Account
-    if current_user.provider == "google_oauth2"
-      event = Google::Apis::CalendarV3::Event.new(
-        summary: Insertion.find(@meeting.insertion_id).title,
-        location: @meeting.place,
-        description: Insertion.find(@meeting.insertion_id).description,
-        start: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: @meeting.date,
-          time_zone: "Europe/Rome"
-        ),
-      end: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: @meeting.date,
-          time_zone: "Europe/Rome"
-        ),
-        attendees: [
-          Google::Apis::CalendarV3::EventAttendee.new(
-            email: User.find(@meeting.user_id).email
-          ),
-          Google::Apis::CalendarV3::EventAttendee.new(
-            email: User.find(Seller.find(@meeting.seller_id).user_id).email
+    
+    respond_to do |format| 
+      if @meeting.save
+        # create Google Calendar event if user is logged with Google Account
+        if current_user.provider == "google_oauth2"
+          event = Google::Apis::CalendarV3::Event.new(
+            summary: Insertion.find(@meeting.insertion_id).title,
+            location: @meeting.place,
+            description: Insertion.find(@meeting.insertion_id).description,
+            start: Google::Apis::CalendarV3::EventDateTime.new(
+              date_time: @meeting.date,
+              time_zone: "Europe/Rome"
+            ),
+          end: Google::Apis::CalendarV3::EventDateTime.new(
+              date_time: @meeting.date,
+              time_zone: "Europe/Rome"
+            ),
+            attendees: [
+              Google::Apis::CalendarV3::EventAttendee.new(
+                email: User.find(@meeting.user_id).email
+              ),
+              Google::Apis::CalendarV3::EventAttendee.new(
+                email: User.find(Seller.find(@meeting.seller_id).user_id).email
+              )
+            ],
           )
-        ],
-      )
+    
+          service = Google::Apis::CalendarV3::CalendarService.new
+          service.authorization = session[:access_token]
+    
+          event_created = service.insert_event("primary", event)    
+          @meeting.calendar_id = event_created.id
+        end
 
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = session[:access_token]
-
-      event_created = service.insert_event("primary", event)    
-      @meeting.calendar_id = event_created.id
+        format.js { render inline: "location.reload();" }
+      else
+        format.html { redirect_to insertion_path(@meeting.insertion_id), alert: "Errore nella prenotazione, campi non validi" }
+      end
     end
-
-    respond_to { |format| @meeting.save if @meeting.valid? }
   end
 
   def destroy
@@ -112,41 +119,8 @@ class MeetingController < ApplicationController
   end
 
   def update
-    if current_user.provider == "google_oauth2"      
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = session[:access_token]
-      event = Google::Apis::CalendarV3::Event.new(
-        summary: Insertion.find(@meeting.insertion_id).title,
-        location: params[:meeting][:place],
-        description: Insertion.find(@meeting.insertion_id).description,
-        start: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: params[:meeting][:date].to_datetime,
-          time_zone: "Europe/Rome"
-        ),
-      end: Google::Apis::CalendarV3::EventDateTime.new(
-          date_time: params[:meeting][:date].to_datetime,
-          time_zone: "Europe/Rome"
-        ),
-        attendees: [
-          Google::Apis::CalendarV3::EventAttendee.new(
-            email: User.find(@meeting.user_id).email
-          ),
-          Google::Apis::CalendarV3::EventAttendee.new(
-            email: User.find(Seller.find(@meeting.seller_id).user_id).email
-          )
-        ],
-      )
-      
-      if @meeting.calendar_id == ""
-        event_created = service.insert_event("primary", event)    
-        @meeting.calendar_id = event_created.id
-      else
-        service.update_event("primary", @meeting.calendar_id, event)
-      end
-    end
-
-    @meeting.update_attribute(:date, params[:meeting][:date])
-    @meeting.update_attribute(:place, params[:meeting][:place])
+    # @meeting.update_attribute(:date, params[:meeting][:date])
+    # @meeting.update_attribute(:place, params[:meeting][:place])
 
     if ActiveModel::Type::Boolean.new.cast(params[:meeting][:owner])
       @meeting.update_attribute(:user_approvation, false)
@@ -156,7 +130,46 @@ class MeetingController < ApplicationController
       @meeting.update_attribute(:seller_approvation, false)
     end
 
-    respond_to { |format| format.js { render inline: "location.reload();" } }
+    respond_to do |format| 
+      if @meeting.update(meeting_params)
+        if current_user.provider == "google_oauth2"      
+          service = Google::Apis::CalendarV3::CalendarService.new
+          service.authorization = session[:access_token]
+          event = Google::Apis::CalendarV3::Event.new(
+            summary: Insertion.find(@meeting.insertion_id).title,
+            location: params[:meeting][:place],
+            description: Insertion.find(@meeting.insertion_id).description,
+            start: Google::Apis::CalendarV3::EventDateTime.new(
+              date_time: params[:meeting][:date].to_datetime,
+              time_zone: "Europe/Rome"
+            ),
+          end: Google::Apis::CalendarV3::EventDateTime.new(
+              date_time: params[:meeting][:date].to_datetime,
+              time_zone: "Europe/Rome"
+            ),
+            attendees: [
+              Google::Apis::CalendarV3::EventAttendee.new(
+                email: User.find(@meeting.user_id).email
+              ),
+              Google::Apis::CalendarV3::EventAttendee.new(
+                email: User.find(Seller.find(@meeting.seller_id).user_id).email
+              )
+            ],
+          )
+          
+          if @meeting.calendar_id == ""
+            event_created = service.insert_event("primary", event)    
+            @meeting.calendar_id = event_created.id
+          else
+            service.update_event("primary", @meeting.calendar_id, event)
+          end
+        end
+
+        format.js { render inline: "location.reload();" } 
+      else
+        format.html { redirect_to show_meeting_path(params[:id]), alert: "Errore nella modifica della prenotazione" }
+      end
+    end
   end
 
   private

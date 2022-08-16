@@ -45,7 +45,7 @@ class UserController < ApplicationController
   end
 
   def insertion
-    seller = Seller.find(params[:id])
+    seller = Seller.find_by(user_id: params[:id])
     @insertions = Insertion.where(seller_id: seller)
   end
 
