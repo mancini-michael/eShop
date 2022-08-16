@@ -26,6 +26,8 @@
       <% end %>
     </div>
 
+    <%= notice %>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.dig(:maps_api) %>&callback=initMap&v=weekly" defer></script>
     <script>
       function initMap() {
