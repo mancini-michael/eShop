@@ -6,6 +6,14 @@ Then('I display the items for sale') do
     expect(page).to have_content("In vendita")
 end
 
+When('I click any insertion') do
+    click_link_or_button 'insertion_1'
+end
+
+Then('I display the information of item') do
+    expect(page).to have_content("Posizione del venditore")
+end
+
 When('I click on the Register button') do
     click_link_or_button 'Registrati'
 end
