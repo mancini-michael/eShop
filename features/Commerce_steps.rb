@@ -1,4 +1,24 @@
 Given('I am not logged in') do
+    user = User.create(
+        first_name: "Franco",
+        last_name: "Ciccarelli",
+        city: "Terracina",
+        zip_code: "00042",
+        address: "Via Baia 96",
+        email: "lorenzo.blu@gmail.com",
+        password: "password")
+    
+    seller = Seller.create(user: user)
+
+    insertion = Insertion.new(
+      seller: seller,
+      title: "Iphone 13",
+      description: "Iphone 13 by Apple California",
+      price: 895,
+      categories: 3
+    )
+    insertion.image.attach(io: File.open("db/seeds/iphone-13.jfif"), filename: "iphone-13.jpg")
+    insertion.save
     visit('http://localhost:3000')
 end
 
@@ -7,7 +27,9 @@ Then('I display the items for sale') do
 end
 
 When('I click any insertion') do
-    click_link_or_button 'insertion_1'
+    within find('#carousel') do
+        click_on 'Visualizza'
+    end
 end
 
 Then('I display the information of item') do
@@ -141,4 +163,14 @@ end
 
 Then('I display that item') do
     expect(page).to have_content("iphone 12")
+end
+
+When('I click any seller') do
+    within first('#carousel') do
+        click_on 'Franco Ciccarelli'
+    end
+end
+  
+Then('I display the page of seller') do
+    expect(page).to have_content("Franco Ciccarelli")
 end

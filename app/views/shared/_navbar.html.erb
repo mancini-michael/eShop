@@ -27,7 +27,7 @@
         <% if user_signed_in? %>          
           <div class="seller-btn mx-2">
             <% if @seller&.active %>
-              <%= button_to restore_user_path(current_user) do %>
+              <%= button_to restore_user_path(current_user), remote: true do %>
                 <span class="fw-bold">Fai una pausa dalle vendite</span>
               <% end %>
             <% else %>
