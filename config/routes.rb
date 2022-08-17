@@ -32,9 +32,10 @@ Rails.application.routes.draw do
 
   delete "/insertion/:id",  to: "insertion#destroy",  as: "destroy_insertion"
 
+  get "/meeting/new/:id", to: "meeting#new", as: "meeting"
   get "/meeting/:id", to: "meeting#show", as: "show_meeting"
   post "/meeting/accept/:id", to: "meeting#accept", as: "accept_meeting"
-  post "/meeting", to: "meeting#create"
+  post "/meeting", to: "meeting#create", as: "create_meeting"
   post "/meeting/:id", to: "meeting#update", as: "edit_meeting"
   delete "/meeting/:id", to: "meeting#destroy", as: "destroy_meeting"
   

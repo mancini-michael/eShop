@@ -4,6 +4,17 @@ require "opencage/geocoder"
 class MeetingController < ApplicationController
   before_action :set_meeting, only: %i[accept destroy update]
 
+  def new
+    @insertion = Insertion.find(params[:id])
+    @seller = Seller.find(@insertion.seller_id)
+    @user = User.find(@seller.user_id)
+
+    geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
+    results = geocoder.geocode("#{@user.address}, #{@user.city}")
+    gon.lat = results.first.coordinates[0]
+    gon.lng = results.first.coordinates[1]
+  end
+
   def accept
     # update or create Google Calendar event if user is logged with Google Account
     if current_user.provider == "google_oauth2"      
@@ -87,7 +98,7 @@ class MeetingController < ApplicationController
           @meeting.calendar_id = event_created.id
         end
 
-        format.js { render inline: "location.reload();" }
+        format.html { redirect_to show_meeting_path(current_user) }
       else
         format.html { redirect_to insertion_path(@meeting.insertion_id), alert: "Errore nella prenotazione, campi non validi" }
       end

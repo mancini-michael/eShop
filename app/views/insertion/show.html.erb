@@ -10,9 +10,7 @@
       <% else %>
         <% if user_signed_in? %>
           <% if current_user.id != Seller.find(@insertion.seller_id).user_id %>            
-            <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#meeting">
-              <span class="fw-bold" style="font-size: 12px;">Prenota un incontro</span>
-            </button>
+            <%= link_to "Prenota un incontro", meeting_path(@insertion), class: "fw-bold", style: "font-size: 12px;" %>
           <% end %>
         <% else %>
           <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#sign_in">
@@ -132,6 +130,16 @@
   </div>
 </div>
 
-<% if user_signed_in? %>
-  <%= render "shared/modal/meeting", user: current_user, seller: Seller.find(@insertion.seller_id), insertion: @insertion %>
-<% end %>
+<script>
+  function initMap() {
+    const coordinates = { lat: gon.lat, lng: gon.lng };
+
+    const map = new google.maps.Map(
+      document.getElementById("map"), { 
+        center: coordinates, 
+        zoom: 12
+    });
+
+    const marker = new google.maps.Marker({ position: coordinates, map, title: "Seller position" });
+  }
+</script>  
