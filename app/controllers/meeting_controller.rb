@@ -63,41 +63,41 @@ class MeetingController < ApplicationController
     @meeting = Meeting.new(meeting_params)
 
     geocoder = OpenCage::Geocoder.new(api_key: Rails.application.credentials.dig(:opencage_api))
-    results = geocoder.geocode(@meeting.place)
+    results = geocoder.geocode(@meeting.place) if @meeting.place != ""
     
-    respond_to do |format| 
-      if results.length > 0 && @meeting.save
-        # create Google Calendar event if user is logged with Google Account
-        if current_user.provider == "google_oauth2"
-          event = Google::Apis::CalendarV3::Event.new(
-            summary: Insertion.find(@meeting.insertion_id).title,
-            location: @meeting.place,
-            description: Insertion.find(@meeting.insertion_id).description,
-            start: Google::Apis::CalendarV3::EventDateTime.new(
-              date_time: @meeting.date,
-              time_zone: "Europe/Rome"
-            ),
-          end: Google::Apis::CalendarV3::EventDateTime.new(
-              date_time: @meeting.date,
-              time_zone: "Europe/Rome"
-            ),
-            attendees: [
-              Google::Apis::CalendarV3::EventAttendee.new(
-                email: User.find(@meeting.user_id).email
-              ),
-              Google::Apis::CalendarV3::EventAttendee.new(
-                email: User.find(Seller.find(@meeting.seller_id).user_id).email
-              )
-            ],
+    # create Google Calendar event if user is logged with Google Account
+    if results && results.length > 0 && current_user.provider == "google_oauth2"
+      event = Google::Apis::CalendarV3::Event.new(
+        summary: Insertion.find(@meeting.insertion_id).title,
+        location: @meeting.place,
+        description: Insertion.find(@meeting.insertion_id).description,
+        start: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date.to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+        end: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: @meeting.date.to_datetime,
+          time_zone: "Europe/Rome"
+        ),
+        attendees: [
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(@meeting.user_id).email
+          ),
+          Google::Apis::CalendarV3::EventAttendee.new(
+            email: User.find(Seller.find(@meeting.seller_id).user_id).email
           )
-    
-          service = Google::Apis::CalendarV3::CalendarService.new
-          service.authorization = session[:access_token]
-    
-          event_created = service.insert_event("primary", event)    
-          @meeting.calendar_id = event_created.id
-        end
+        ],
+      )
 
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
+
+      event_created = service.insert_event("primary", event)    
+      @meeting.calendar_id = event_created.id
+    end
+
+    respond_to do |format| 
+      if @meeting.save
         format.html { redirect_to show_meeting_path(current_user) }
       else
         format.html { redirect_to insertion_path(@meeting.insertion_id), alert: "Errore nella prenotazione, campi non validi" }
@@ -110,7 +110,7 @@ class MeetingController < ApplicationController
       service = Google::Apis::CalendarV3::CalendarService.new
       service.authorization = session[:access_token]
       
-      if @meeting.calendar_id != ""
+      if @meeting.calendar_id != "" && service.get_event("primary", @meeting.calendar_id).status != "cancelled"
         service.delete_event("primary", @meeting.calendar_id)
       end
     end
@@ -145,19 +145,20 @@ class MeetingController < ApplicationController
 
     respond_to do |format| 
       if @meeting.update(meeting_params)
-        if current_user.provider == "google_oauth2"      
-          service = Google::Apis::CalendarV3::CalendarService.new
-          service.authorization = session[:access_token]
+        service = Google::Apis::CalendarV3::CalendarService.new
+        service.authorization = session[:access_token]
+
+        if current_user.provider == "google_oauth2" && service.get_event("primary", @meeting.calendar_id).status != "cancelled"    
           event = Google::Apis::CalendarV3::Event.new(
             summary: Insertion.find(@meeting.insertion_id).title,
-            location: params[:meeting][:place],
+            location: @meeting.place,
             description: Insertion.find(@meeting.insertion_id).description,
             start: Google::Apis::CalendarV3::EventDateTime.new(
-              date_time: params[:meeting][:date].to_datetime,
+              date_time: @meeting.date.to_datetime,
               time_zone: "Europe/Rome"
             ),
           end: Google::Apis::CalendarV3::EventDateTime.new(
-              date_time: params[:meeting][:date].to_datetime,
+              date_time: @meeting.date.to_datetime,
               time_zone: "Europe/Rome"
             ),
             attendees: [
