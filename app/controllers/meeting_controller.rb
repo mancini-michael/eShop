@@ -56,7 +56,7 @@ class MeetingController < ApplicationController
       @meeting.update_attribute(:user_approvation, true)
     end
 
-    respond_to { |format| format.js { render inline: "location.reload();" } }
+    redirect_to '/meeting/'+@meeting.insertion_id.to_s
   end
   
   def create
@@ -143,25 +143,24 @@ class MeetingController < ApplicationController
       @meeting.update_attribute(:seller_approvation, false)
     end
 
-    respond_to do |format| 
-      if @meeting.update(meeting_params)
-        service = Google::Apis::CalendarV3::CalendarService.new
-        service.authorization = session[:access_token]
+    if @meeting.update(meeting_params)
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.authorization = session[:access_token]
 
-        if current_user.provider == "google_oauth2" && service.get_event("primary", @meeting.calendar_id).status != "cancelled"    
-          event = Google::Apis::CalendarV3::Event.new(
-            summary: Insertion.find(@meeting.insertion_id).title,
-            location: @meeting.place,
-            description: Insertion.find(@meeting.insertion_id).description,
-            start: Google::Apis::CalendarV3::EventDateTime.new(
-              date_time: @meeting.date.to_datetime,
-              time_zone: "Europe/Rome"
-            ),
+      if current_user.provider == "google_oauth2" && service.get_event("primary", @meeting.calendar_id).status != "cancelled"    
+        event = Google::Apis::CalendarV3::Event.new(
+          summary: Insertion.find(@meeting.insertion_id).title,
+          location: @meeting.place,
+          description: Insertion.find(@meeting.insertion_id).description,
+          start: Google::Apis::CalendarV3::EventDateTime.new(
+            date_time: @meeting.date.to_datetime,
+            time_zone: "Europe/Rome"
+          ),
           end: Google::Apis::CalendarV3::EventDateTime.new(
               date_time: @meeting.date.to_datetime,
               time_zone: "Europe/Rome"
-            ),
-            attendees: [
+          ),
+          attendees: [
               Google::Apis::CalendarV3::EventAttendee.new(
                 email: User.find(@meeting.user_id).email
               ),
@@ -177,11 +176,10 @@ class MeetingController < ApplicationController
           else
             service.update_event("primary", @meeting.calendar_id, event)
           end
-        end
 
-        format.js { render inline: "location.reload();" } 
+        redirect_to '/meeting/'+params[:id].to_s
       else
-        format.html { redirect_to show_meeting_path(params[:id]), alert: "Errore nella modifica della prenotazione" }
+        redirect_to show_meeting_path(params[:id]), alert: "Errore nella modifica della prenotazione" 
       end
     end
   end

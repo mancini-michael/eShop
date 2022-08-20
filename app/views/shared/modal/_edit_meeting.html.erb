@@ -11,7 +11,7 @@
       </div>
 
       <div class="modal-body py-3">
-        <%= form_for(:meeting, url: edit_meeting_path(meeting.id)) do |f| %>
+        <%= form_for(:meeting, url: edit_meeting_path(meeting.id), id: "change_meeting") do |f| %>
           <%= f.hidden_field :owner?, value: meeting.insertion.seller_id == Seller.find_by(user_id: current_user).id if Seller.find_by(user_id: current_user) %>
           <%= f.hidden_field :user, value: current_user.id %>
           <div class="mb-3">
@@ -19,7 +19,7 @@
               <h6 class="mb-0">Precedente orario:</h6>
               <span class="fw-bold"><%= meeting.date %></span>
             </div>
-            <%= f.datetime_local_field :date, class: "form-control" %>
+            <%= f.datetime_local_field :date, class: "form-control", id: "date" %>
           </div>
           <div class="form-floating mb-3">
             <%= f.text_field :place, class: "form-control", placeholder: "Address", value: meeting.place %>

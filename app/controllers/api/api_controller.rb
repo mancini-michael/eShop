@@ -13,7 +13,7 @@ module Api
           seller.update(active: !seller.active)
         end
 
-        respond_to { |format| format.js { render inline: "location.reload();" } }
+        redirect_to "/profile/"+seller.user_id.to_s
       else
         respond_to { head :unauthorized  }
       end
@@ -26,7 +26,7 @@ module Api
         seller = Seller.find_by(user_id: current_user)
         seller.update(active: !seller.active)
 
-        respond_to { |format| format.js { render inline: "location.reload();" } }
+        redirect_to "/profile/"+seller.user_id.to_s
       else
         respond_to { head :unauthorized  }
       end
@@ -37,7 +37,7 @@ module Api
     def add_to_cart
       if user_signed_in?
         Cart.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion])) if !Insertion.find(params[:insertion]).sold
-        respond_to { |format| format.js { render inline: "location.reload();" } }
+        redirect_to "/profile/"+current_user.id.to_s
       else
         respond_to { head :unauthorized  }
       end
@@ -48,7 +48,7 @@ module Api
     def remove_to_cart
       if user_signed_in?
         Cart.destroy_by(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-        respond_to { |format| format.js { render inline: "location.reload();" } }
+        redirect_to "/profile/"+current_user.id.to_s
       else
         respond_to { |format| head :unauthorized }
       end

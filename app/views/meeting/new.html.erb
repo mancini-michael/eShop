@@ -4,13 +4,13 @@
 </div>
 
 <h6 class="text-center mb-3">Indirizzo selezionato: <span id="selected_address"><%= @user.address %>, <%= @user.city %></span></h6>
-<%= form_for(:meeting, url: create_meeting_path, class: "mb-3") do |f| %>
+<%= form_for(:meeting, url: create_meeting_path, class: "mb-3", id:"meeting_form") do |f| %>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :seller_id, value: @seller.id %>
   <%= f.hidden_field :insertion_id, value: @insertion.id %>
   <div class="row mb-3">
     <div class="col-6 my-auto">
-      <%= f.datetime_local_field :date, class: "form-control", min: Time.now.strftime('%Y-%m-%d') %>
+      <%= f.datetime_local_field :date, class: "form-control", id:"date", min: Time.now.strftime('%Y-%m-%d') %>
     </div>
     <div class="col-6">
       <div class="form-floating">

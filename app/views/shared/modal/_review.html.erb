@@ -11,7 +11,7 @@
       </div>
 
         <div class="modal-body py-3">
-          <%= form_for(:review, url: create_review_path) do |f| %>
+          <%= form_for(:review, url: create_review_path, id: "review_form") do |f| %>
             <%= f.hidden_field :user_id, value: current_user.id %>
             <%= f.hidden_field :seller_id, value: Seller.find_by(user_id: @user).id %>
               <div class="form-floating mb-3">

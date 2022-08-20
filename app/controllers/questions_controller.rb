@@ -11,13 +11,11 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(question_params)
-
-    respond_to do |format|
-       if @question.valid?
-        format.js { render inline: "location.reload();"} 
-       else
-        format.html { redirect_to insertion_path(@question.insertion_id), alert: "Domanda non valida" }
-       end
+       
+    if @question.valid?
+      redirect_to "/insertion/"+@question.insertion_id.to_s
+    else
+      redirect_to insertion_path(@question.insertion_id), alert: "Domanda non valida" 
     end
   end
 

@@ -11,6 +11,6 @@ class HistoryController < ApplicationController
 
     Meeting.find(params[:id]).destroy
     
-    respond_to { |format| format.js { render inline: "location.reload();" } }
+    redirect_to '/meeting/'+insertion.id.to_s
   end
 end

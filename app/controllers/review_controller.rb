@@ -5,7 +5,7 @@ class ReviewController < ApplicationController
   def create
     @review = Review.new(review_params)
 
-    respond_to { |format| @review.save if @review.valid? }
+    redirect_to "/profile/"+current_user.id.to_s
   end
 
   def edit

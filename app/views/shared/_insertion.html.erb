@@ -1,6 +1,6 @@
 <%# * DONE %>
 <div class="insertion_class" id="insertion_<%= insertion.id %>">
-  <%= link_to show_insertion_path(insertion) do %>
+  <%= link_to show_insertion_path(insertion), id: "show_insertion" do %>
     <%# card %>
     <div class="card">
       <%= image_tag(insertion.image, class: "insertion-image") %>
@@ -51,13 +51,13 @@
             
             <%# cart section %>
             <% if @cart&.find_by(insertion_id: insertion) %>
-              <%= button_to remove_cart_path(insertion), method: :delete do %>
+              <%= button_to remove_cart_path(insertion), method: :delete, id: "remove_cart" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                 </svg>
               <% end %>
             <% else %>
-              <%= button_to add_cart_path(insertion) do %>
+              <%= button_to add_cart_path(insertion), id: "add_cart" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                 </svg>

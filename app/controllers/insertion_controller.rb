@@ -25,12 +25,11 @@ class InsertionController < ApplicationController
     params[:insertion][:categories] = params[:insertion][:categories].to_i
     @insertion = Insertion.new(insertion_params)
 
-    respond_to do |format| 
-      if @insertion.valid? 
+    if @insertion.valid? 
         @insertion.save
-      else
-       format.html { redirect_to user_profile_path(current_user), alert: "Completa tutti i campi per vendere un articolo" }
-      end
+        redirect_to '/profile/'+current_user.id.to_s
+    else
+        redirect_to '/profile/'+current_user.id.to_s, alert: "Completa tutti i campi per vendere un articolo"
     end
   end
   
@@ -49,7 +48,7 @@ class InsertionController < ApplicationController
   def destroy
     @insertion.destroy
     
-    respond_to { |format| format.js { render inline: "location.reload();" } }
+    redirect_to '/profile/'+current_user.id.to_s
   end
 
   # * DONE
