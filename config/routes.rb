@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   
   post "/review/create", to: "review#create", as: "create_review"
 
-  get "questions/reply"
+  post "questions/reply/:id", to: "questions#reply", as: "question_reply"
   post "/questions", to: "questions#create"
 
   post "/history/insertion/:id", to: "history#complete", as: "complete_purchase"

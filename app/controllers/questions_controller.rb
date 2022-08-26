@@ -2,7 +2,10 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[ edit update destroy ]
 
   def reply
-    # @question = Question.find_by(insertion_id: $insertion_id)
+    question = Question.find(params[:id])
+    question.update(reply: params[:reply])
+
+    respond_to { |format| redirect_to show_insertion_path(question.insertion_id) }
   end
 
   def edit
