@@ -101,8 +101,8 @@
               <span class="fw-light"><%= if question.reply.empty? then "-" else question.reply end %></span>
             </div>
             <% if user_signed_in? && current_user.id == Seller.find(@insertion.seller_id).user_id && question.reply == ""%>
-              <%= form_with url: question_reply_path(question), class: "text-center mb-2", method: :post do |f| %>
-                <%= f.text_area :reply, style: "resize: none; border: 1px solid #fe385c;" %>
+              <%= form_with url: question_reply_path(question), class: "text-center mb-2", id: "reply_form", method: :post do |f| %>
+                <%= f.text_area :reply, id: "reply", style: "resize: none; border: 1px solid #fe385c;" %>
                 <%= f.submit "Rispondi", class: "border-0 bg-transparent fw-bold", style: "font-size: 12px;" %>
               <% end %>
             <% end %>

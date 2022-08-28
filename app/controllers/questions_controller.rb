@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     question.update(reply: params[:reply])
 
-    respond_to { |format| redirect_to show_insertion_path(question.insertion_id) }
+    redirect_to show_insertion_path(question.insertion_id) 
   end
 
   def edit

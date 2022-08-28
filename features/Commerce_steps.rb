@@ -454,7 +454,11 @@ When('I display the question I received for that item') do
 end
   
 Then('I can answer to it') do
-    click_on 'Rispondi alla domanda'
+    within first('#reply_form') do
+        fill_in 'reply', with: 'certo'
+        click_on 'Rispondi'
+    end
+    page.should have_content("certo")
 end
 
 Then('I should display the reviews I received') do
