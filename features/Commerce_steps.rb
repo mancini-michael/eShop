@@ -256,7 +256,7 @@ When('I click on a seller\'s name') do
 end
 
 When('I click on the review button') do
-    click_on 'review'
+    click_on 'create_review'
 end
 
 When('I fill the form') do

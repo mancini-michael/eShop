@@ -3,9 +3,10 @@ class ReviewController < ApplicationController
   before_action :set_review, only: %i[edit destroy]
 
   def create
-    @review = Review.new(review_params)
+    @review = Review.create(review_params)
 
-    redirect_to "/profile/"+current_user.id.to_s
+    user = Seller.find(@review.seller_id).user_id
+    redirect_to user_profile_path(user)
   end
 
   def edit

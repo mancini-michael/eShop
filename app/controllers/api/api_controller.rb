@@ -37,7 +37,8 @@ module Api
     def add_to_cart
       if user_signed_in?
         Cart.create(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion])) if !Insertion.find(params[:insertion]).sold
-        redirect_to "/profile/"+current_user.id.to_s
+        # redirect_to "/profile/"+current_user.id.to_s
+        redirect_to root_path
       else
         respond_to { head :unauthorized  }
       end
@@ -48,7 +49,8 @@ module Api
     def remove_to_cart
       if user_signed_in?
         Cart.destroy_by(user: User.find(current_user.id), insertion: Insertion.find(params[:insertion]))
-        redirect_to "/profile/"+current_user.id.to_s
+        # redirect_to "/profile/"+current_user.id.to_s
+        redirect_to root_path
       else
         respond_to { |format| head :unauthorized }
       end
